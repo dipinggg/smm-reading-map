@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en" class="m2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Content process: content creation · SMM Reading Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* SMM Reading Map — shared styles.
+   Layout: hub (modules → topics) and topic pages (road map → skim guide → tier map → tier lists → extras → notes).
+   Each module owns one accent (--a). Tiers are an ordered scale of that accent:
+   Tier 1 = solid accent, Tier 2 = lighter accent, Tier 3 = dashed outline. */
+:root{
+  --bg:#f4f6f8;
+  --surface:#ffffff;
+  --sunk:#eaeef2;
+  --ink:#18212e;
+  --muted:#556072;
+  --line:#d5dbe3;
+  --focus:#2f5bd3;
+  --old-bg:#f6ecd9; --old-ink:#7a4d0c;
+  --a:#14657d; --a-soft:#e0eff4; --a-mid:#7fb3c4; --on-a:#ffffff;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Verdana","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+.m1{--a:#14657d;--a-soft:#e0eff4;--a-mid:#7fb3c4}
+.m2{--a:#a3305f;--a-soft:#f6e3eb;--a-mid:#d996b3}
+.m3{--a:#5141b8;--a-soft:#e9e6f8;--a-mid:#a79ee0}
+.m4{--a:#a9501a;--a-soft:#f8e8dc;--a-mid:#e0a57f}
+.m5{--a:#2f6b3e;--a-soft:#e2efe5;--a-mid:#8fbf9b}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --surface:#161c24; --sunk:#1d242e; --ink:#e6eaf0; --muted:#9aa5b5; --line:#2a3340;
+    --focus:#8aa8ff; --old-bg:#3a2c12; --old-ink:#e9c07a; --on-a:#0f1319; color-scheme:dark;
+  }
+  :root:not([data-theme="light"]) .m1,:root.m1:not([data-theme="light"]){--a:#62b6d2;--a-soft:#13303a;--a-mid:#2f6f84}
+  :root:not([data-theme="light"]) .m2,:root.m2:not([data-theme="light"]){--a:#e886ae;--a-soft:#3a1a28;--a-mid:#8a3f60}
+  :root:not([data-theme="light"]) .m3,:root.m3:not([data-theme="light"]){--a:#a99ef2;--a-soft:#24203f;--a-mid:#5a4fa0}
+  :root:not([data-theme="light"]) .m4,:root.m4:not([data-theme="light"]){--a:#f0a46e;--a-soft:#3a2516;--a-mid:#8f5a33}
+  :root:not([data-theme="light"]) .m5,:root.m5:not([data-theme="light"]){--a:#7cc68f;--a-soft:#18301e;--a-mid:#3f7a4e}
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --surface:#161c24; --sunk:#1d242e; --ink:#e6eaf0; --muted:#9aa5b5; --line:#2a3340;
+  --focus:#8aa8ff; --old-bg:#3a2c12; --old-ink:#e9c07a; --on-a:#0f1319; color-scheme:dark;
+}
+:root[data-theme="dark"] .m1,:root.m1[data-theme="dark"]{--a:#62b6d2;--a-soft:#13303a;--a-mid:#2f6f84}
+:root[data-theme="dark"] .m2,:root.m2[data-theme="dark"]{--a:#e886ae;--a-soft:#3a1a28;--a-mid:#8a3f60}
+:root[data-theme="dark"] .m3,:root.m3[data-theme="dark"]{--a:#a99ef2;--a-soft:#24203f;--a-mid:#5a4fa0}
+:root[data-theme="dark"] .m4,:root.m4[data-theme="dark"]{--a:#f0a46e;--a-soft:#3a2516;--a-mid:#8f5a33}
+:root[data-theme="dark"] .m5,:root.m5[data-theme="dark"]{--a:#7cc68f;--a-soft:#18301e;--a-mid:#3f7a4e}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:20px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.55rem,1.2rem + 1.4vw,2.1rem);font-weight:700;letter-spacing:-0.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+button{font:inherit}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ref{font-family:var(--mono);font-size:.8rem;white-space:nowrap;padding:.08em .45em;border-radius:4px;background:var(--sunk);color:var(--ink);font-variant-numeric:tabular-nums}
+.ref.acc{background:var(--a-soft);color:var(--a)}
+.muted{color:var(--muted)}
+
+/* ---------- Tier marks (shared) ---------- */
+.tierchip{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.12em .5em;border-radius:4px;white-space:nowrap;line-height:1.5}
+.tierchip.t1{background:var(--a);color:var(--on-a)}
+.tierchip.t2{background:var(--a-soft);color:var(--a);box-shadow:inset 0 0 0 1px var(--a-mid)}
+.tierchip.t3{background:transparent;color:var(--a);box-shadow:none;outline:1px dashed var(--a);outline-offset:-1px}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:6px 14px;padding-block:8px;flex-wrap:wrap}
+.topbar .home{font-size:.9rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.topbar .home::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--a)}
+.topbar .crumb{font-size:.88rem;color:var(--muted)}
+.topbar .jump{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;flex:1 1 320px;min-width:0}
+.topbar .jump a:first-child{margin-left:auto}
+.topbar .jump a{flex:none;text-decoration:none;font-size:.86rem;padding:.3em .7em;border-radius:999px;color:var(--muted);border:1px solid transparent}
+.topbar .jump a:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:760px){.topbar .jump{flex-basis:100%}.topbar .jump a:first-child{margin-left:0}}
+
+/* ---------- Topic hero ---------- */
+header.hero{padding-block:40px 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--a-soft),var(--bg) 70%)}
+.hero .eyebrow{color:var(--a)}
+.hero h1{font-size:clamp(2.2rem,1.5rem + 3.2vw,3.6rem);font-weight:700;letter-spacing:-0.02em;margin-top:10px}
+.hero .lede{max-width:66ch;margin-top:14px;font-size:1.08rem}
+.hero .cp{max-width:76ch;margin-top:12px;font-size:.95rem;color:var(--muted)}
+.hero .cp b{color:var(--ink)}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+.legend .tier{background:var(--surface);padding:14px 16px 16px;border-radius:0 0 8px 8px;min-width:0;border-top:4px solid var(--a)}
+.legend .tier.l2{border-top-color:var(--a-mid)}
+.legend .tier.l3{border-top:4px dashed var(--a)}
+.legend .tier b{font-family:var(--display);font-size:1.08rem;display:block;margin-top:4px}
+.legend .tier p{font-size:.95rem;color:var(--muted);margin-top:4px}
+@media (max-width:760px){.legend{grid-template-columns:1fr}}
+.pager{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.pager a,.pager span{font-size:.9rem;padding:.4em .85em;border-radius:8px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:var(--ink)}
+.pager span{color:var(--muted);border-style:dashed;background:transparent}
+
+section.block{padding-block:48px 8px}
+section.block > .wrap > header{display:grid;gap:8px;margin-bottom:22px}
+section.block > .wrap > header p{max-width:70ch;color:var(--muted)}
+
+/* ---------- Road map (stops) ---------- */
+ol.route{list-style:none;margin:0;padding:0;display:grid;gap:18px;position:relative}
+ol.route::before{content:"";position:absolute;left:21px;top:18px;bottom:18px;width:3px;background:var(--a);opacity:.35;border-radius:2px}
+.stop{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;align-items:start}
+.stop .dot{width:44px;height:44px;border-radius:50%;background:var(--surface);border:3px solid var(--a);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--a);position:relative;z-index:1}
+.stop .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+.stop .card h3{font-size:1.3rem}
+.stop .plain{margin-top:6px;max-width:70ch}
+.stop .cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:22px;margin-top:14px}
+@media (max-width:820px){.stop .cols{grid-template-columns:1fr}}
+.stop ul.learn{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.stop ul.learn li{padding-left:16px;position:relative}
+.stop ul.learn li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--a)}
+.stop .side{display:grid;gap:12px;align-content:start}
+.stop .side .box{background:var(--sunk);border-radius:8px;padding:12px 14px}
+.stop .side .box .eyebrow{font-size:.7rem}
+.stop .side .box p{margin-top:4px;font-size:.95rem}
+.tiercount{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.linkrow{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px}
+button.linkish{background:none;border:0;padding:0;color:var(--a);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:.9rem}
+
+.plan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.plan .s{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--a);border-radius:8px;padding:12px 14px;min-width:0}
+.plan .s.p2{border-left-color:var(--a-mid)} .plan .s.p3{border-left:4px dashed var(--a)}
+.plan .s p{font-size:.95rem;margin-top:4px}
+@media (max-width:900px){.plan{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.plan{grid-template-columns:1fr}}
+
+/* ---------- Skim guide ---------- */
+.skimkey{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.92rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.skimkey span{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.act{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.2em .55em;border-radius:4px;white-space:nowrap;text-align:center;min-width:62px}
+.act.read{background:var(--a);color:var(--on-a)}
+.act.skim{box-shadow:inset 0 0 0 1.5px var(--a);color:var(--a)}
+.act.glance{background:var(--sunk);color:var(--ink)}
+.act.skip{outline:1.5px dashed var(--line);outline-offset:-1.5px;color:var(--muted)}
+.fast{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.15em .5em;border-radius:999px;background:var(--a-soft);color:var(--a);white-space:nowrap}
+.fast::before{content:"\2605  "}
+.skimbar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:18px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:.93rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.45em .9em;border-radius:8px;text-align:left}
+.seg button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.fasttoggle{display:inline-flex;align-items:center;gap:8px;font-size:.93rem;cursor:pointer}
+.fasttoggle input{width:18px;height:18px;accent-color:var(--a)}
+.skimsum{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.filterbanner{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--a-soft);color:var(--ink);font-size:.93rem}
+.filterbanner b{color:var(--a)}
+.booklabel{font-family:var(--display);font-weight:700;font-size:1.02rem;margin:20px 0 4px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.booklabel small{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
+.skimrow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.skimrow:first-child{border-top:3px solid var(--a);margin-top:12px}
+.skimrow .pn{display:grid;gap:8px;align-content:start}
+.skimrow .pn b{font-family:var(--mono);font-weight:500;font-size:1.05rem;color:var(--a);font-variant-numeric:tabular-nums;white-space:nowrap}
+.skimrow .pn label{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);cursor:pointer}
+.skimrow .pn input{width:16px;height:16px;accent-color:var(--a)}
+.skimrow h4{font-size:1.08rem;font-weight:700;line-height:1.25}
+.skimrow ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:12px}
+.skimrow li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:start}
+.skimrow li .act{margin-top:2px}
+.skimrow li .what{font-size:.97rem}
+.skimrow li .take{margin-top:3px;font-size:.93rem;color:var(--muted)}
+.skimrow li .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag-deck,.tag-old,.tag-stop{font-size:.78rem;padding:.1em .5em;border-radius:4px;line-height:1.5}
+.tag-deck{background:var(--sunk);color:var(--ink)}
+.tag-old{background:var(--old-bg);color:var(--old-ink)}
+.tag-stop{color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.skimrow.donepage h4,.skimrow.donepage li{opacity:.55}
+.skimnote{margin-top:14px;max-width:80ch;font-size:.95rem;color:var(--muted)}
+@media (max-width:560px){
+  .skimrow{grid-template-columns:1fr;gap:6px}
+  .skimrow .pn{grid-auto-flow:column;justify-content:space-between;align-items:center}
+  .skimrow li{grid-template-columns:1fr;gap:4px}
+  .skimrow li .act{justify-self:start}
+}
+
+/* ---------- Tier map ---------- */
+.topicbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.topicbar button{font-size:.9rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.4em .85em;border-radius:999px}
+.topicbar button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+.mapgrid > *{min-width:0}
+.mapbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto;max-width:100%}
+.mapbox svg{display:block;width:100%;height:auto}
+@media (max-width:700px){.mapbox svg{width:880px;max-width:none}}
+.maphint{font-size:.88rem;color:var(--muted);margin:8px 4px 0}
+.mapkey{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;color:var(--muted);margin-top:10px}
+.mapkey span{display:inline-flex;align-items:center;gap:8px}
+.mapkey svg{flex:none}
+svg .ring{fill:none}
+svg .ring.r1{stroke:var(--a);stroke-width:2}
+svg .ring.r2{stroke:var(--a-mid);stroke-width:2;stroke-dasharray:8 7}
+svg .ring.r3{stroke:var(--a-mid);stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round}
+svg .ringlabel{font-family:var(--mono);font-size:13px;letter-spacing:.08em;font-weight:500;fill:var(--a)}
+svg .spoke{stroke:var(--line);stroke-width:2}
+svg .flow{fill:none;stroke:var(--muted);stroke-width:2.2}
+svg .loop{fill:none;stroke:var(--a);stroke-width:2.6}
+svg .cross{fill:none;stroke:var(--muted);stroke-width:1.6;stroke-dasharray:5 5;opacity:.75}
+svg .arrowhead{fill:var(--muted)} svg .arrowhead.acc{fill:var(--a)}
+svg .centre{fill:var(--a)}
+svg .centretext{fill:var(--on-a);font-family:var(--display);font-weight:700;font-size:16px}
+svg .tnode circle{fill:var(--surface);stroke:var(--ink);stroke-width:2.5}
+svg .tnode .num{fill:var(--a);font-family:var(--display);font-weight:700;font-size:15px}
+svg .tnode .lab{fill:var(--ink);font-family:var(--display);font-weight:700;font-size:14px}
+svg .tnode{cursor:pointer}
+svg .tnode:focus{outline:none}
+svg .tnode:focus-visible circle{stroke:var(--focus);stroke-width:4}
+svg .tnode.sel circle{fill:var(--a);stroke:var(--a)}
+svg .tnode.sel .lab,svg .tnode.sel .num{fill:var(--on-a)}
+svg .sat rect{fill:var(--surface)}
+svg .sat.s1 rect{stroke:var(--a);stroke-width:2.2;fill:var(--a-soft)}
+svg .sat.s2 rect{stroke:var(--a-mid);stroke-width:2}
+svg .sat.s3 rect{stroke:var(--a);stroke-width:1.4;stroke-dasharray:5 4}
+svg .sat .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;fill:var(--a)}
+svg .sat .txt{fill:var(--ink);font-family:var(--body);font-size:13px}
+svg .sat{cursor:pointer}
+svg .sat:focus{outline:none}
+svg .sat:focus-visible rect{stroke:var(--focus);stroke-width:3}
+svg .sat:hover rect{stroke-width:3}
+svg .spokegroup{transition:opacity .2s}
+svg .dim{opacity:.3}
+svg .crosssel{opacity:1;stroke:var(--ink);stroke-width:2.2}
+@media (prefers-reduced-motion:reduce){svg .spokegroup{transition:none}}
+
+.detail{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--a);border-radius:12px;padding:18px 18px 20px;min-width:0}
+.detail h3{font-size:1.35rem;margin-top:4px}
+.detail .plain{margin-top:6px;color:var(--muted)}
+.detail .go{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.detail .go button{cursor:pointer;font-size:.88rem;padding:.4em .8em;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:inline-flex;gap:8px;align-items:center}
+.detail .go button:hover{border-color:var(--a)}
+.detail .tgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:16px}
+@media (max-width:900px){.detail .tgs{grid-template-columns:1fr;gap:14px}}
+.detail .tg{min-width:0}
+.detail .tg h4{margin:0 0 8px}
+.detail .tg ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.detail .tg li{font-size:.93rem;line-height:1.45;padding-left:12px;border-left:3px solid var(--a)}
+.detail .tg.g2 li{border-left-color:var(--a-mid)}
+.detail .tg.g3 li{border-left:3px dashed var(--a)}
+.detail .tg li .src{color:var(--muted)}
+.detail .links{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:.92rem}
+.detail .links ul{margin:6px 0 0;padding-left:18px}
+
+/* ---------- Reading lists ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.filters .lbl{font-size:.9rem;color:var(--muted);margin-right:4px}
+.filters button{font-size:.88rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.35em .8em;border-radius:999px}
+.filters button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.progress{font-size:.9rem;color:var(--muted);margin:6px 0 0}
+.tierblock{margin-top:30px;scroll-margin-top:70px}
+.tierblock > .th{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-bottom:10px;border-bottom:3px solid var(--a)}
+.tierblock.b2 > .th{border-bottom-color:var(--a-mid)}
+.tierblock.b3 > .th{border-bottom:3px dashed var(--a)}
+.tierblock > .th h3{font-size:1.45rem}
+.tierblock > .th .count{font-family:var(--mono);font-size:.8rem;color:var(--a)}
+.tierblock > .th p{flex-basis:100%;color:var(--muted);font-size:.97rem;max-width:72ch}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start}
+ul.items li input{width:18px;height:18px;margin-top:4px;accent-color:var(--a)}
+ul.items li .main{min-width:0}
+ul.items li .where{font-family:var(--mono);font-size:.76rem;color:var(--muted);letter-spacing:.02em}
+ul.items li .title{font-weight:700;margin-top:1px}
+ul.items li .why{margin-top:3px;font-size:.95rem}
+ul.items li .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+ul.items li .meta span{font-size:.75rem;font-family:var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 .4em}
+ul.items li .pg{font-family:var(--mono);font-size:.86rem;font-variant-numeric:tabular-nums;background:var(--a-soft);color:var(--a);padding:.2em .55em;border-radius:5px;white-space:nowrap;margin-top:2px}
+.b2 ul.items li .pg{background:var(--sunk)}
+.b3 ul.items li .pg{background:transparent;outline:1px dashed var(--a);outline-offset:-1px}
+ul.items li .pg.unv{background:var(--sunk);color:var(--muted);outline:none}
+ul.items li.done .title,ul.items li.done .why{opacity:.55}
+ul.items li a.out{font-weight:700}
+@media (max-width:560px){ul.items li{grid-template-columns:24px minmax(0,1fr)} ul.items li .pg{grid-column:2;justify-self:start;white-space:normal}}
+.empty{padding:14px 0;color:var(--muted);font-size:.95rem}
+
+/* ---------- Extras, notes ---------- */
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+thead th{font-family:var(--display);font-size:1rem;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:0}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.cards3 > div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.cards3 > div p{font-size:.95rem;margin-top:4px}
+@media (max-width:760px){.cards3{grid-template-columns:1fr}}
+.notes{display:grid;gap:12px;max-width:80ch}
+.notes p{font-size:.97rem}
+footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
+
+/* ---------- Hub ---------- */
+.hubhero{padding-block:44px 24px}
+.hubhero h1{font-size:clamp(2.3rem,1.6rem + 3.2vw,3.7rem);font-weight:700;letter-spacing:-0.02em;margin-top:10px}
+.hubhero .lede{max-width:66ch;margin-top:14px;font-size:1.08rem}
+.hubstats{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-size:.95rem;color:var(--muted)}
+.hubstats b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.swatches{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:.88rem;color:var(--muted)}
+.swatches span{display:inline-flex;align-items:center;gap:6px}
+.swatches i{width:12px;height:12px;border-radius:3px;background:var(--a);display:inline-block}
+.modules{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.module{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--a);border-radius:12px;overflow:hidden}
+.module > button{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;text-align:left;background:none;border:0;padding:18px 20px;cursor:pointer;color:var(--ink)}
+.module > button:hover{background:var(--a-soft)}
+.module .mnum{font-family:var(--display);font-weight:700;font-size:1.5rem;color:var(--a);width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--a-soft)}
+.module .mtitle{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2}
+.module .mmeta{font-size:.9rem;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.module .mmeta .ready{color:var(--a);font-weight:700}
+.module .chev{width:12px;height:12px;border-right:2.5px solid var(--muted);border-bottom:2.5px solid var(--muted);transform:rotate(45deg);transition:transform .2s;margin-right:6px}
+.module.open .chev{transform:rotate(-135deg)}
+@media (prefers-reduced-motion:reduce){.module .chev{transition:none}}
+.module .topics{list-style:none;margin:0;padding:0 20px 16px 80px;display:grid;gap:2px}
+@media (max-width:600px){.module .topics{padding:0 14px 14px 14px}.module > button{padding:16px 14px;gap:12px}}
+.module .topics li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:8px}
+.module .topics li .sn{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.module .topics li .tn{min-width:0}
+.module .topics li .tn small{display:block;color:var(--muted);font-size:.85rem}
+.module .topics li .st{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.15em .55em;border-radius:999px;white-space:nowrap}
+.module .topics li.ready{background:var(--a-soft)}
+.module .topics li.ready .tn a{font-weight:700;text-decoration:none;color:var(--ink)}
+.module .topics li.ready .tn a::after{content:" \2192";color:var(--a)}
+.module .topics li.ready .tn a:hover{text-decoration:underline}
+.module .topics li.ready .st{background:var(--a);color:var(--on-a)}
+.module .topics li.soon .tn{color:var(--muted)}
+.module .topics li.soon .st{color:var(--muted);outline:1px dashed var(--line);outline-offset:-1px}
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.howto > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.howto > div p{font-size:.95rem;color:var(--muted);margin-top:4px}
+@media (max-width:760px){.howto{grid-template-columns:1fr}}
+
+[hidden]{display:none!important}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Modules and topics for 22MDM32, in course-plan session order. A topic with a `file` has a page. */
+window.CATALOG = {
+ course:"22MDM32 Social Media Marketing",
+ modules:[
+  {id:"m1",n:1,title:"Introduction to Social Media Marketing",hours:8,topics:[
+   {s:"S1",title:"Introduction to the concept of social media"},
+   {s:"S2",title:"Social media marketing: definition"},
+   {s:"S3",title:"Uses and scope of social media marketing"},
+   {s:"S4",title:"Social media platforms: Facebook and YouTube"},
+   {s:"S5",title:"Social media platforms: LinkedIn, Instagram, Twitter (X), Snapchat"},
+   {s:"S6",title:"Social media marketing advantages and limitations"},
+   {s:"S7",title:"Social media marketing strategies",file:"m1-strategies.html"},
+   {s:"S8",title:"Influencers: role and types"}]},
+  {id:"m2",n:2,title:"Content Designing for Social Media Platforms",hours:8,topics:[
+   {s:"S9",title:"Basics of content creation",file:"m2-basics.html"},
+   {s:"S10",title:"Content process: planning and strategy",file:"m2-planning.html"},
+   {s:"S11",title:"Content process: content creation",file:"m2-creation.html"},
+   {s:"S12",title:"Content process: content optimisation",file:"m2-optimization.html"},
+   {s:"S13",title:"Content process: content distribution",file:"m2-distribution.html"},
+   {s:"S14",title:"Content process: measurement and analysis",file:"m2-measurement.html"},
+   {s:"S15",title:"Content mix (sales, interactive, informative posts) and the impact of colours"},
+   {s:"S16",title:"Tools for content creation: Canva, Natural Readers, Adobe Express, Picsart, Graphionica"}]},
+  {id:"m3",n:3,title:"Facebook and Instagram Advertising and Marketing",hours:8,topics:[
+   {s:"S17",title:"Facebook and Instagram as advertising and marketing media"},
+   {s:"S18",title:"Characteristics of Facebook marketing"},
+   {s:"S19",title:"Characteristics of Instagram marketing"},
+   {s:"S20",title:"Facebook Marketplace"},
+   {s:"S21",title:"Facebook and Instagram ads: objectives"},
+   {s:"S22",title:"Types of ad"},
+   {s:"S23",title:"Targeting"},
+   {s:"S24",title:"Dimensions"}]},
+  {id:"m4",n:4,title:"Twitter, LinkedIn, YouTube and Snapchat",hours:7,topics:[
+   {s:"S25",title:"Twitter (X): introduction, overview, characteristics"},
+   {s:"S26",title:"LinkedIn: introduction, overview, characteristics"},
+   {s:"S27",title:"YouTube: introduction, overview, characteristics"},
+   {s:"S28",title:"Snapchat, and what each platform is used for"},
+   {s:"S29",title:"Profile building and crafting a summary for marketing"},
+   {s:"S30",title:"Creating and uploading videos"},
+   {s:"S31",title:"Use of hashtags; targeting the audience"}]},
+  {id:"m5",n:5,title:"Social Media Privacy and Policy",hours:9,topics:[
+   {s:"S32",title:"Social media privacy and its importance"},
+   {s:"S33",title:"Privacy concerns and challenges on platforms"},
+   {s:"S34",title:"Indian law: IT Act 2000"},
+   {s:"S35",title:"Indian law: data protection (now the DPDP Act 2023) and its implications"},
+   {s:"S36",title:"Platform privacy policies: Facebook and Instagram"},
+   {s:"S37",title:"Platform privacy policies: X, LinkedIn and others"},
+   {s:"S38",title:"Ethics: data use, user rights, content moderation"},
+   {s:"S39",title:"Data protection: secure settings, phishing, social engineering"},
+   {s:"S40",title:"AI and blockchain for privacy; emerging security trends"}]}
+ ]
+};
+
+</script>
+<script>
+window.TOPIC={
+id:"m2-creation", module:"m2", file:"m2-creation.html", session:"S11",
+title:"Content process: content creation",
+centre:["Content","creation"],
+lede:"How content actually gets made: choose the format, make the images and video, use long-form and audio where they fit, invite users to create with you, and keep it honest about who made it and who paid.",
+coursePlan:"S11 · lab. Hands-on production in Canva, with a template-free rule for at least one asset. Before class: a free Canva account, and brand colours and fonts decided. SM-A3 begins: first two posts designed to spec in class.",
+tierText:["Syllabus books: Tuten & Solomon Ch 6 (pp. 129–132, 147) with Ch 2 and Ch 5, and Zahay's blog, podcast, visual and video sections.","Other chapters and books: the value ladder, memes, Kotler & Keller on creative strategy and consumer-generated ads.","Design courses, platform help pages, India's rules on disclosure and AI labels, 2024–2026."],
+tierIntro:["The syllabus books. Tuten & Solomon cover formats, user content and honesty; Zahay covers each format in its own section.","Chapters around the topic: what makes content valuable, why ideas spread, and classic advertising theory on creative work.","Free courses and tools for the lab, platform rules, and Indian regulation. Links checked in October 2026."],
+routeTitle:"Six stops, from picking a format to publishing it honestly",
+routeIntro:"The order follows a piece of content being made: decide the format, make the visual, the video or the long piece, bring users in, then check it is honest before it goes out.",
+flowLabel:"Making order",
+skimTitle:"What to read, skim and skip for this topic",
+skimIntro:"The Tuten & Solomon pages on formats, user-generated content and disclosure, broken into paragraphs and boxes. Zahay's format sections are listed by start page.",
+skimNote:"<b>Zahay chapters 4, 7, 8 and 9 are section-level only</b> (start pages from your contents scan). Scan them to get a paragraph-level guide. Tuten 5th ed. and the Dummies chapters are not in your folders.",
+plan:[
+ {tier:1,when:"Sitting 1 · about {min:tut} min · Tier 1",text:"Tuten &amp; Solomon <span class=\"ref\">pp. 129–132</span>, then <span class=\"ref\">p. 120</span>, <span class=\"ref\">p. 52</span> and the box on <span class=\"ref\">p. 147</span>, with the skim guide."},
+ {tier:1,when:"Sitting 2 · about {min:zah} min · Tier 1",text:"Zahay: visual storytelling <span class=\"ref\">pp. 157–159</span>, photos and video <span class=\"ref\">pp. 169–177</span>, then the blog and podcast sections in Ch 7."},
+ {tier:2,when:"Sitting 3 · about 1 h · Tier 2",text:"Kotler &amp; Keller <span class=\"ref\">pp. 484–486</span> (appeals) and <span class=\"ref\">pp. 506–509</span> (the ad campaign, consumer-generated ads, print ad criteria); Tuten <span class=\"ref\">pp. 133–134</span>."},
+ {tier:3,when:"Sitting 4 · about 30 min · Tier 3",text:"One Canva Design School lesson, the YouTube A/B test page, and the WebAIM contrast checker, all for the lab."}],
+stops:[
+ {id:1,name:"Choose the format",short:["Choose the","format"],
+  plain:"Pick the format that suits the message and the platform: a post, a photo, a video, a long article, a podcast. Make it for social, not just copied from print.",
+  learn:[["Social content should do more than repurpose offline content for digital display.","Tuten p. 129"],["The format list: blog posts and articles, microblog posts, press releases, white papers, case studies and ebooks, newsletters, videos, webinars and presentations, podcasts, photos.","Tuten p. 129"],["Content becomes social when it adds interaction, participation and sharing (Travel + Leisure).","Tuten p. 129"],["Zahay: white papers and e-books.","Zahay pp. 185–187"],["Dummies: exploring content-marketing platforms.","Dummies Bk 3 Ch 2"]],
+  ask:"List the formats of social media content. Which would you choose for a product launch, and why?",
+  map:{t1:["Tuten p. 129","Zahay pp. 185–187"],t2:["Kotler p. 512","Tuten pp. 133–134"],t3:["CMI 2026 trends","Meta Blueprint"]}},
+ {id:2,name:"Images and visual posts",short:["Images &","visuals"],
+  plain:"Most social content is visual. Tell the story in the picture, keep it readable, and choose the site that suits the image.",
+  learn:[["The type of content decides the site: Saab put video on YouTube, photos on Flickr and news on Twitter.","Tuten p. 130"],["Zahay: the growing importance of visual storytelling.","Zahay pp. 157–159"],["Zahay: photos and images.","Zahay pp. 169–170"],["Get permission before posting copyrighted material.","Tuten p. 52"]],
+  ask:"Why does visual content matter on social media? Give three rules for a good image post.",
+  map:{t1:["Tuten p. 130","Zahay pp. 169–170"],t2:["Kotler p. 509","Tuten pp. 92–93"],t3:["Canva Design School","WebAIM checker"]}},
+ {id:3,name:"Video",short:["Video",""],
+  plain:"Video shows a product in use and tells a story in motion. It does not need a big budget to work.",
+  learn:[["Zahay: online videos, and what makes a video appealing.","Zahay pp. 171–175"],["Zahay: a viral video case.","Zahay pp. 176–177"],["Doritos' homemade Super Bowl ads cost under $100 to make and ranked near the top.","Tuten pp. 131–132"],["Zahay: lessons from video sharing.","Zahay pp. 146–149"]],
+  ask:"What makes an online video appealing? Explain with an example.",
+  map:{t1:["Zahay pp. 171–177","Tuten pp. 131–132"],t2:["Kotler pp. 506–508","Kotler pp. 484–485"],t3:["YouTube A/B tests","BCG creator economy"]}},
+ {id:4,name:"Long-form and audio",short:["Long-form","& audio"],
+  plain:"Blogs, articles, podcasts and webinars carry depth. They build expertise and feed shorter posts.",
+  learn:[["Blogs help organisations show thought leadership, send traffic to target sites, build links and build awareness.","Tuten p. 130"],["Zahay: creating and promoting a blog.","Zahay pp. 130–132"],["Zahay: creating and sharing podcasts; webinars.","Zahay pp. 139–145"],["Zahay: best practices for content marketing with articles.","Zahay pp. 190–192"]],
+  ask:"How can a brand use a blog or a podcast? List the benefits for the organisation.",
+  map:{t1:["Tuten pp. 129–130","Zahay pp. 130–132"],t2:["Kotler pp. 541–545","Tuten pp. 133–134"],t3:["CMI 2026 trends","Canva Design School"]}},
+ {id:5,name:"Co-creating with users",short:["Co-create","with users"],
+  plain:"Invite customers to make content with you: reviews, photos, contest entries, even ads. It is cheap and it spreads, but it needs rules.",
+  learn:[["Organic content comes from the person's own motivation; incentivised content answers a call to action with a prize, goods or cash.","Tuten p. 131"],["Cultural co-creation: Jones Soda lets customers help choose packages and flavours.","Tuten p. 131"],["A UGC campaign (participatory advertising) sets guidelines, may supply brand assets, and shows entries in a gallery.","Tuten p. 120"],["UGC contests give interesting content at low cost and suit creators, joiners, conversationalists and collectors.","Tuten p. 120"]],
+  ask:"Differentiate organic and incentivised user-generated content. Design a UGC contest for a brand.",
+  map:{t1:["Tuten p. 120","Tuten p. 131"],t2:["Kotler pp. 506–507","Tuten pp. 92–93"],t3:["BCG creator economy","Instagram originality"]}},
+ {id:6,name:"Make it honest",short:["Make it","honest"],
+  plain:"Say who made it and who paid. Paid posts must be labelled, fake “customer” posts are off-limits, and AI-made content now needs a label in India.",
+  learn:[["Editorial messages are objective; commercial messages are paid for and aim to persuade. Social media blurs the line.","Tuten p. 130"],["Sponsored conversations are paid consumer content; counterfeit conversations are company content pretending to come from a consumer (Lonelygirl15).","Tuten p. 132"],["Disclose affiliations and gifts; WOMMA suggests #emp, #samp, #paid.","Tuten pp. 52–53"],["Sockpuppeting, posting under a fake identity, crosses an ethical line.","Tuten p. 147"],["Zahay: ethics, and making ethical decisions.","Zahay pp. 72–75"]],
+  ask:"What are sponsored and counterfeit conversations? Why must sponsored content be disclosed?",
+  map:{t1:["Tuten pp. 132, 147","Zahay pp. 72–75"],t2:["Kotler pp. 486, 540","Tuten p. 130"],t3:["ASCI guidelines","IT Rules 2026"]},
+  elsewhere:"Module 5 (S32–S40) returns to privacy, policy and ethics."}
+],
+links:[
+ {a:3,b:5,text:"Users can make the video: Doritos' homemade ads beat many agency spots (Tuten pp. 131–132)."},
+ {a:6,b:2,text:"Disclosure and AI labels apply to images too, and you need permission for copyrighted pictures (Tuten p. 52)."},
+ {a:2,b:4,text:"One long piece can be cut into images and short posts that link back to it (Tuten p. 136: SOS posts its article's images on Flickr)."},
+ {a:4,b:6,text:"Blogs carry the oldest disclosure problem: freebies and paid reviews (Tuten pp. 132, 147)."}
+],
+books:{
+ TUT1:{label:"Tuten & Solomon, Social Media Marketing, 1st ed.",sub:"Pearson, 2014 · your PDF in SMM › Books",short:"Tuten & Solomon",skim:"tut"},
+ ZAH:{label:"Zahay, Roberts, Parker, Barker & Barker, Social Media Marketing: A Strategic Approach, 3rd ed.",sub:"Cengage, 2023 · section start pages from your contents scan",short:"Zahay et al.",skim:"zah"},
+ TUT5:{label:"Tuten, Social Media Marketing, 5th ed.",sub:"SAGE, 2023 · the syllabus edition",short:"Tuten 5th ed."},
+ DUM:{label:"Krasniak, Zimmerman & Ng, Social Media Marketing All-in-One For Dummies, 5th ed.",sub:"Wiley · syllabus book 5",short:"All-in-One For Dummies"},
+ KOT:{label:"Kotler & Keller, Marketing Management, 14th ed.",sub:"Pearson, 2012 · your PDF in BGS › Resources",short:"Kotler & Keller"}
+},
+readings:[
+ {id:"t1-tut-types",tier:1,book:"TUT1",where:"Ch 6",title:"Types of Content: repurposed vs original; the format list; multi-layered content (Travel + Leisure)",pages:"p. 129",why:"The starting list of formats.",st:[1]},
+ {id:"t1-tut-blogs",tier:1,book:"TUT1",where:"Ch 6",title:"Channels of Content Distribution: Blogs (what blogs offer people and organisations)",pages:"pp. 129–130",why:"Why a brand keeps a blog.",st:[4]},
+ {id:"t1-tut-media",tier:1,book:"TUT1",where:"Ch 6",title:"Media-Sharing Sites: owned vs earned; the content type decides the site (Saab)",pages:"p. 130",why:"Where images and video go.",st:[2]},
+ {id:"t1-tut-auth",tier:1,book:"TUT1",where:"Ch 6",title:"Content Producers: What Is “Authentic?” Editorial vs commercial messages",pages:"p. 130",why:"The base idea behind disclosure.",st:[6]},
+ {id:"t1-tut-ugc",tier:1,book:"TUT1",where:"Ch 6",title:"User-generated content · cultural co-creation (Jones Soda) · organic vs incentivised content · call to action · consumer-solicited content (Doritos)",pages:"pp. 131–132",why:"The core pages on content made by users.",st:[3,5]},
+ {id:"t1-tut-spon",tier:1,book:"TUT1",where:"Ch 6",title:"Sponsored and counterfeit conversations · spokesbloggers · ElevenMoms · FTC guidelines",pages:"p. 132",why:"Paid and fake content, and why it must be labelled.",st:[6]},
+ {id:"t1-tut-box",tier:1,book:"TUT1",where:"Ch 6 · box",title:"John Chow, seeding, sockpuppeting and the FTC disclosure rule",pages:"p. 147",why:"A short, exam-friendly case on disclosure.",st:[6]},
+ {id:"t1-tut-ugcc",tier:1,book:"TUT1",where:"Ch 5",title:"User-Generated Content Campaigns: UGC contests, participatory advertising, “create your own ad”",pages:"p. 120",why:"How to run co-creation as a campaign.",st:[5]},
+ {id:"t1-tut-policy",tier:1,book:"TUT1",where:"Ch 2",title:"The Social Media Policy: standards of conduct, disclosure requirements (#emp, #samp, #paid), copyright · WOMMA disclosure form (Fig. 9)",pages:"pp. 51–53",why:"Ready-made disclosure wording for posts, videos and podcasts.",st:[2,6]},
+ {id:"t1-zah-eth",tier:1,book:"ZAH",where:"Ch 4",title:"Ethics (p. 72) · making ethical decisions (p. 75)",pages:"pp. 72–75",why:"Zahay's ethics sections. Section-level only.",st:[6]},
+ {id:"t1-zah-blog",tier:1,book:"ZAH",where:"Ch 7",title:"Creating and Promoting a Blog",pages:"pp. 130–132",why:"Section-level only.",st:[4]},
+ {id:"t1-zah-pod",tier:1,book:"ZAH",where:"Ch 7",title:"Creating and sharing podcasts (p. 139) · webinars (p. 143) · marketing with webinars (p. 145)",pages:"pp. 139–145",why:"Audio and live formats. Section-level only.",st:[4]},
+ {id:"t1-zah-vidles",tier:1,book:"ZAH",where:"Ch 7",title:"Best practices and lessons from video sharing",pages:"pp. 146–149",why:"Section-level only.",st:[3]},
+ {id:"t1-zah-vis",tier:1,book:"ZAH",where:"Ch 8",title:"The Growing Importance of Visual Storytelling",pages:"pp. 157–159",why:"Why visuals lead on social. Section-level only.",st:[2]},
+ {id:"t1-zah-photo",tier:1,book:"ZAH",where:"Ch 8",title:"Photos and images",pages:"pp. 169–170",why:"Section-level only.",st:[2]},
+ {id:"t1-zah-video",tier:1,book:"ZAH",where:"Ch 8",title:"Online videos (p. 171) · what makes a video appealing (p. 172) · a viral video case (p. 176)",pages:"pp. 171–177",why:"Zahay's main video pages. Section-level only.",st:[3]},
+ {id:"t1-zah-wp",tier:1,book:"ZAH",where:"Ch 9",title:"White papers and e-books",pages:"pp. 185–187",why:"Long, downloadable formats. Section-level only.",st:[1,4]},
+ {id:"t1-zah-bp",tier:1,book:"ZAH",where:"Ch 9",title:"Best practices for content marketing with articles",pages:"pp. 190–192",why:"Section-level only.",st:[4]},
+ {id:"t1-tut5",tier:1,book:"TUT5",where:"Ch 7",title:"Social Publishing",pages:"check your copy",unv:true,why:"The syllabus edition of Tuten's Ch 6.",st:[1,4,5,6]},
+ {id:"t1-dum2",tier:1,book:"DUM",where:"Book 3 · Ch 2",title:"Exploring Content-Marketing Platforms: blogs, podcasts and video, sharing images, social platforms, guest blogging",pages:"check your copy",unv:true,why:"A practical tour of the formats.",st:[1,2,3,4]},
+ {id:"t2-tut-ladder",tier:2,book:"TUT1",where:"Ch 6",title:"The content value ladder (Fig. 3) and pillar content (Table 1)",pages:"pp. 133–134",why:"Original and flagship pieces are worth more than filler.",st:[1,4]},
+ {id:"t2-tut-memes",tier:2,book:"TUT1",where:"Ch 4",title:"How Ideas Travel in a Community (memes) · How to Create a Facebook Meme (Table 1) · Cheezburger box",pages:"pp. 92–93",why:"Simple, copyable visual formats spread fastest.",st:[2,5]},
+ {id:"t2-kot-design",tier:2,book:"KOT",where:"Ch 17",title:"Design the communications: message strategy, creative strategy, informational and transformational appeals",pages:"pp. 484–485",why:"Classic theory for choosing what a post says and how.",st:[1,3]},
+ {id:"t2-kot-celeb",tier:2,book:"KOT",where:"Ch 17 · Marketing Insight",title:"Celebrity Endorsements as a Strategy",pages:"p. 486",why:"The paid-endorser idea behind influencer posts.",st:[6]},
+ {id:"t2-kot-camp",tier:2,book:"KOT",where:"Ch 18",title:"Developing the advertising campaign: message generation, creative development · consumer-generated advertising",pages:"pp. 506–508",why:"The ad-world view of making content, and of users making ads.",st:[3,5]},
+ {id:"t2-kot-print",tier:2,book:"KOT",where:"Ch 18",title:"Print Ad Evaluation Criteria (memo)",pages:"p. 509",why:"A checklist that works for a static social post too.",st:[2]},
+ {id:"t2-kot-media",tier:2,book:"KOT",where:"Ch 18",title:"Choosing among major media types",pages:"p. 512",why:"Each medium's strengths and limits, applied to formats.",st:[1]},
+ {id:"t2-kot-inter",tier:2,book:"KOT",where:"Ch 19",title:"Interactive marketing communication options (p. 541) · seven key design elements of a website (p. 542) · e-mail (p. 543) · mobile (p. 544)",pages:"pp. 541–545",why:"Digital formats beyond the social feed.",st:[4]},
+ {id:"t2-kot-eth",tier:2,book:"KOT",where:"Ch 19",title:"Public and ethical issues in direct marketing",pages:"p. 540",why:"Older rules of fair dealing that still apply.",st:[6]},
+ {id:"t3-canva",tier:3,group:"Courses and tools for the lab",title:"Learn Canva with Design School",src:"Canva · free",date:"current",url:"https://www.canva.com/designschool/",why:"Free courses and short tips on graphic design, social media, video editing and content creation. Use a plain free Canva account; Canva for Education is for K-12 schools.",st:[2,4]},
+ {id:"t3-blueprint",tier:3,group:"Courses and tools for the lab",title:"Meta Blueprint (free courses)",src:"Meta · named in your course plan",date:"current",url:"https://www.facebook.com/business/learn",why:"Meta's own lessons on creative for Facebook and Instagram.",st:[1,2,3]},
+ {id:"t3-webaim",tier:3,group:"Courses and tools for the lab",title:"Contrast Checker",src:"WebAIM",date:"current",url:"https://webaim.org/resources/contrastchecker/",why:"Check text against its background colour: at least 4.5:1 for normal text and 3:1 for large text (WCAG AA). Useful before text goes on an image.",st:[2]},
+ {id:"t3-ytab",tier:3,group:"Platform help and news",title:"A/B test titles & thumbnails",src:"YouTube Help",date:"current",url:"https://support.google.com/youtube/answer/16391400",why:"Test up to 3 titles and thumbnails; the one with the most watch time wins. YouTube Studio on a computer only; not for Shorts.",st:[3]},
+ {id:"t3-orig",tier:3,group:"Platform help and news",title:"“Instagram is updating its ranking systems to surface more content from smaller, original creators”",src:"TechCrunch",date:"30 Apr 2024",url:"https://techcrunch.com/2024/04/30/instagram-is-updating-its-ranking-systems-to-surface-more-content-from-smaller-original-creators",why:"When identical posts exist, Instagram recommends only the original. Make your own content, and credit what you repost.",st:[5,6]},
+ {id:"t3-bcg",tier:3,group:"Platform help and news",title:"From Content to Commerce: Mapping India's Creator Economy",src:"BCG (Jain, Gupta, Garg & Mehta)",date:"May 2025",url:"https://www.bcg.com/publications/2025/india-from-content-to-commerce-mapping-indias-creator-economy",why:"2–2.5 million monetised creators in India. Press coverage of the report (Storyboard18, May 2025) notes short-form video has the strongest traction.",st:[3,5]},
+ {id:"t3-cmi",tier:3,group:"Platform help and news",title:"9 Takeaways from the 2026 B2B Content and Marketing Trends Report",src:"Content Marketing Institute",date:"8 Oct 2025",url:"https://contentmarketinginstitute.com/b2b-research/b2b-content-marketing-trends-research",why:"95% of B2B marketers now use AI tools in content work. A starting point for discussing what AI should and should not make.",st:[1,4]},
+ {id:"t3-asci",tier:3,group:"India: rules on disclosure and AI",title:"ASCI Guidelines for Influencer Advertising in Digital Media",src:"Advertising Standards Council of India · from your course plan",date:"current",url:"https://www.ascionline.in",why:"India's rules for labelling paid and sponsored content: the local version of Tuten's FTC point on p. 132.",st:[6]},
+ {id:"t3-itrules",tier:3,group:"India: rules on disclosure and AI",title:"“Govt tightens rules on AI-generated content, mandates labels and faster takedowns”",src:"Business Today",date:"10 Feb 2026",url:"https://www.businesstoday.in/amp/technology/story/govt-tightens-rules-on-ai-generated-content-mandates-labels-and-faster-takedowns-515505-2026-02-10",why:"AI-made images and video must be labelled (rules in force from 20 Feb 2026). Your course policy also asks students to submit their prompts with AI-made assets.",st:[6,2]}
+],
+skim:[
+ {key:"tut",tab:"Tuten & Solomon · Ch 2, 5, 6 · selected pages",label:"Tuten & Solomon, Social Media Marketing, 1st ed. · creation pages from Ch 2, Ch 5 and Ch 6",note:"Printed page numbers. In your PDF, add 5 (book p. 129 = PDF p. 134).",
+ pages:[
+  {p:"52",h:"Ch 2 · The social media policy: disclosure",s:[2,6],b:[
+   {a:"skim",w:"Paras 1–2 and the Microsoft, Sun and Intel excerpts.",t:"Intel: “If you make a mistake, admit it.”",s:[6]},
+   {a:"read",f:1,w:"Bullets “Standards of conduct” and “Disclosure requirements”.",t:"All statements must be honest and transparent. Disclose affiliation and any payment or gift. WOMMA's wording: “I received [insert product name] from [insert company name] and here is my opinion…”, plus #emp, #samp, #paid.",s:[6]},
+   {a:"read",w:"Bullet on intellectual property and copyright.",t:"Get permission before posting copyrighted material: this covers the photos and music in your posts.",s:[2]}]},
+  {p:"53",h:"Ch 2 · WOMMA disclosure form (Fig. 9)",s:[6],b:[
+   {a:"glance",f:1,w:"Fig. 9, Key Aspects of the WOMMA Disclosure Form.",t:"Disclosure wording for blogs, comments, microblogs (#spon, #paid, #samp), video and photo sites, and podcasts. Put the disclosure close to the endorsement."}]},
+  {p:"120",h:"Ch 5 · User-generated content campaigns",s:[5],b:[
+   {a:"skim",w:"Top of page: influence impressions and seeding.",t:"Under 10% of online adults generate 80% of influence impressions.",s:[]},
+   {a:"read",f:1,w:"“User-Generated Content Campaigns”: paras 1–2.",t:"A UGC campaign (UGC contest) invites people to make shareable content. Organic UGC comes from the creator's own motivation (a fan's iPad video). Participatory advertising sets guidelines, may supply brand assets, and shows entries in a gallery."},
+   {a:"read",f:1,w:"Para 3: why brands run UGC contests.",t:"They engage people and spread through their networks, give interesting content at low cost, suit creators, joiners, conversationalists and collectors, and give journalists a story."},
+   {a:"skim",w:"Para 4: “create your own ad” contests (Frito-Lay, Dove, Chevy; Doritos Crash the Super Bowl).",o:"US examples from around 2010."},
+   {a:"skip",w:"“Social Presence: Brands as Relationship Nodes”.",t:"Not today's topic.",s:[]}]},
+  {p:"129",h:"Ch 6 · Types of content",s:[1,4],b:[
+   {a:"glance",w:"Top lines: protest sites and the BP spill videos.",s:[]},
+   {a:"read",f:1,w:"“Types of Content”: para 1.",t:"Content can start as something made for another purpose (an ad, a film, a news story) or be original. Social content should do more than repurpose offline content.",s:[1]},
+   {a:"read",f:1,w:"The format list.",t:"Blog posts and feature articles, microblog posts, press releases, white papers, case studies and ebooks, newsletters, videos, webinars and presentations, podcasts, photos.",s:[1]},
+   {a:"read",w:"Para on multi-layered content (Travel + Leisure).",t:"The article only became social when it gained comments, a Share This widget, bookmarking and the Pack and Play game.",s:[1]},
+   {a:"skim",w:"“Blogs”: para 1.",o:"Technorati's blog counts are from 2010–2011.",s:[4]}]},
+  {p:"130",h:"Ch 6 · Blogs, media sharing, and what is authentic",s:[2,4,6],b:[
+   {a:"read",f:1,w:"Para 1: what blogs offer.",t:"For people: a voice, expertise, ad income, clients. For organisations: thought leadership, traffic to target sites, links to other sites, brand awareness.",s:[4]},
+   {a:"read",f:1,w:"“Media-Sharing Sites”.",t:"Blogs are usually owned media; media-sharing sites are earned media, because the brand does not control them. The content type decides the site: Saab used YouTube for video, Flickr for photos, Twitter for news.",s:[2]},
+   {a:"read",w:"“Content Producers: What Is ‘Authentic?’”: paras 1–3.",t:"An editorial message is objective and unpaid. A commercial message is paid for and tries to persuade. Social media blurs the two.",s:[6]},
+   {a:"skip",w:"Paras 4–5: the traditional press and entertainment studios.",s:[]}]},
+  {p:"131",h:"Ch 6 · User-generated content and co-creation",s:[3,5],b:[
+   {a:"skip",w:"Paras 1–2: newspapers closing; Gourmet Live.",o:"2009–2010 examples.",s:[]},
+   {a:"read",f:1,w:"Paras 3–4: UGC, and what is new about it.",t:"Everyday people make content for personal reasons. What is new is that it can be shared far beyond their own circle.",s:[5]},
+   {a:"read",f:1,w:"Para 5: why UGC is powerful; cultural co-creation (Jones Soda).",t:"Customers' ideas fold back into the product: Jones Soda flavours chosen with customers.",s:[5]},
+   {a:"read",f:1,w:"Para 6: organic vs incentivised content; call to action.",t:"Organic: made from the person's own motivation. Incentivised: made for a contest, free goods or cash, in answer to a call to action.",s:[5]},
+   {a:"read",w:"Para 7: consumer-solicited content (CSC) and Doritos.",t:"Invited, unpaid citizen advertising, also called participatory advertising. Doritos' homemade Super Bowl ads were among the best rated.",s:[3,5]}]},
+  {p:"132",h:"Ch 6 · Sponsored and counterfeit conversations",s:[3,6],b:[
+   {a:"read",w:"First line: the Doritos spots cost under $100 to create.",t:"A low-budget video can compete.",s:[3]},
+   {a:"read",f:1,w:"Paras 1–2: sponsored conversations, spokesbloggers; counterfeit conversations (Lonelygirl15).",t:"Sponsored: consumers are paid for their content. Counterfeit: an organisation plants content that pretends to come from a real consumer.",s:[6]},
+   {a:"read",w:"Paras 3–4: New York Times blogs; ElevenMoms.",t:"Even independent bloggers turn commercial when they accept ads, freebies or payment. Readers need to know where content came from and why.",s:[6]},
+   {a:"read",f:1,w:"Para 5: the FTC guidelines.",t:"Sponsorships must be transparent. (Not in the book: in India, ASCI's influencer guidelines do this job; see Tier 3.)",s:[6]},
+   {a:"skip",w:"“Developing and Organizing Marketing Content”.",t:"Covered on the S10 page.",s:[]}]},
+  {p:"147",h:"Ch 6 · Box: bloggers, freebies and disclosure",s:[6],b:[
+   {a:"read",f:1,w:"Box, paras 1–2: John Chow, seeding and sockpuppeting.",t:"Employees may seed content if they say who they are. Sockpuppeting, promoting content under a made-up identity, crosses an ethical line."},
+   {a:"read",w:"Box, rest: the FTC rule on freebies; ElevenMoms.",t:"Bloggers must disclose payment or free products given for a review.",o:"US rules as described around 2011."},
+   {a:"skip",w:"Text beside the box: pitching influencers; start of the chapter summary.",t:"Pitching belongs to S13.",s:[]}]}
+ ]},
+ {key:"zah",tab:"Zahay et al. · sections",label:"Zahay et al., Social Media Marketing: A Strategic Approach, 3rd ed.",note:"Start pages from your contents scan only. End pages are the next section's start minus one.",
+ pages:[
+  {p:"72-75",pl:"pp. 72–75",h:"Ch 4 · Ethics · making ethical decisions",s:[6],b:[{a:"skim",m:6,w:"Both sections.",t:"Section-level only."}]},
+  {p:"130-132",pl:"pp. 130–132",h:"Ch 7 · Creating and Promoting a Blog",s:[4],b:[{a:"read",f:1,m:6,w:"Whole section.",t:"Section-level only."}]},
+  {p:"139-145",pl:"pp. 139–145",h:"Ch 7 · Podcasts (p. 139) · webinars (p. 143) · marketing with webinars (p. 145)",s:[4],b:[{a:"skim",m:7,w:"Podcast and webinar sections. Skip the podcast case (p. 141) if short of time.",t:"Section-level only."}]},
+  {p:"146-149",pl:"pp. 146–149",h:"Ch 7 · Best practices and lessons from video sharing",s:[3],b:[{a:"read",m:6,w:"Whole section.",t:"Section-level only."}]},
+  {p:"157-159",pl:"pp. 157–159",h:"Ch 8 · The Growing Importance of Visual Storytelling",s:[2],b:[{a:"read",f:1,m:6,w:"Whole section.",t:"Section-level only. Also on the S9 page."}]},
+  {p:"169-170",pl:"pp. 169–170",h:"Ch 8 · Photos and images",s:[2],b:[{a:"read",f:1,m:4,w:"Whole section.",t:"Section-level only."}]},
+  {p:"171-175",pl:"pp. 171–175",h:"Ch 8 · Online videos · what makes a video appealing",s:[3],b:[{a:"read",f:1,m:10,w:"Both sections.",t:"Section-level only. The main video reading for the lab."}]},
+  {p:"176-177",pl:"pp. 176–177",h:"Ch 8 · A viral video case",s:[3],b:[{a:"skim",m:3,w:"Whole case.",t:"Section-level only."}]},
+  {p:"185-187",pl:"pp. 185–187",h:"Ch 9 · White papers and e-books",s:[1,4],b:[{a:"skim",m:5,w:"Whole section.",t:"Section-level only."}]},
+  {p:"190-192",pl:"pp. 190–192",h:"Ch 9 · Best practices for content marketing with articles",s:[4],b:[{a:"skim",m:5,w:"Whole section.",t:"Section-level only."}]}
+ ]}
+],
+extras:[{id:"formats",nav:"Format chooser",eyebrow:"For the lab",title:"Which format, and where to read about it",intro:"The format list is Tuten & Solomon's (p. 129). The middle column is a short guide; where a book says what a format is good for, the page is given.",
+ html:'<div class="tablewrap"><table><thead><tr><th>Format</th><th>Good for</th><th>Read</th></tr></thead><tbody>'+
+ '<tr><td>Blog posts and feature articles</td><td>Depth, expertise, traffic and links to your site <span class="ref">Tuten p. 130</span></td><td>Zahay <span class="ref">pp. 130–132</span></td></tr>'+
+ '<tr><td>Microblog posts</td><td>Headlines, reminders, links, staying top of mind <span class="ref">Tuten p. 144</span></td><td>S12 and S13 pages</td></tr>'+
+ '<tr><td>Press releases</td><td>News; a social media press release adds share buttons and media <span class="ref">Tuten p. 144</span></td><td>Tuten <span class="ref">pp. 144–145</span></td></tr>'+
+ '<tr><td>White papers, case studies, ebooks</td><td>Detailed expertise people download and keep</td><td>Zahay <span class="ref">pp. 185–187</span></td></tr>'+
+ '<tr><td>Newsletters</td><td>Regular updates to people who signed up</td><td>Kotler <span class="ref">p. 543</span> (e-mail)</td></tr>'+
+ '<tr><td>Videos</td><td>Showing a product in use; telling a story in motion</td><td>Zahay <span class="ref">pp. 171–177</span></td></tr>'+
+ '<tr><td>Webinars and presentations</td><td>Live teaching and questions</td><td>Zahay <span class="ref">pp. 143–145</span></td></tr>'+
+ '<tr><td>Podcasts</td><td>Longer talk people can listen to on the move</td><td>Zahay <span class="ref">pp. 139–140</span></td></tr>'+
+ '<tr><td>Photos</td><td>A quick visual message; product and people shots</td><td>Zahay <span class="ref">pp. 169–170</span></td></tr>'+
+ '</tbody></table></div>'}],
+notes:[
+ "<b>Checked against your copies.</b> Every Tuten &amp; Solomon page in this guide was read from the PDF in SMM › Books (PDF page = book page + 5). Kotler &amp; Keller pages were checked in the PDF in BGS › Resources (PDF page = book page + 23). Zahay sections are start pages from your contents scan.",
+ "<b>Chapter titles only.</b> Tuten 5th ed.: Ch 7 “Social Publishing”. <i>All-in-One For Dummies</i>, 5th ed.: Book 3 Ch 2. No page numbers for either.",
+ "<b>Dated examples.</b> Doritos, Jones Soda, Lonelygirl15 and the FTC box come from around 2006–2011. They still teach the ideas; pair each with an Indian example in class.",
+ "<b>Not in the books.</b> Image sizes and aspect ratios change often, so they are not listed here. Check them on the platform's own help pages on the day of the lab."
+],
+footer:"Module 2 · S11. Page numbers checked October 2026. Tier 3 links can move; check dates before you quote them."
+};
+
+</script>
+<script>
+/* Topic page renderer. Needs window.CATALOG and window.TOPIC. */
+(function(){
+"use strict";
+var T=window.TOPIC, C=window.CATALOG;
+var STOPS=T.stops, R=T.readings, N=STOPS.length;
+var MOD=C.modules.filter(function(m){return m.id===T.module;})[0];
+var KEY="smm-rm-"+T.id;
+
+/* ---------- helpers ---------- */
+function el(tag,attrs,html){var e=document.createElement(tag); if(attrs){for(var k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k,attrs[k]); }} if(html!=null) e.innerHTML=html; return e;}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function stop(id){for(var i=0;i<N;i++) if(STOPS[i].id===id) return STOPS[i];}
+function byTier(t){return R.filter(function(r){return r.tier===t;});}
+function smooth(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"; }catch(e){ return "auto"; } }
+function go(id){ var t=document.getElementById(id); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); }
+var done={};
+try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
+function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+var TIERNAME=["Tier 1 · Primary","Tier 2 · Adjacent","Tier 3 · Outside the syllabus"];
+var ACT={read:"Read",skim:"Skim",glance:"Glance",skip:"Skip"};
+var MIN={read:2,skim:1,glance:0.5,skip:0};
+
+var app=document.getElementById("app");
+document.title=T.title+" · SMM Reading Map";
+
+/* ---------- top bar ---------- */
+var ready=MOD.topics.filter(function(t){return t.file;});
+var idx=MOD.topics.map(function(t){return t.file;}).indexOf(T.file);
+var topicNo=idx+1;
+var jumps=[["route","Road map"],["skim","Skim guide"],["map","Tier map"],["tier1","Tier 1"],["tier2","Tier 2"],["tier3","Tier 3"]];
+(T.extras||[]).forEach(function(x){jumps.push([x.id,x.nav||x.title]);});
+jumps.push(["notes","Notes"]);
+var top=el("nav",{class:"topbar","aria-label":"Page"});
+top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
+  jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
+app.appendChild(top);
+
+/* ---------- hero ---------- */
+var prev=null,next=null;
+for(var i=idx-1;i>=0;i--){ if(MOD.topics[i].file){prev=MOD.topics[i];break;} }
+for(var j=idx+1;j<MOD.topics.length;j++){ if(MOD.topics[j].file){next=MOD.topics[j];break;} }
+var hero=el("header",{class:"hero"});
+hero.innerHTML='<div class="wrap"><div class="eyebrow">Module '+MOD.n+' · '+esc(MOD.title)+' · '+esc(T.session)+'</div>'+
+ '<h1>'+esc(T.title)+'</h1><p class="lede">'+T.lede+'</p>'+(T.coursePlan?'<p class="cp"><b>Course plan:</b> '+T.coursePlan+'</p>':'')+
+ '<div class="legend">'+
+  '<div class="tier"><span class="tierchip t1">Tier 1 · '+byTier(1).length+'</span><b>Primary reading</b><p>'+esc(T.tierText[0])+'</p></div>'+
+  '<div class="tier l2"><span class="tierchip t2">Tier 2 · '+byTier(2).length+'</span><b>Adjacent reading</b><p>'+esc(T.tierText[1])+'</p></div>'+
+  '<div class="tier l3"><span class="tierchip t3">Tier 3 · '+byTier(3).length+'</span><b>Outside the syllabus</b><p>'+esc(T.tierText[2])+'</p></div>'+
+ '</div><div class="pager">'+
+  (prev?'<a href="'+prev.file+'">← '+esc(prev.s)+' · '+esc(prev.title)+'</a>':'')+
+  '<a href="index.html#'+MOD.id+'">All modules</a>'+
+  (next?'<a href="'+next.file+'">'+esc(next.s)+' · '+esc(next.title)+' →</a>':'')+
+ '</div></div>';
+app.appendChild(hero);
+var main=el("main",{}); app.appendChild(main);
+function section(id,eyebrow,title,intro){
+  var s=el("section",{class:"block",id:id});
+  s.innerHTML='<div class="wrap"><header><div class="eyebrow">'+eyebrow+'</div><h2>'+esc(title)+'</h2>'+(intro?'<p>'+intro+'</p>':'')+'</header></div>';
+  main.appendChild(s); return s.firstChild;
+}
+
+/* ---------- skim totals ---------- */
+var SK=T.skim||[];
+function totalMin(book,fast){ return Math.round(book.pages.reduce(function(s,pg){return s+pg.b.reduce(function(t,b){return t+((!fast||b.f)?(b.m!=null?b.m:MIN[b.a]):0);},0);},0)); }
+var TOT={};
+SK.forEach(function(b){ TOT[b.key]=totalMin(b,false); TOT[b.key+"-fast"]=totalMin(b,true); });
+TOT.fast=SK.reduce(function(s,b){return s+TOT[b.key+"-fast"];},0);
+function fillTotals(txt){ return String(txt).replace(/\{min:([a-z0-9-]+)\}/g,function(_,k){return TOT[k]!=null?TOT[k]:"?";}); }
+
+/* ---------- Road map ---------- */
+var rw=section("route","Road map · the essential topics",T.routeTitle,T.routeIntro);
+var ol=el("ol",{class:"route"});
+STOPS.forEach(function(t){
+  var counts=[1,2,3].map(function(n){return R.filter(function(r){return r.tier===n && r.st.indexOf(t.id)>-1;}).length;});
+  var li=el("li",{class:"stop",id:"stop-"+t.id});
+  var learn=t.learn.map(function(l){return "<li>"+esc(l[0])+(l[1]?" <span class=\"ref acc\">"+esc(l[1])+"</span>":"")+"</li>";}).join("");
+  li.innerHTML='<div class="dot" aria-hidden="true">'+t.id+'</div><div class="card"><div class="eyebrow">Stop '+t.id+' of '+N+'</div><h3>'+esc(t.name)+'</h3>'+
+    '<p class="plain">'+esc(t.plain)+'</p><div class="cols"><ul class="learn">'+learn+'</ul><div class="side">'+
+    '<div class="box"><div class="eyebrow">Be ready to answer</div><p>'+esc(t.ask)+'</p></div>'+
+    '<div class="box"><div class="eyebrow">Readings for this stop</div><div class="tiercount"><span class="tierchip t1">Tier 1 · '+counts[0]+'</span><span class="tierchip t2">Tier 2 · '+counts[1]+'</span><span class="tierchip t3">Tier 3 · '+counts[2]+'</span></div>'+
+    '<div class="linkrow"><button class="linkish" type="button" data-act="skim" data-stop="'+t.id+'">Skim guide</button><button class="linkish" type="button" data-act="map" data-stop="'+t.id+'">Tier map</button><button class="linkish" type="button" data-act="list" data-stop="'+t.id+'">Reading lists</button></div></div></div></div></div>';
+  ol.appendChild(li);
+});
+rw.appendChild(ol);
+if(T.plan&&T.plan.length){
+  var plan=el("div",{class:"plan","aria-label":"Suggested study plan"});
+  T.plan.forEach(function(p){ plan.appendChild(el("div",{class:"s p"+p.tier},'<div class="eyebrow">'+esc(fillTotals(p.when))+'</div><p>'+fillTotals(p.text)+'</p>')); });
+  rw.appendChild(plan);
+  rw.appendChild(el("p",{class:"muted",style:"font-size:.88rem;margin-top:10px"},"Times are rough guides, worked out from the skim guide below."));
+}
+
+/* ---------- Skim guide ---------- */
+var sw=section("skim","Tier 1 skim guide · page by page",T.skimTitle||"What to read, skim and skip",T.skimIntro);
+sw.appendChild(el("div",{class:"skimkey","aria-label":"How to read the marks"},
+  '<span><b class="act read">Read</b> Definitions, lists and models. Read every line.</span>'+
+  '<span><b class="act skim">Skim</b> Examples and stories. First and last line of each paragraph.</span>'+
+  '<span><b class="act glance">Glance</b> Figures and tables. Look for the shape.</span>'+
+  '<span><b class="act skip">Skip</b> Old data, notes, side topics.</span>'+
+  '<span><b class="fast">Fast route</b> The minimum to teach the hour.</span>'));
+var skimBar=el("div",{class:"skimbar"});
+var seg=el("div",{class:"seg",role:"group","aria-label":"Choose a book"});
+SK.forEach(function(b,i){ seg.appendChild(el("button",{type:"button","data-book":b.key,"aria-pressed":String(i===0)},esc(b.tab))); });
+skimBar.appendChild(seg);
+skimBar.appendChild(el("label",{class:"fasttoggle"},'<input type="checkbox" id="fastOnly-'+T.id+'"> Show the fast route only'));
+sw.appendChild(skimBar);
+var skimBanner=el("div",{class:"filterbanner"}); skimBanner.hidden=true; sw.appendChild(skimBanner);
+var skimSum=el("p",{class:"skimsum"}); sw.appendChild(skimSum);
+var skimList=el("div",{}); sw.appendChild(skimList);
+if(T.skimNote) sw.appendChild(el("p",{class:"skimnote"},T.skimNote));
+var skimBook=SK.length?SK[0].key:null, fastOnly=false, skimStop=0;
+function bookByKey(k){return SK.filter(function(b){return b.key===k;})[0];}
+function blockStops(pg,b){ return b.s||pg.s||[]; }
+function skimDoneCount(B){ return B.pages.filter(function(pg){return done["skim-"+B.key+"-"+pg.p];}).length; }
+function renderSkim(){
+  var B=bookByKey(skimBook); skimList.innerHTML=""; if(!B) return;
+  skimList.appendChild(el("div",{class:"booklabel"},esc(B.label)+' <small>'+esc(B.note)+'</small>'));
+  var wrap=el("div",{}), shown=0;
+  B.pages.forEach(function(pg){
+    var blocks=pg.b.filter(function(b){ if(fastOnly && !b.f) return false; if(skimStop){ return blockStops(pg,b).indexOf(skimStop)>-1; } return true; });
+    if(!blocks.length) return;
+    shown++;
+    var key="skim-"+B.key+"-"+pg.p;
+    var row=el("div",{class:"skimrow",id:"skim-"+B.key+"-"+String(pg.p).replace(/[^0-9a-z]/gi,"-")});
+    if(done[key]) row.classList.add("donepage");
+    var items=blocks.map(function(b){
+      var tags="";
+      if(b.f) tags+='<span class="fast">Fast route</span>';
+      var st=blockStops(pg,b); if(st.length && st.length<N && !skimStop) tags+='<span class="tag-stop">Stop '+st.join(", ")+'</span>';
+      if(b.d) tags+='<span class="tag-deck">In your deck: '+esc(b.d)+'</span>';
+      if(b.o) tags+='<span class="tag-old">Dated: '+esc(b.o)+'</span>';
+      return '<li><span class="act '+b.a+'">'+ACT[b.a]+'</span><div><div class="what">'+esc(b.w)+'</div>'+(b.t?'<p class="take">'+esc(b.t)+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+'</div></li>';
+    }).join("");
+    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b><label><input type="checkbox"'+(done[key]?' checked':'')+'> Done</label></div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
+    row.querySelector("input").addEventListener("change",function(e){
+      if(e.target.checked) done[key]=1; else delete done[key];
+      row.classList.toggle("donepage",e.target.checked); saveDone(); updateSkimSum();
+    });
+    wrap.appendChild(row);
+  });
+  if(!shown){
+    var custom=skimStop && T.skimEmpty && T.skimEmpty[skimStop];
+    wrap.appendChild(el("p",{class:"empty"},custom?custom+' <button class="linkish" type="button" data-act="tier" data-tier="3" data-stop="'+skimStop+'">Tier 3 list for this stop</button>':"Nothing in this book for stop "+skimStop+". Try the other book, or show all stops."));
+  }
+  skimList.appendChild(wrap);
+  skimBanner.hidden=!skimStop;
+  if(skimStop) skimBanner.innerHTML='Showing only the parts for <b>Stop '+skimStop+' · '+esc(stop(skimStop).name)+'</b><button class="linkish" type="button" data-clear="skim">Show every page</button><button class="linkish" type="button" data-act="list" data-stop="'+skimStop+'">Tier 1 list for this stop</button>';
+  updateSkimSum();
+}
+function updateSkimSum(){
+  var B=bookByKey(skimBook); if(!B){skimSum.textContent="";return;}
+  skimSum.textContent="Full skim about "+TOT[B.key]+" min · fast route about "+TOT[B.key+"-fast"]+" min · pages done: "+skimDoneCount(B)+" of "+B.pages.length+".";
+}
+function setSkimBook(k){ skimBook=k; Array.prototype.forEach.call(seg.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-book")===k));}); renderSkim(); }
+function setSkimStop(id){
+  skimStop=id||0;
+  /* switch to a book that has parts for this stop, if the current one has none */
+  if(skimStop){
+    var has=function(B){return B.pages.some(function(pg){return pg.b.some(function(b){return blockStops(pg,b).indexOf(skimStop)>-1;});});};
+    var cur=bookByKey(skimBook);
+    if(cur && !has(cur)){ var alt=SK.filter(has)[0]; if(alt){ setSkimBook(alt.key); return; } }
+  }
+  renderSkim();
+}
+seg.addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) setSkimBook(b.getAttribute("data-book")); });
+skimBar.querySelector("input").addEventListener("change",function(e){ fastOnly=e.target.checked; renderSkim(); });
+
+/* ---------- Tier map ---------- */
+var mw=section("map","Tier map · how it all connects",T.mapTitle||"One topic in the middle, three rings of reading around it",
+  "Each spoke is one stop. Moving outwards, the rings go from the syllabus books (Tier 1) to other books (Tier 2) to outside material (Tier 3). Tap a stop's circle to see its readings below the map. Tap a ring box to jump straight there: Tier 1 opens the skim guide for that stop, Tier 2 and Tier 3 open their reading lists.");
+var topicbar=el("div",{class:"topicbar",role:"group","aria-label":"Choose a stop"});
+mw.appendChild(topicbar);
+var mg=el("div",{class:"mapgrid"}); mw.appendChild(mg);
+var mapCol=el("div",{}); mg.appendChild(mapCol);
+var mapbox=el("div",{class:"mapbox"}); mapCol.appendChild(mapbox);
+mapCol.appendChild(el("p",{class:"maphint"},"On a phone, swipe sideways to see the whole map."));
+mapCol.appendChild(el("div",{class:"mapkey"},
+ '<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="2.2"/><path d="M26 1 L33 5 L26 9 Z" fill="currentColor"/></svg>'+esc(T.flowLabel||"Order of the stops")+'</span>'+
+ (T.links.some(function(l){return l.loop;})?'<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="26" y2="5" stroke="var(--a)" stroke-width="2.6"/><path d="M26 1 L33 5 L26 9 Z" fill="var(--a)"/></svg>'+esc(T.loopLabel||"Feedback loop")+'</span>':'')+
+ '<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="5 4"/></svg>Cross-link between stops</span>'+
+ '<span><span class="tierchip t1">Tier 1</span><span class="tierchip t2">Tier 2</span><span class="tierchip t3">Tier 3</span></span>'));
+var detail=el("aside",{class:"detail","aria-live":"polite"}); mg.appendChild(detail);
+
+var NS="http://www.w3.org/2000/svg";
+function sv(tag,attrs,text){var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; return e;}
+var CX=0, CY=0, RT=170, RN=54, BW=152, BH=52;
+var STEP=(N===5)?170:120;
+var RR=[315,315+STEP,315+2*STEP];
+var START=(N===4)?-45:-90;
+var ANG={}; STOPS.forEach(function(t,i){ ANG[t.id]=START+i*360/N; });
+function pt(r,deg){var a=deg*Math.PI/180; return [CX+r*Math.cos(a), CY+r*Math.sin(a)];}
+var svg=sv("svg",{role:"img","aria-label":"Tier map for "+T.title+": "+N+" stops around the centre, each with Tier 1, Tier 2 and Tier 3 readings on rings."});
+mapbox.appendChild(svg);
+var defs=sv("defs",{});
+var m1=sv("marker",{id:"ah-"+T.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"}); m1.appendChild(sv("path",{d:"M0 0 L10 5 L0 10 Z","class":"arrowhead"}));
+var m2=sv("marker",{id:"ahA-"+T.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"}); m2.appendChild(sv("path",{d:"M0 0 L10 5 L0 10 Z","class":"arrowhead acc"}));
+defs.appendChild(m1); defs.appendChild(m2); svg.appendChild(defs);
+RR.forEach(function(r,i){ svg.appendChild(sv("circle",{cx:CX,cy:CY,r:r,"class":"ring r"+(i+1)})); });
+/* ring labels go in the gap between spokes closest to the lower right */
+var gaps=STOPS.map(function(t,i){ return START+(i+0.5)*360/N; });
+var best=gaps.slice().sort(function(a,b){ function d(x){var v=((x-60)%360+540)%360-180; return Math.abs(v);} return d(a)-d(b); })[0];
+["TIER 1 · PRIMARY","TIER 2 · ADJACENT","TIER 3 · OUTSIDE"].forEach(function(lbl,i){ var p=pt(RR[i],best); svg.appendChild(sv("text",{x:p[0].toFixed(1),y:(p[1]+4).toFixed(1),"text-anchor":"middle","class":"ringlabel"},lbl)); });
+var linkLayer=sv("g",{}); svg.appendChild(linkLayer);
+var gapDeg=Math.asin((RN+8)/RT)*180/Math.PI+2;
+for(var k=0;k<N-1;k++){
+  var a0=ANG[STOPS[k].id]+gapDeg, a1=ANG[STOPS[k+1].id]-gapDeg;
+  var q0=pt(RT,a0), q1=pt(RT,a1);
+  var fl=sv("path",{d:"M"+q0[0].toFixed(1)+" "+q0[1].toFixed(1)+" A"+RT+" "+RT+" 0 0 1 "+q1[0].toFixed(1)+" "+q1[1].toFixed(1),"class":"flow","marker-end":"url(#ah-"+T.id+")"});
+  fl.appendChild(sv("title",{},"Stop "+STOPS[k].id+" to stop "+STOPS[k+1].id));
+  linkLayer.appendChild(fl);
+}
+var chordEls=[];
+(T.links||[]).forEach(function(L){
+  var pa=pt(RT,ANG[L.a]), pb=pt(RT,ANG[L.b]);
+  var dx=pb[0]-pa[0], dy=pb[1]-pa[1], len=Math.sqrt(dx*dx+dy*dy), ux=dx/len, uy=dy/len;
+  var trim=RN+6, extra=L.loop?4:0;
+  var sx=pa[0]+ux*trim, sy=pa[1]+uy*trim, ex=pb[0]-ux*(trim+extra), ey=pb[1]-uy*(trim+extra);
+  var mx=(pa[0]+pb[0])/2, my=(pa[1]+pb[1])/2, dm=Math.sqrt(mx*mx+my*my);
+  var safe=RN+24, dctrl=Math.max(2*safe-dm, dm*0.75);
+  var vx,vy; if(dm<1){ vx=-uy; vy=ux; } else { vx=mx/dm; vy=my/dm; }
+  var qx=vx*dctrl, qy=vy*dctrl;
+  var attrs={d:"M"+sx.toFixed(1)+" "+sy.toFixed(1)+" Q"+qx.toFixed(1)+" "+qy.toFixed(1)+" "+ex.toFixed(1)+" "+ey.toFixed(1),"class":L.loop?"loop":"cross"};
+  if(L.loop) attrs["marker-end"]="url(#ahA-"+T.id+")";
+  var p=sv("path",attrs); p.appendChild(sv("title",{},L.text)); linkLayer.appendChild(p);
+  chordEls.push({el:p,L:L});
+});
+svg.appendChild(sv("circle",{cx:CX,cy:CY,r:RN+2,"class":"centre"}));
+var cl=T.centre||["SMM","topic"];
+svg.appendChild(sv("text",{x:CX,y:CY-3,"text-anchor":"middle","class":"centretext"},cl[0]));
+svg.appendChild(sv("text",{x:CX,y:CY+17,"text-anchor":"middle","class":"centretext"},cl[1]));
+var spoke={}, nodes=[];
+var minX=-RN-10,maxX=RN+10,minY=-RN-10,maxY=RN+10;
+function grow(x,y,w,h){ minX=Math.min(minX,x-w/2); maxX=Math.max(maxX,x+w/2); minY=Math.min(minY,y-h/2); maxY=Math.max(maxY,y+h/2); }
+STOPS.forEach(function(t){
+  var g=sv("g",{"class":"spokegroup"});
+  var pa=pt(RT+RN,ANG[t.id]), pb=pt(RR[2],ANG[t.id]);
+  g.appendChild(sv("line",{x1:pa[0].toFixed(1),y1:pa[1].toFixed(1),x2:pb[0].toFixed(1),y2:pb[1].toFixed(1),"class":"spoke"}));
+  ["t1","t2","t3"].forEach(function(key,ix){
+    var c=pt(RR[ix],ANG[t.id]); grow(c[0],c[1],BW,BH);
+    var lines=t.map[key];
+    var sat=sv("g",{"class":"sat s"+(ix+1),tabindex:"0",role:"button","aria-label":"Stop "+t.id+", "+TIERNAME[ix]+": "+lines.join(", ")+". Go to "+(ix===0?"the skim guide":"the Tier "+(ix+1)+" list")});
+    sat.appendChild(sv("rect",{x:(c[0]-BW/2).toFixed(1),y:(c[1]-BH/2).toFixed(1),width:BW,height:BH,rx:7}));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]-12).toFixed(1),"text-anchor":"middle","class":"txt"},lines[0]));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+6).toFixed(1),"text-anchor":"middle","class":"txt"},lines[1]));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+21).toFixed(1),"text-anchor":"middle","class":"tag"},["TIER 1 → SKIM","TIER 2 → LIST","TIER 3 → LIST"][ix]));
+    sat.appendChild(sv("title",{},t.name+" · "+TIERNAME[ix]+": "+lines.join(", ")));
+    var act=function(){ jumpTier(t.id,ix+1); };
+    sat.addEventListener("click",act);
+    sat.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(); } });
+    g.appendChild(sat);
+  });
+  svg.appendChild(g);
+  var c=pt(RT,ANG[t.id]);
+  var node=sv("g",{"class":"tnode",tabindex:"0",role:"button","aria-label":"Stop "+t.id+": "+t.name});
+  node.appendChild(sv("circle",{cx:c[0].toFixed(1),cy:c[1].toFixed(1),r:RN}));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]-18).toFixed(1),"text-anchor":"middle","class":"num"},String(t.id)));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+2).toFixed(1),"text-anchor":"middle","class":"lab"},t.short[0]));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+20).toFixed(1),"text-anchor":"middle","class":"lab"},t.short[1]||""));
+  node.addEventListener("click",function(){select(t.id);});
+  node.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(t.id);} });
+  nodes.push(node);
+  spoke[t.id]={g:g,node:node};
+});
+nodes.forEach(function(n){ svg.appendChild(n); });
+var pad=16;
+svg.setAttribute("viewBox",[(minX-pad).toFixed(0),(minY-pad).toFixed(0),(maxX-minX+2*pad).toFixed(0),(maxY-minY+2*pad).toFixed(0)].join(" "));
+
+STOPS.forEach(function(t){
+  var b=el("button",{type:"button","aria-pressed":"false","data-stop":t.id},t.id+" · "+esc(t.name));
+  b.addEventListener("click",function(){select(t.id);});
+  topicbar.appendChild(b);
+});
+function readingLine(r){
+  if(r.tier===3){
+    var head=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':'<b>'+esc(r.title)+'</b>';
+    return head+' <span class="src">· '+esc(r.src)+' · '+esc(r.date)+'</span>';
+  }
+  var b=T.books[r.book];
+  return '<span class="src">'+esc(b.short)+' · '+esc(r.where)+' ·</span> '+esc(r.title)+' <span class="ref">'+esc(r.pages)+'</span>';
+}
+var current=1;
+function renderDetail(id){
+  var t=stop(id);
+  var html='<div class="eyebrow">Stop '+t.id+' of '+N+' · readings on this spoke</div><h3>'+esc(t.name)+'</h3><p class="plain">'+esc(t.plain)+'</p>'+
+    '<div class="go"><button type="button" data-act="skim" data-stop="'+id+'"><span class="tierchip t1">Tier 1</span>Skim guide for this stop</button>'+
+    '<button type="button" data-act="tier" data-tier="1" data-stop="'+id+'"><span class="tierchip t1">Tier 1</span>List</button>'+
+    '<button type="button" data-act="tier" data-tier="2" data-stop="'+id+'"><span class="tierchip t2">Tier 2</span>List</button>'+
+    '<button type="button" data-act="tier" data-tier="3" data-stop="'+id+'"><span class="tierchip t3">Tier 3</span>List</button></div><div class="tgs">';
+  [1,2,3].forEach(function(n){
+    var items=R.filter(function(r){return r.tier===n && r.st.indexOf(id)>-1 && !r.hideInDetail;});
+    html+='<div class="tg g'+n+'"><h4><span class="tierchip t'+n+'">'+TIERNAME[n-1]+'</span></h4><ul>'+(items.length?items.map(function(r){return "<li>"+readingLine(r)+"</li>";}).join(""):'<li class="muted">Nothing in this tier for this stop.</li>')+'</ul></div>';
+  });
+  html+='</div>';
+  var rel=(T.links||[]).filter(function(L){return L.a===id||L.b===id;});
+  var pos=STOPS.map(function(s){return s.id;}).indexOf(id);
+  var prev=pos>0?'<li>Comes after stop '+STOPS[pos-1].id+': '+esc(STOPS[pos-1].name)+'.</li>':'';
+  var next=pos<N-1?'<li>Leads to stop '+STOPS[pos+1].id+': '+esc(STOPS[pos+1].name)+'.</li>':'';
+  html+='<div class="links"><b>Connects to</b><ul>'+prev+next+rel.map(function(L){var o=L.a===id?L.b:L.a; return '<li>Stop '+o+' ('+esc(stop(o).name)+'): '+esc(L.text)+'</li>';}).join("")+(t.elsewhere?'<li>'+t.elsewhere+'</li>':'')+'</ul></div>';
+  detail.innerHTML=html;
+}
+function select(id){
+  current=id;
+  STOPS.forEach(function(t){ var on=t.id===id; spoke[t.id].g.classList.toggle("dim",!on); spoke[t.id].node.classList.toggle("sel",on); });
+  chordEls.forEach(function(c){ c.el.classList.toggle("crosssel", !c.L.loop && (c.L.a===id||c.L.b===id)); });
+  Array.prototype.forEach.call(topicbar.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(Number(b.getAttribute("data-stop"))===id));});
+  renderDetail(id);
+}
+
+/* ---------- Reading lists ---------- */
+var lw=section("lists","Reading lists · book, section and page","Everything to read, by tier","Tick items off as you go; the ticks stay in this browser only. Use the buttons to show one stop at a time.");
+var filters=el("div",{class:"filters",role:"group","aria-label":"Filter by stop"},'<span class="lbl">Show:</span>'); lw.appendChild(filters);
+var progress=el("p",{class:"progress"}); lw.appendChild(progress);
+var listBoxes={};
+[1,2,3].forEach(function(n){
+  var blk=el("div",{class:"tierblock b"+n,id:"tier"+n});
+  blk.innerHTML='<div class="th"><h3>'+TIERNAME[n-1]+'</h3><span class="count"></span><p>'+esc(T.tierIntro[n-1])+'</p></div>';
+  var box=el("div",{}); blk.appendChild(box); lw.appendChild(blk);
+  listBoxes[n]={box:box,count:blk.querySelector(".count")};
+});
+var filter=0;
+[{id:0,name:"All stops"}].concat(STOPS).forEach(function(t){
+  var b=el("button",{type:"button","aria-pressed":String(t.id===0),"data-f":t.id}, t.id===0?"All stops":(t.id+" · "+esc(t.name)));
+  b.addEventListener("click",function(){setFilter(t.id);});
+  filters.appendChild(b);
+});
+function itemHTML(r){
+  var chk='<input type="checkbox" aria-label="Mark as read"'+(done[r.id]?' checked':'')+'>';
+  var tags='<div class="meta">'+r.st.map(function(id){return '<span>'+id+' · '+esc(stop(id).short.join(" "))+'</span>';}).join("")+'</div>';
+  if(r.tier===3){
+    var title=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':esc(r.title);
+    return chk+'<div class="main"><div class="where">'+esc(r.src)+'</div><div class="title">'+title+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg">'+esc(r.date)+'</span>';
+  }
+  return chk+'<div class="main"><div class="where">'+esc(r.where)+'</div><div class="title">'+esc(r.title)+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg'+(r.unv?' unv':'')+'">'+esc(r.pages)+'</span>';
+}
+function renderLists(){
+  [1,2,3].forEach(function(n){
+    var box=listBoxes[n].box; box.innerHTML="";
+    var items=byTier(n).filter(function(r){return filter===0 || r.st.indexOf(filter)>-1;});
+    listBoxes[n].count.textContent=items.length+(filter===0?" items":" for stop "+filter);
+    if(!items.length){ box.appendChild(el("p",{class:"empty"},"Nothing in this tier for this stop.")); return; }
+    var groups=[], keyOf=function(r){return n===3?r.group:r.book;};
+    items.forEach(function(r){var k=keyOf(r); var g=groups.filter(function(x){return x.k===k;})[0]; if(!g){g={k:k,items:[]};groups.push(g);} g.items.push(r);});
+    groups.forEach(function(g){
+      var lab;
+      if(n===3){ lab=el("div",{class:"booklabel"},esc(g.k)); }
+      else {
+        var b=T.books[g.k];
+        var sk=(n===1 && b.skim)?b.skim:"";
+        lab=el("div",{class:"booklabel"},esc(b.label)+' <small>'+esc(b.sub)+(sk?' · <button class="linkish" type="button" data-skimbook="'+sk+'">page-by-page skim guide</button>':'')+'</small>');
+      }
+      box.appendChild(lab);
+      var ul=el("ul",{class:"items"});
+      g.items.forEach(function(r){
+        var li=el("li",{},itemHTML(r));
+        if(done[r.id]) li.classList.add("done");
+        li.querySelector("input").addEventListener("change",function(e){ if(e.target.checked) done[r.id]=1; else delete done[r.id]; li.classList.toggle("done",e.target.checked); saveDone(); updateProgress(); });
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+    });
+  });
+  updateProgress();
+}
+function updateProgress(){
+  var c=[1,2,3].map(function(n){var all=byTier(n); return all.filter(function(r){return done[r.id];}).length+" of "+all.length;});
+  progress.textContent="Read so far: Tier 1 "+c[0]+" · Tier 2 "+c[1]+" · Tier 3 "+c[2]+".";
+}
+function setFilter(id){
+  filter=id;
+  Array.prototype.forEach.call(filters.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(Number(b.getAttribute("data-f"))===id));});
+  renderLists();
+}
+
+/* ---------- Extras and notes ---------- */
+(T.extras||[]).forEach(function(x){ var w=section(x.id,x.eyebrow,x.title,x.intro); w.appendChild(el("div",{},x.html)); });
+var nw=section("notes","Notes on editions and page numbers","What was checked, and what was not");
+nw.appendChild(el("div",{class:"notes"},T.notes.map(function(p){return "<p>"+p+"</p>";}).join("")));
+app.appendChild(el("footer",{},'<div class="wrap">'+T.footer+'</div>'));
+
+/* ---------- Jumps from the map, road map and panels ---------- */
+function jumpTier(id,tier){
+  select(id);
+  if(tier===1){ setSkimStop(id); go("skim"); }
+  else { setFilter(id); go("tier"+tier); }
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act],[data-clear],[data-skimbook]"); if(!b) return;
+  if(b.hasAttribute("data-skimbook")){ setSkimStop(0); setSkimBook(b.getAttribute("data-skimbook")); go("skim"); return; }
+  if(b.getAttribute("data-clear")==="skim"){ setSkimStop(0); return; }
+  var id=Number(b.getAttribute("data-stop")), a=b.getAttribute("data-act");
+  if(a==="skim"){ select(id); setSkimStop(id); go("skim"); }
+  else if(a==="map"){ select(id); go("map"); }
+  else if(a==="list"){ setFilter(id); go("tier1"); }
+  else if(a==="tier"){ setFilter(id); go("tier"+b.getAttribute("data-tier")); }
+});
+
+renderSkim();
+select(1);
+renderLists();
+})();
+
+</script>
+</body>
+</html>

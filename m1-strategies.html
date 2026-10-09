@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="en" class="m1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social media marketing strategies · SMM Reading Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* SMM Reading Map — shared styles.
+   Layout: hub (modules → topics) and topic pages (road map → skim guide → tier map → tier lists → extras → notes).
+   Each module owns one accent (--a). Tiers are an ordered scale of that accent:
+   Tier 1 = solid accent, Tier 2 = lighter accent, Tier 3 = dashed outline. */
+:root{
+  --bg:#f4f6f8;
+  --surface:#ffffff;
+  --sunk:#eaeef2;
+  --ink:#18212e;
+  --muted:#556072;
+  --line:#d5dbe3;
+  --focus:#2f5bd3;
+  --old-bg:#f6ecd9; --old-ink:#7a4d0c;
+  --a:#14657d; --a-soft:#e0eff4; --a-mid:#7fb3c4; --on-a:#ffffff;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Verdana","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+.m1{--a:#14657d;--a-soft:#e0eff4;--a-mid:#7fb3c4}
+.m2{--a:#a3305f;--a-soft:#f6e3eb;--a-mid:#d996b3}
+.m3{--a:#5141b8;--a-soft:#e9e6f8;--a-mid:#a79ee0}
+.m4{--a:#a9501a;--a-soft:#f8e8dc;--a-mid:#e0a57f}
+.m5{--a:#2f6b3e;--a-soft:#e2efe5;--a-mid:#8fbf9b}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --surface:#161c24; --sunk:#1d242e; --ink:#e6eaf0; --muted:#9aa5b5; --line:#2a3340;
+    --focus:#8aa8ff; --old-bg:#3a2c12; --old-ink:#e9c07a; --on-a:#0f1319; color-scheme:dark;
+  }
+  :root:not([data-theme="light"]) .m1,:root.m1:not([data-theme="light"]){--a:#62b6d2;--a-soft:#13303a;--a-mid:#2f6f84}
+  :root:not([data-theme="light"]) .m2,:root.m2:not([data-theme="light"]){--a:#e886ae;--a-soft:#3a1a28;--a-mid:#8a3f60}
+  :root:not([data-theme="light"]) .m3,:root.m3:not([data-theme="light"]){--a:#a99ef2;--a-soft:#24203f;--a-mid:#5a4fa0}
+  :root:not([data-theme="light"]) .m4,:root.m4:not([data-theme="light"]){--a:#f0a46e;--a-soft:#3a2516;--a-mid:#8f5a33}
+  :root:not([data-theme="light"]) .m5,:root.m5:not([data-theme="light"]){--a:#7cc68f;--a-soft:#18301e;--a-mid:#3f7a4e}
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --surface:#161c24; --sunk:#1d242e; --ink:#e6eaf0; --muted:#9aa5b5; --line:#2a3340;
+  --focus:#8aa8ff; --old-bg:#3a2c12; --old-ink:#e9c07a; --on-a:#0f1319; color-scheme:dark;
+}
+:root[data-theme="dark"] .m1,:root.m1[data-theme="dark"]{--a:#62b6d2;--a-soft:#13303a;--a-mid:#2f6f84}
+:root[data-theme="dark"] .m2,:root.m2[data-theme="dark"]{--a:#e886ae;--a-soft:#3a1a28;--a-mid:#8a3f60}
+:root[data-theme="dark"] .m3,:root.m3[data-theme="dark"]{--a:#a99ef2;--a-soft:#24203f;--a-mid:#5a4fa0}
+:root[data-theme="dark"] .m4,:root.m4[data-theme="dark"]{--a:#f0a46e;--a-soft:#3a2516;--a-mid:#8f5a33}
+:root[data-theme="dark"] .m5,:root.m5[data-theme="dark"]{--a:#7cc68f;--a-soft:#18301e;--a-mid:#3f7a4e}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:20px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.55rem,1.2rem + 1.4vw,2.1rem);font-weight:700;letter-spacing:-0.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+button{font:inherit}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ref{font-family:var(--mono);font-size:.8rem;white-space:nowrap;padding:.08em .45em;border-radius:4px;background:var(--sunk);color:var(--ink);font-variant-numeric:tabular-nums}
+.ref.acc{background:var(--a-soft);color:var(--a)}
+.muted{color:var(--muted)}
+
+/* ---------- Tier marks (shared) ---------- */
+.tierchip{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.12em .5em;border-radius:4px;white-space:nowrap;line-height:1.5}
+.tierchip.t1{background:var(--a);color:var(--on-a)}
+.tierchip.t2{background:var(--a-soft);color:var(--a);box-shadow:inset 0 0 0 1px var(--a-mid)}
+.tierchip.t3{background:transparent;color:var(--a);box-shadow:none;outline:1px dashed var(--a);outline-offset:-1px}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:6px 14px;padding-block:8px;flex-wrap:wrap}
+.topbar .home{font-size:.9rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.topbar .home::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--a)}
+.topbar .crumb{font-size:.88rem;color:var(--muted)}
+.topbar .jump{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;flex:1 1 320px;min-width:0}
+.topbar .jump a:first-child{margin-left:auto}
+.topbar .jump a{flex:none;text-decoration:none;font-size:.86rem;padding:.3em .7em;border-radius:999px;color:var(--muted);border:1px solid transparent}
+.topbar .jump a:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:760px){.topbar .jump{flex-basis:100%}.topbar .jump a:first-child{margin-left:0}}
+
+/* ---------- Topic hero ---------- */
+header.hero{padding-block:40px 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--a-soft),var(--bg) 70%)}
+.hero .eyebrow{color:var(--a)}
+.hero h1{font-size:clamp(2.2rem,1.5rem + 3.2vw,3.6rem);font-weight:700;letter-spacing:-0.02em;margin-top:10px}
+.hero .lede{max-width:66ch;margin-top:14px;font-size:1.08rem}
+.hero .cp{max-width:76ch;margin-top:12px;font-size:.95rem;color:var(--muted)}
+.hero .cp b{color:var(--ink)}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+.legend .tier{background:var(--surface);padding:14px 16px 16px;border-radius:0 0 8px 8px;min-width:0;border-top:4px solid var(--a)}
+.legend .tier.l2{border-top-color:var(--a-mid)}
+.legend .tier.l3{border-top:4px dashed var(--a)}
+.legend .tier b{font-family:var(--display);font-size:1.08rem;display:block;margin-top:4px}
+.legend .tier p{font-size:.95rem;color:var(--muted);margin-top:4px}
+@media (max-width:760px){.legend{grid-template-columns:1fr}}
+.pager{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.pager a,.pager span{font-size:.9rem;padding:.4em .85em;border-radius:8px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:var(--ink)}
+.pager span{color:var(--muted);border-style:dashed;background:transparent}
+
+section.block{padding-block:48px 8px}
+section.block > .wrap > header{display:grid;gap:8px;margin-bottom:22px}
+section.block > .wrap > header p{max-width:70ch;color:var(--muted)}
+
+/* ---------- Road map (stops) ---------- */
+ol.route{list-style:none;margin:0;padding:0;display:grid;gap:18px;position:relative}
+ol.route::before{content:"";position:absolute;left:21px;top:18px;bottom:18px;width:3px;background:var(--a);opacity:.35;border-radius:2px}
+.stop{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;align-items:start}
+.stop .dot{width:44px;height:44px;border-radius:50%;background:var(--surface);border:3px solid var(--a);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--a);position:relative;z-index:1}
+.stop .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+.stop .card h3{font-size:1.3rem}
+.stop .plain{margin-top:6px;max-width:70ch}
+.stop .cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:22px;margin-top:14px}
+@media (max-width:820px){.stop .cols{grid-template-columns:1fr}}
+.stop ul.learn{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.stop ul.learn li{padding-left:16px;position:relative}
+.stop ul.learn li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--a)}
+.stop .side{display:grid;gap:12px;align-content:start}
+.stop .side .box{background:var(--sunk);border-radius:8px;padding:12px 14px}
+.stop .side .box .eyebrow{font-size:.7rem}
+.stop .side .box p{margin-top:4px;font-size:.95rem}
+.tiercount{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.linkrow{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px}
+button.linkish{background:none;border:0;padding:0;color:var(--a);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:.9rem}
+
+.plan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.plan .s{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--a);border-radius:8px;padding:12px 14px;min-width:0}
+.plan .s.p2{border-left-color:var(--a-mid)} .plan .s.p3{border-left:4px dashed var(--a)}
+.plan .s p{font-size:.95rem;margin-top:4px}
+@media (max-width:900px){.plan{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.plan{grid-template-columns:1fr}}
+
+/* ---------- Skim guide ---------- */
+.skimkey{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.92rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.skimkey span{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.act{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.2em .55em;border-radius:4px;white-space:nowrap;text-align:center;min-width:62px}
+.act.read{background:var(--a);color:var(--on-a)}
+.act.skim{box-shadow:inset 0 0 0 1.5px var(--a);color:var(--a)}
+.act.glance{background:var(--sunk);color:var(--ink)}
+.act.skip{outline:1.5px dashed var(--line);outline-offset:-1.5px;color:var(--muted)}
+.fast{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.15em .5em;border-radius:999px;background:var(--a-soft);color:var(--a);white-space:nowrap}
+.fast::before{content:"\2605  "}
+.skimbar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:18px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:.93rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.45em .9em;border-radius:8px;text-align:left}
+.seg button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.fasttoggle{display:inline-flex;align-items:center;gap:8px;font-size:.93rem;cursor:pointer}
+.fasttoggle input{width:18px;height:18px;accent-color:var(--a)}
+.skimsum{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.filterbanner{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--a-soft);color:var(--ink);font-size:.93rem}
+.filterbanner b{color:var(--a)}
+.booklabel{font-family:var(--display);font-weight:700;font-size:1.02rem;margin:20px 0 4px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.booklabel small{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
+.skimrow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.skimrow:first-child{border-top:3px solid var(--a);margin-top:12px}
+.skimrow .pn{display:grid;gap:8px;align-content:start}
+.skimrow .pn b{font-family:var(--mono);font-weight:500;font-size:1.05rem;color:var(--a);font-variant-numeric:tabular-nums;white-space:nowrap}
+.skimrow .pn label{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);cursor:pointer}
+.skimrow .pn input{width:16px;height:16px;accent-color:var(--a)}
+.skimrow h4{font-size:1.08rem;font-weight:700;line-height:1.25}
+.skimrow ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:12px}
+.skimrow li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:start}
+.skimrow li .act{margin-top:2px}
+.skimrow li .what{font-size:.97rem}
+.skimrow li .take{margin-top:3px;font-size:.93rem;color:var(--muted)}
+.skimrow li .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag-deck,.tag-old,.tag-stop{font-size:.78rem;padding:.1em .5em;border-radius:4px;line-height:1.5}
+.tag-deck{background:var(--sunk);color:var(--ink)}
+.tag-old{background:var(--old-bg);color:var(--old-ink)}
+.tag-stop{color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.skimrow.donepage h4,.skimrow.donepage li{opacity:.55}
+.skimnote{margin-top:14px;max-width:80ch;font-size:.95rem;color:var(--muted)}
+@media (max-width:560px){
+  .skimrow{grid-template-columns:1fr;gap:6px}
+  .skimrow .pn{grid-auto-flow:column;justify-content:space-between;align-items:center}
+  .skimrow li{grid-template-columns:1fr;gap:4px}
+  .skimrow li .act{justify-self:start}
+}
+
+/* ---------- Tier map ---------- */
+.topicbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.topicbar button{font-size:.9rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.4em .85em;border-radius:999px}
+.topicbar button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+.mapgrid > *{min-width:0}
+.mapbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto;max-width:100%}
+.mapbox svg{display:block;width:100%;height:auto}
+@media (max-width:700px){.mapbox svg{width:880px;max-width:none}}
+.maphint{font-size:.88rem;color:var(--muted);margin:8px 4px 0}
+.mapkey{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;color:var(--muted);margin-top:10px}
+.mapkey span{display:inline-flex;align-items:center;gap:8px}
+.mapkey svg{flex:none}
+svg .ring{fill:none}
+svg .ring.r1{stroke:var(--a);stroke-width:2}
+svg .ring.r2{stroke:var(--a-mid);stroke-width:2;stroke-dasharray:8 7}
+svg .ring.r3{stroke:var(--a-mid);stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round}
+svg .ringlabel{font-family:var(--mono);font-size:13px;letter-spacing:.08em;font-weight:500;fill:var(--a)}
+svg .spoke{stroke:var(--line);stroke-width:2}
+svg .flow{fill:none;stroke:var(--muted);stroke-width:2.2}
+svg .loop{fill:none;stroke:var(--a);stroke-width:2.6}
+svg .cross{fill:none;stroke:var(--muted);stroke-width:1.6;stroke-dasharray:5 5;opacity:.75}
+svg .arrowhead{fill:var(--muted)} svg .arrowhead.acc{fill:var(--a)}
+svg .centre{fill:var(--a)}
+svg .centretext{fill:var(--on-a);font-family:var(--display);font-weight:700;font-size:16px}
+svg .tnode circle{fill:var(--surface);stroke:var(--ink);stroke-width:2.5}
+svg .tnode .num{fill:var(--a);font-family:var(--display);font-weight:700;font-size:15px}
+svg .tnode .lab{fill:var(--ink);font-family:var(--display);font-weight:700;font-size:14px}
+svg .tnode{cursor:pointer}
+svg .tnode:focus{outline:none}
+svg .tnode:focus-visible circle{stroke:var(--focus);stroke-width:4}
+svg .tnode.sel circle{fill:var(--a);stroke:var(--a)}
+svg .tnode.sel .lab,svg .tnode.sel .num{fill:var(--on-a)}
+svg .sat rect{fill:var(--surface)}
+svg .sat.s1 rect{stroke:var(--a);stroke-width:2.2;fill:var(--a-soft)}
+svg .sat.s2 rect{stroke:var(--a-mid);stroke-width:2}
+svg .sat.s3 rect{stroke:var(--a);stroke-width:1.4;stroke-dasharray:5 4}
+svg .sat .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;fill:var(--a)}
+svg .sat .txt{fill:var(--ink);font-family:var(--body);font-size:13px}
+svg .sat{cursor:pointer}
+svg .sat:focus{outline:none}
+svg .sat:focus-visible rect{stroke:var(--focus);stroke-width:3}
+svg .sat:hover rect{stroke-width:3}
+svg .spokegroup{transition:opacity .2s}
+svg .dim{opacity:.3}
+svg .crosssel{opacity:1;stroke:var(--ink);stroke-width:2.2}
+@media (prefers-reduced-motion:reduce){svg .spokegroup{transition:none}}
+
+.detail{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--a);border-radius:12px;padding:18px 18px 20px;min-width:0}
+.detail h3{font-size:1.35rem;margin-top:4px}
+.detail .plain{margin-top:6px;color:var(--muted)}
+.detail .go{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.detail .go button{cursor:pointer;font-size:.88rem;padding:.4em .8em;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:inline-flex;gap:8px;align-items:center}
+.detail .go button:hover{border-color:var(--a)}
+.detail .tgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:16px}
+@media (max-width:900px){.detail .tgs{grid-template-columns:1fr;gap:14px}}
+.detail .tg{min-width:0}
+.detail .tg h4{margin:0 0 8px}
+.detail .tg ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.detail .tg li{font-size:.93rem;line-height:1.45;padding-left:12px;border-left:3px solid var(--a)}
+.detail .tg.g2 li{border-left-color:var(--a-mid)}
+.detail .tg.g3 li{border-left:3px dashed var(--a)}
+.detail .tg li .src{color:var(--muted)}
+.detail .links{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:.92rem}
+.detail .links ul{margin:6px 0 0;padding-left:18px}
+
+/* ---------- Reading lists ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.filters .lbl{font-size:.9rem;color:var(--muted);margin-right:4px}
+.filters button{font-size:.88rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.35em .8em;border-radius:999px}
+.filters button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
+.progress{font-size:.9rem;color:var(--muted);margin:6px 0 0}
+.tierblock{margin-top:30px;scroll-margin-top:70px}
+.tierblock > .th{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-bottom:10px;border-bottom:3px solid var(--a)}
+.tierblock.b2 > .th{border-bottom-color:var(--a-mid)}
+.tierblock.b3 > .th{border-bottom:3px dashed var(--a)}
+.tierblock > .th h3{font-size:1.45rem}
+.tierblock > .th .count{font-family:var(--mono);font-size:.8rem;color:var(--a)}
+.tierblock > .th p{flex-basis:100%;color:var(--muted);font-size:.97rem;max-width:72ch}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start}
+ul.items li input{width:18px;height:18px;margin-top:4px;accent-color:var(--a)}
+ul.items li .main{min-width:0}
+ul.items li .where{font-family:var(--mono);font-size:.76rem;color:var(--muted);letter-spacing:.02em}
+ul.items li .title{font-weight:700;margin-top:1px}
+ul.items li .why{margin-top:3px;font-size:.95rem}
+ul.items li .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+ul.items li .meta span{font-size:.75rem;font-family:var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 .4em}
+ul.items li .pg{font-family:var(--mono);font-size:.86rem;font-variant-numeric:tabular-nums;background:var(--a-soft);color:var(--a);padding:.2em .55em;border-radius:5px;white-space:nowrap;margin-top:2px}
+.b2 ul.items li .pg{background:var(--sunk)}
+.b3 ul.items li .pg{background:transparent;outline:1px dashed var(--a);outline-offset:-1px}
+ul.items li .pg.unv{background:var(--sunk);color:var(--muted);outline:none}
+ul.items li.done .title,ul.items li.done .why{opacity:.55}
+ul.items li a.out{font-weight:700}
+@media (max-width:560px){ul.items li{grid-template-columns:24px minmax(0,1fr)} ul.items li .pg{grid-column:2;justify-self:start;white-space:normal}}
+.empty{padding:14px 0;color:var(--muted);font-size:.95rem}
+
+/* ---------- Extras, notes ---------- */
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+thead th{font-family:var(--display);font-size:1rem;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:0}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.cards3 > div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.cards3 > div p{font-size:.95rem;margin-top:4px}
+@media (max-width:760px){.cards3{grid-template-columns:1fr}}
+.notes{display:grid;gap:12px;max-width:80ch}
+.notes p{font-size:.97rem}
+footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
+
+/* ---------- Hub ---------- */
+.hubhero{padding-block:44px 24px}
+.hubhero h1{font-size:clamp(2.3rem,1.6rem + 3.2vw,3.7rem);font-weight:700;letter-spacing:-0.02em;margin-top:10px}
+.hubhero .lede{max-width:66ch;margin-top:14px;font-size:1.08rem}
+.hubstats{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-size:.95rem;color:var(--muted)}
+.hubstats b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.swatches{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:.88rem;color:var(--muted)}
+.swatches span{display:inline-flex;align-items:center;gap:6px}
+.swatches i{width:12px;height:12px;border-radius:3px;background:var(--a);display:inline-block}
+.modules{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.module{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--a);border-radius:12px;overflow:hidden}
+.module > button{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;text-align:left;background:none;border:0;padding:18px 20px;cursor:pointer;color:var(--ink)}
+.module > button:hover{background:var(--a-soft)}
+.module .mnum{font-family:var(--display);font-weight:700;font-size:1.5rem;color:var(--a);width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--a-soft)}
+.module .mtitle{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2}
+.module .mmeta{font-size:.9rem;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.module .mmeta .ready{color:var(--a);font-weight:700}
+.module .chev{width:12px;height:12px;border-right:2.5px solid var(--muted);border-bottom:2.5px solid var(--muted);transform:rotate(45deg);transition:transform .2s;margin-right:6px}
+.module.open .chev{transform:rotate(-135deg)}
+@media (prefers-reduced-motion:reduce){.module .chev{transition:none}}
+.module .topics{list-style:none;margin:0;padding:0 20px 16px 80px;display:grid;gap:2px}
+@media (max-width:600px){.module .topics{padding:0 14px 14px 14px}.module > button{padding:16px 14px;gap:12px}}
+.module .topics li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:8px}
+.module .topics li .sn{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.module .topics li .tn{min-width:0}
+.module .topics li .tn small{display:block;color:var(--muted);font-size:.85rem}
+.module .topics li .st{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.15em .55em;border-radius:999px;white-space:nowrap}
+.module .topics li.ready{background:var(--a-soft)}
+.module .topics li.ready .tn a{font-weight:700;text-decoration:none;color:var(--ink)}
+.module .topics li.ready .tn a::after{content:" \2192";color:var(--a)}
+.module .topics li.ready .tn a:hover{text-decoration:underline}
+.module .topics li.ready .st{background:var(--a);color:var(--on-a)}
+.module .topics li.soon .tn{color:var(--muted)}
+.module .topics li.soon .st{color:var(--muted);outline:1px dashed var(--line);outline-offset:-1px}
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.howto > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.howto > div p{font-size:.95rem;color:var(--muted);margin-top:4px}
+@media (max-width:760px){.howto{grid-template-columns:1fr}}
+
+[hidden]{display:none!important}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Modules and topics for 22MDM32, in course-plan session order. A topic with a `file` has a page. */
+window.CATALOG = {
+ course:"22MDM32 Social Media Marketing",
+ modules:[
+  {id:"m1",n:1,title:"Introduction to Social Media Marketing",hours:8,topics:[
+   {s:"S1",title:"Introduction to the concept of social media"},
+   {s:"S2",title:"Social media marketing: definition"},
+   {s:"S3",title:"Uses and scope of social media marketing"},
+   {s:"S4",title:"Social media platforms: Facebook and YouTube"},
+   {s:"S5",title:"Social media platforms: LinkedIn, Instagram, Twitter (X), Snapchat"},
+   {s:"S6",title:"Social media marketing advantages and limitations"},
+   {s:"S7",title:"Social media marketing strategies",file:"m1-strategies.html"},
+   {s:"S8",title:"Influencers: role and types"}]},
+  {id:"m2",n:2,title:"Content Designing for Social Media Platforms",hours:8,topics:[
+   {s:"S9",title:"Basics of content creation",file:"m2-basics.html"},
+   {s:"S10",title:"Content process: planning and strategy",file:"m2-planning.html"},
+   {s:"S11",title:"Content process: content creation",file:"m2-creation.html"},
+   {s:"S12",title:"Content process: content optimisation",file:"m2-optimization.html"},
+   {s:"S13",title:"Content process: content distribution",file:"m2-distribution.html"},
+   {s:"S14",title:"Content process: measurement and analysis",file:"m2-measurement.html"},
+   {s:"S15",title:"Content mix (sales, interactive, informative posts) and the impact of colours"},
+   {s:"S16",title:"Tools for content creation: Canva, Natural Readers, Adobe Express, Picsart, Graphionica"}]},
+  {id:"m3",n:3,title:"Facebook and Instagram Advertising and Marketing",hours:8,topics:[
+   {s:"S17",title:"Facebook and Instagram as advertising and marketing media"},
+   {s:"S18",title:"Characteristics of Facebook marketing"},
+   {s:"S19",title:"Characteristics of Instagram marketing"},
+   {s:"S20",title:"Facebook Marketplace"},
+   {s:"S21",title:"Facebook and Instagram ads: objectives"},
+   {s:"S22",title:"Types of ad"},
+   {s:"S23",title:"Targeting"},
+   {s:"S24",title:"Dimensions"}]},
+  {id:"m4",n:4,title:"Twitter, LinkedIn, YouTube and Snapchat",hours:7,topics:[
+   {s:"S25",title:"Twitter (X): introduction, overview, characteristics"},
+   {s:"S26",title:"LinkedIn: introduction, overview, characteristics"},
+   {s:"S27",title:"YouTube: introduction, overview, characteristics"},
+   {s:"S28",title:"Snapchat, and what each platform is used for"},
+   {s:"S29",title:"Profile building and crafting a summary for marketing"},
+   {s:"S30",title:"Creating and uploading videos"},
+   {s:"S31",title:"Use of hashtags; targeting the audience"}]},
+  {id:"m5",n:5,title:"Social Media Privacy and Policy",hours:9,topics:[
+   {s:"S32",title:"Social media privacy and its importance"},
+   {s:"S33",title:"Privacy concerns and challenges on platforms"},
+   {s:"S34",title:"Indian law: IT Act 2000"},
+   {s:"S35",title:"Indian law: data protection (now the DPDP Act 2023) and its implications"},
+   {s:"S36",title:"Platform privacy policies: Facebook and Instagram"},
+   {s:"S37",title:"Platform privacy policies: X, LinkedIn and others"},
+   {s:"S38",title:"Ethics: data use, user rights, content moderation"},
+   {s:"S39",title:"Data protection: secure settings, phishing, social engineering"},
+   {s:"S40",title:"AI and blockchain for privacy; emerging security trends"}]}
+ ]
+};
+
+</script>
+<script>
+window.TOPIC={
+id:"m1-strategies", module:"m1", file:"m1-strategies.html", session:"S7",
+title:"Social media marketing strategies",
+centre:["SMM","strategy"],
+lede:"What to learn for the <b>social media marketing strategies</b> lecture, where to read it, and how the pieces connect. Book page numbers were checked against the books in your SMM and Resources folders.",
+coursePlan:"pre-read Zahay et al., Ch 2 (strategy chapter). In-class activity: a strategy one-pager for each team's brand. Your new deck is <i>WS_S07_Social_Media_Strategies</i> (the café example).",
+tierText:["Syllabus books, the chapters that teach strategy directly. Read these first.","Other chapters and books that fill the gaps: segmentation, positioning, measurement, whole plans.","Research papers, data, industry guides and 2025–26 news that bring the books up to date."],
+tierIntro:["The syllabus books. Tuten & Solomon Ch 2 and Zahay Ch 2 are the two core chapters for this lecture.","Chapters you need around the strategy chapter: who the audience is, what the brand stands for, how to measure, and what a whole plan looks like.","Supporting research, Indian data, industry guides and recent news. Links checked in October 2026."],
+routeTitle:"Six stops, in the order a plan is built",
+routeIntro:"The order follows the planning steps in Tuten & Solomon (p. 38) and Zahay (Fig. 2.1, p. 25). Learn them in this order, because each stop feeds the next.",
+flowLabel:"Planning order (Tuten p. 38)", loopLabel:"Monitor and tune, then listen again (Zahay p. 25)",
+skimIntro:"Every page of Tuten & Solomon Ch 2 and Zahay Ch 2, broken into its paragraphs, boxes and figures. Each part says what to do with it and what to take away. Paragraphs are named by their opening words, so you can find them on the page.",
+skimNote:"<b>Other Tier 1 books.</b> Tuten 5th ed. (Ch 4 and 5) and the All-in-One For Dummies chapters are not in your folders, so they have no page-by-page guide. Match them to the pages above by topic, not by page.",
+plan:[
+ {tier:1,when:"Sitting 1 · about {min:tut} min · Tier 1",text:"Tuten & Solomon Ch 2, <span class=\"ref\">pp. 29–56</span>, with the skim guide. Write the seven steps on one page."},
+ {tier:1,when:"Sitting 2 · about {min:zah} min · Tier 1",text:"Zahay Ch 2, <span class=\"ref\">pp. 24–41</span>, with the skim guide. Add the planning cycle, listening stages, Valid Metrics, Eight C's and calls to action."},
+ {tier:2,when:"Sitting 3 · about 1½ h · Tier 2",text:"Kotler &amp; Keller <span class=\"ref\">pp. 47–55</span> and Tuten <span class=\"ref\">pp. 217–229</span>. Skim Zahay Ch 14 <span class=\"ref\">pp. 270–292</span> as a checklist."},
+ {tier:3,when:"Sitting 4 · about 45 min · Tier 3",text:"The India 2026 figures, the Sprout Social Index, and one 2026 news item to open the class with."}],
+stops:[
+ {id:1,name:"Strategy basics",short:["Strategy","basics"],
+  plain:"A strategy links every post to a business goal. Tactics are the posts, ads and stunts themselves.",
+  learn:[["Strategy vs tactics. A one-off stunt to get attention is not a strategy.","Tuten p. 35"],["Planning runs at three levels: company, business unit, then marketing. The social media plan sits inside the marketing plan.","Tuten p. 31"],["The parts of a social media marketing plan (Fig. 2).","Tuten pp. 33–34"],["Three phases of maturity: trial, transition, strategic.","Tuten pp. 35–37"],["A short definition: social media strategy is a broad statement of what you want to achieve for the brand on social media.","Zahay p. 38"]],
+  ask:"Explain the three phases of social media marketing maturity, with an example of each.",
+  map:{t1:["Tuten pp. 31–38","Zahay pp. 25, 38"],t2:["Kotler pp. 36–55","Zahay pp. 4–15"],t3:["Ritson · Piskorski","Meta AI ads news"]}},
+ {id:2,name:"Listening and situation analysis",short:["Listen &","analyse"],
+  plain:"Before you post, find out what people already say about the brand, its rivals and the category.",
+  learn:[["Five stages of listening: the brand, competitors, the industry, the tone of the community, and each platform.","Zahay pp. 27–28"],["Listening centres in practice: the NFL at the Super Bowl, and Cisco.","Zahay pp. 30–33"],["Situation analysis: internal strengths and weaknesses, external opportunities and threats (SWOT).","Tuten pp. 38–39"],["Three questions for a competitor audit: where are they active, how do they present themselves, and who follows them.","Tuten p. 39"],["Check first that social media is the right tool: “don't be a hammer in search of a nail”.","Tuten p. 39"],["Worked example: Benjamin Moore's SWOT (Table 1).","Tuten p. 40"]],
+  ask:"What is a situation analysis? Prepare a social media SWOT for a brand of your choice.",
+  map:{t1:["Tuten pp. 38–40","Zahay pp. 27–33"],t2:["Kotler pp. 48–50","Zahay Ch 13–14"],t3:["Sprout Index 2025","Hootsuite guide"]}},
+ {id:3,name:"Objectives and budget",short:["Goals &","budget"],
+  plain:"Write down what success looks like, with a number and a date, and what it will cost to get there.",
+  learn:[["Common social media objectives, from brand awareness to sales.","Tuten p. 41 · Zahay p. 34"],["What makes an objective usable: specific, measurable, a change from a baseline, a time line, realistic.","Tuten p. 41"],["SMART. The books expand the A differently: Tuten says Appropriate, Zahay says Achievable.","Tuten p. 219 · Zahay p. 37"],["The objectives cascade: business goals, then marketing objectives, then social media objectives, then each platform.","Zahay p. 36"],["The Valid Metrics Framework: exposure, engagement, influence, impact, advocacy.","Zahay p. 35"],["Social media is not free. It swaps media costs for labour costs.","Tuten p. 42"],["Three budget methods: percentage of ad spend, competitive parity, objective-and-task.","Tuten pp. 43–44"]],
+  ask:"What makes a good social media objective? Explain three ways to set a social media budget.",
+  map:{t1:["Tuten pp. 41–44","Zahay pp. 33–37"],t2:["Tuten pp. 215–229","Kotler pp. 482–488"],t3:["AMEC framework","Binet & Field"]}},
+ {id:4,name:"Audience and channels",short:["Audience &","channels"],
+  plain:"Pick the people who can solve the business problem, then go where they already spend time.",
+  learn:[["A social profile of the audience: how much they take part, which communities and channels they use, and on which devices.","Tuten pp. 44–45"],["Choose a social media mix across the four zones: community, publishing, entertainment, commerce.","Tuten p. 45"],["Plan paid, owned and earned media together (Benjamin Moore, Fig. 8).","Tuten p. 46"],["Platforms vs channels: a platform is one site; a channel, such as mobile, is made of many.","Zahay p. 26"],["The first of the Eight C's: sort platforms by how relevant they are to your target market.","Zahay p. 38"]],
+  ask:"How is a social consumer profile different from a normal target-market profile?",
+  map:{t1:["Tuten pp. 44–46","Zahay pp. 26, 38"],t2:["Tuten pp. 72–80","Zahay Ch 3 · Kotler 8"],t3:["DataReportal India","Honeycomb · POST"]}},
+ {id:5,name:"Experience, message and action",short:["Message &","action"],
+  plain:"Decide how the brand will sound, what experience it offers, and what you want people to do next.",
+  learn:[["Start from the positioning statement: the one idea the brand wants to own.","Tuten p. 45"],["Write an experience brief, also called a propagation brief: plan for the people your audience will reach, not only the audience.","Tuten p. 47"],["The questions the brief answers: goals, positioning, audience, influencers, creative assets, content and sharing.","Tuten pp. 47–48"],["Social persona: how the brand behaves and speaks online. One corporate voice, many employees, one person, or a mascot.","Tuten p. 48"],["The Eight C's: categorise, comprehend, converse, collaborate, contribute, connect, community, convert.","Zahay p. 38"],["Calls to action as a chain of small steps towards the sale (Table 2.1).","Zahay pp. 38–39"],["Build an army of advocates instead of only promoting yourself.","Zahay pp. 40–41"]],
+  ask:"What is an experience brief? Explain the Eight C's of strategy development.",
+  map:{t1:["Tuten pp. 45–49","Zahay pp. 38–41"],t2:["Kotler Ch 10, 19","Zahay pp. 64–71"],t3:["Amul case (2026)","Sprout trend data"]}},
+ {id:6,name:"Run, measure and govern",short:["Run, measure","& govern"],
+  plain:"Put the plan to work, check it against the objectives, and set rules for who posts what.",
+  learn:[["Fit social media with other promotion, and choose always-on or a time-bound campaign.","Tuten pp. 49–50"],["Six common mistakes: staffing, content, time horizon, focus of objectives, benefits to users, measurement.","Tuten pp. 50–51"],["The plan is a cycle: monitor, tune, then listen again (Fig. 2.1).","Zahay pp. 25–26"],["A social media policy covers conduct, disclosure (#spon, #paid, #samp) and confidential information.","Tuten pp. 51–53"],["Three ways to organise the team: centralised, distributed, combination, plus the centre-of-excellence model.","Tuten p. 54"],["Five best practices: a road map, listen first, welcome participation, be patient, be flexible.","Zahay p. 41"]],
+  ask:"Explain three ways to organise a social media team. What should a social media policy include?",
+  map:{t1:["Tuten pp. 49–54","Zahay pp. 25–26, 41"],t2:["Tuten DATA loop","Zahay Ch 12–14"],t3:["Felix et al. 2017","IT Rules 2026"]},
+  elsewhere:"Module 2 picks this up: measurement gets its own page in S14."}
+],
+links:[
+ {a:2,b:4,text:"Listening shows where the audience spends time (Zahay p. 28)."},
+ {a:3,b:5,text:"Each goal needs a matching call to action (Zahay p. 38)."},
+ {a:1,b:3,text:"Objectives cascade down from the business plan (Zahay p. 36)."},
+ {a:6,b:2,text:"Monitor and tune, then listen again (Zahay Fig. 2.1, p. 25).",loop:true}
+],
+books:{
+ TUT1:{label:"Tuten & Solomon, Social Media Marketing, 1st ed.",sub:"Pearson, 2014 · your PDF in SMM › Books",short:"Tuten & Solomon",skim:"tut"},
+ ZAH:{label:"Zahay, Roberts, Parker, Barker & Barker, Social Media Marketing: A Strategic Approach, 3rd ed.",sub:"Cengage, 2023 · your scans in SMM › Books",short:"Zahay et al.",skim:"zah"},
+ TUT5:{label:"Tuten, Social Media Marketing, 5th ed.",sub:"SAGE, 2023 · the syllabus edition",short:"Tuten 5th ed."},
+ DUM:{label:"Krasniak, Zimmerman & Ng, Social Media Marketing All-in-One For Dummies, 5th ed.",sub:"Wiley · syllabus book 5",short:"All-in-One For Dummies"},
+ KOT:{label:"Kotler & Keller, Marketing Management, 14th ed.",sub:"Pearson, 2012 · your PDF in BGS › Resources",short:"Kotler & Keller"}
+},
+readings:[
+ {id:"t1-tut-ch2",tier:1,book:"TUT1",where:"Ch 2 · whole chapter",title:"Strategic Planning with Social Media",pages:"pp. 29–58",why:"The core chapter for this lecture. Read it once, start to finish.",st:[1,2,3,4,5,6],hideInDetail:true},
+ {id:"t1-tut-plan",tier:1,book:"TUT1",where:"Ch 2",title:"Strategic planning and social media marketing · marketing plan outline (Fig. 1) · social media marketing plan outline (Fig. 2)",pages:"pp. 31–34",why:"Shows where social media sits: company plan, then marketing plan, then social media plan.",st:[1]},
+ {id:"t1-tut-phases",tier:1,book:"TUT1",where:"Ch 2",title:"Three phases of social media marketing maturity: trial, transition, strategic",pages:"pp. 35–38",why:"Stunts vs strategy. Pizza Hut's “Twitern” (a stunt), Beall's (transition), Benjamin Moore (strategic).",st:[1]},
+ {id:"t1-tut-steps",tier:1,book:"TUT1",where:"Ch 2",title:"Social media campaigns: the strategic planning process (seven steps)",pages:"p. 38",why:"The seven steps in one list. This is the spine of the lecture.",st:[1,6]},
+ {id:"t1-tut-situation",tier:1,book:"TUT1",where:"Ch 2",title:"Situation analysis · SWOT · competitor questions · Smirnoff “icing” box · Benjamin Moore SWOT (Table 1)",pages:"pp. 38–40",why:"How to study the brand, its rivals and the market before you plan.",st:[2]},
+ {id:"t1-tut-objectives",tier:1,book:"TUT1",where:"Ch 2",title:"Identify objectives and set budgets · actionable objectives · “social media is not free” · budget methods (Table 2)",pages:"pp. 41–44",why:"Nine common objectives, what makes an objective usable, and three ways to set a budget.",st:[3]},
+ {id:"t1-tut-audience",tier:1,book:"TUT1",where:"Ch 2",title:"Profile the target audience · select channels and vehicles · Benjamin Moore's channels (Fig. 8)",pages:"pp. 44–46",why:"Go beyond age and income to what the audience does online. Then pick the mix of zones.",st:[4]},
+ {id:"t1-tut-experience",tier:1,book:"TUT1",where:"Ch 2",title:"Create an experience strategy · positioning statement · experience and propagation brief · social persona",pages:"pp. 45–49",why:"How the brand will sound and what experience it offers. Ends with the Experts Exchange campaign.",st:[5]},
+ {id:"t1-tut-execute",tier:1,book:"TUT1",where:"Ch 2",title:"Integrate and set a timeline · execute and measure · six common mistakes",pages:"pp. 49–51",why:"Always-on vs time-bound campaigns, and the six mistakes beginners make.",st:[6]},
+ {id:"t1-tut-policy",tier:1,book:"TUT1",where:"Ch 2",title:"Planning structure · social media policy (WOMMA, Fig. 9) · centralised, distributed and combination structures",pages:"pp. 51–54",why:"Who owns social media in a company, and the rules employees follow.",st:[6]},
+ {id:"t1-tut-review",tier:1,book:"TUT1",where:"Ch 2",title:"Chapter summary · key terms · review questions · exercises",pages:"pp. 54–56",why:"Quick revision, and ready-made exam-style questions.",st:[1,2,3,4,5,6],hideInDetail:true},
+ {id:"t1-zah-ch2",tier:1,book:"ZAH",where:"Ch 2 · whole chapter",title:"Goals and Strategies",pages:"pp. 24–43",why:"The second core chapter. The text runs to p. 41; pp. 42–43 are notes.",st:[1,2,3,4,5,6],hideInDetail:true},
+ {id:"t1-zah-cycle",tier:1,book:"ZAH",where:"Ch 2",title:"What is a SMM plan? · SMM planning cycle (Fig. 2.1) and its steps",pages:"pp. 25–27",why:"An eight-step cycle: listen, goals, strategies, target audience, tools, implement, monitor, tune.",st:[1,6]},
+ {id:"t1-zah-listen",tier:1,book:"ZAH",where:"Ch 2",title:"Listen and observe: five stages · personal branding box",pages:"pp. 27–29",why:"Listen to the brand, competitors, the industry, the community's tone, and each platform.",st:[2]},
+ {id:"t1-zah-centres",tier:1,book:"ZAH",where:"Ch 2",title:"Listen and observe: listening centres (NFL Super Bowl, Cisco)",pages:"pp. 30–33",why:"Two real listening set-ups. Cisco reports a 281% return on its social listening.",st:[2]},
+ {id:"t1-zah-goals",tier:1,book:"ZAH",where:"Ch 2",title:"Setting goals and objectives · Fig. 2.4 objectives · Valid Metrics Framework (Fig. 2.5) · objectives cascade (Fig. 2.6) · SMART",pages:"pp. 33–37",why:"Where objectives come from and how to check that they are good.",st:[3]},
+ {id:"t1-zah-strategies",tier:1,book:"ZAH",where:"Ch 2",title:"Determining strategies · the Eight C's of strategy development",pages:"pp. 37–38",why:"Four questions to ask before setting strategy, then the eight C's from “categorise” to “convert”.",st:[4,5]},
+ {id:"t1-zah-cta",tier:1,book:"ZAH",where:"Ch 2",title:"Linking goals with a call to action (Table 2.1) · self-promotion vs an army of advocates (Fig. 2.7)",pages:"pp. 38–41",why:"Turn goals into small steps people take, and grow fans who speak for you.",st:[5]},
+ {id:"t1-zah-best",tier:1,book:"ZAH",where:"Ch 2",title:"Best practices for developing a social media strategy",pages:"p. 41",why:"Five rules: a road map, listen first, welcome participation, be patient, be flexible.",st:[6]},
+ {id:"t1-tut5",tier:1,book:"TUT5",where:"Ch 4 and Ch 5",title:"Social Media Marketing Strategy · Tactical Planning and Execution",pages:"check your copy",unv:true,why:"The syllabus edition. Same ideas as the 1st-edition Ch 2, split into strategy (Ch 4) and tactics (Ch 5). Tuten & Solomon's 4th ed. (SAGE, 2020) uses the same chapter numbers.",st:[1,2,3,4,5,6]},
+ {id:"t1-dummies",tier:1,book:"DUM",where:"Book 1 · Ch 1, 3 and 4",title:"Developing a strategic SMM plan (Ch 1) · Plotting your SMM strategy (Ch 3) · Managing your cybersocial campaign: schedule, team, policy (Ch 4)",pages:"check your copy",unv:true,why:"The practical, plain-English version. Ch 3 covers finding your market online, segmenting B2C, researching B2B and setting up the plan.",st:[1,4,6]},
+ {id:"t2-tut-5thp",tier:2,book:"TUT1",where:"Ch 1",title:"The 5th P of marketing (participation) · from top-down to bottom-up communication",pages:"pp. 14–15",why:"Why social media changes the rules: people talk back.",st:[1]},
+ {id:"t2-tut-objectives",tier:2,book:"TUT1",where:"Ch 1",title:"Social media achieves marketing objectives · paid, owned and earned media (Table 2, p. 17)",pages:"pp. 15–20",why:"The jobs social media can do: promotion and branding, service, research, selling.",st:[3,4]},
+ {id:"t2-tut-seg",tier:2,book:"TUT1",where:"Ch 3",title:"Market segmentation (geographic, demographic, psychographic, benefit, behavioural) · social technographics (p. 78) · Pew technology types (p. 80)",pages:"pp. 72–80",why:"Deeper tools for describing the audience.",st:[4]},
+ {id:"t2-tut-paid",tier:2,book:"TUT1",where:"Ch 5",title:"Paid media in social networks · earned media and brand engagement",pages:"pp. 117–119",why:"How paid and earned media work together inside social networks.",st:[4]},
+ {id:"t2-tut-calendar",tier:2,book:"TUT1",where:"Ch 6",title:"Developing and organising marketing content · master editorial calendar (Fig. 2) · content value ladder (Fig. 3)",pages:"pp. 132–134",why:"Turns strategy into a posting calendar. Useful when you discuss cadence.",st:[5,6]},
+ {id:"t2-tut-data",tier:2,book:"TUT1",where:"Ch 10",title:"What matters is measured · the DATA process: define, assess, track, adjust · SMART objectives (p. 219)",pages:"pp. 215–229",why:"The measurement step in full. Note that p. 219 expands SMART's A as “Appropriate”.",st:[3,6]},
+ {id:"t2-tut-cases",tier:2,book:"TUT1",where:"Cases and plan",title:"Case: Saab (p. 233) · Case: New Belgium Brewing (p. 235) · Build a Social Media Marketing Plan (pp. 237–240)",pages:"pp. 233–240",why:"Short real campaigns, then the book's plan-building section at the back.",st:[6]},
+ {id:"t2-zah-myths",tier:2,book:"ZAH",where:"Ch 1",title:"The seven myths of SMM · why SMM is different (p. 15)",pages:"pp. 4–15",why:"Common wrong beliefs that lead to weak plans.",st:[1]},
+ {id:"t2-zah-target",tier:2,book:"ZAH",where:"Ch 3",title:"The targeting process in SMM (p. 45) · targeting ads and posts (p. 56) · best practices (p. 59)",pages:"pp. 44–59",why:"A full chapter on choosing and reaching the audience.",st:[4]},
+ {id:"t2-zah-inbound",tier:2,book:"ZAH",where:"Ch 4",title:"Permission vs interruption marketing (p. 64) · a holistic approach (p. 65) · inbound marketing methodology (p. 68)",pages:"pp. 64–71",why:"Why social media works by earning attention, not by interrupting.",st:[5]},
+ {id:"t2-zah-monitor",tier:2,book:"ZAH",where:"Ch 12",title:"Monitoring: listening and tracking (p. 233) · measuring (p. 234) · metrics (p. 236) · evaluation (p. 241)",pages:"pp. 232–242",why:"How the monitor and tune steps are done in practice.",st:[2,6]},
+ {id:"t2-zah-team",tier:2,book:"ZAH",where:"Ch 13",title:"Find executive support (p. 257) · assess the organisation (p. 258) · review the current presence (p. 261) · build a team (p. 265)",pages:"pp. 256–268",why:"The people side: who does the work, and how to get leaders on board.",st:[2,6]},
+ {id:"t2-zah-plan",tier:2,book:"ZAH",where:"Ch 14",title:"Social media marketing plan: audit (p. 273), listening and competitive analysis (p. 275), goals (p. 278), objectives (p. 279), strategies and target market (p. 280), tools (p. 281), platforms (p. 282), budgeting (p. 290), social ROI (p. 291)",pages:"pp. 270–292",why:"The whole plan, section by section. Use it as a checklist.",st:[2,3,4,6]},
+ {id:"t2-zah-cafe",tier:2,book:"ZAH",where:"Appendix",title:"Caffé Daily social media marketing plan (worked example)",pages:"pp. 295–315",why:"A complete plan written out, for a café, like the example in your deck.",st:[6]},
+ {id:"t2-kot-plan",tier:2,book:"KOT",where:"Ch 2",title:"The central role of strategic planning (p. 36) · corporate mission (p. 38) · business unit planning (p. 47) · SWOT (p. 48) · goal formulation (p. 50) · strategy formulation, Porter (pp. 50–53)",pages:"pp. 36–53",why:"The classic marketing-strategy base that social media strategy sits on.",st:[1,2,3]},
+ {id:"t2-kot-mplan",tier:2,book:"KOT",where:"Ch 2",title:"The nature and contents of a marketing plan (pp. 54–55) · sample plan: Pegasus Sports International (pp. 60–64)",pages:"pp. 54–64",why:"What a full marketing plan looks like on paper.",st:[1,6]},
+ {id:"t2-kot-seg",tier:2,book:"KOT",where:"Ch 8",title:"Bases for segmenting consumer markets (p. 214) · market targeting (p. 231)",pages:"pp. 214–235",why:"Standard segmentation and targeting, to back up the social audience profile.",st:[4]},
+ {id:"t2-kot-pos",tier:2,book:"KOT",where:"Ch 10",title:"Developing and establishing a brand positioning · points of parity and difference (p. 280) · brand mantras (p. 284) · positioning bull's-eye (p. 287)",pages:"pp. 275–293",why:"Positioning is where the brand's social voice comes from.",st:[5]},
+ {id:"t2-kot-imc",tier:2,book:"KOT",where:"Ch 17",title:"Developing effective communications: audience, objectives, design, channels (pp. 482–488) · budget (p. 488) · communications mix (p. 490) · measuring results and managing IMC (pp. 494–496)",pages:"pp. 482–496",why:"Social media as one part of integrated marketing communications.",st:[3,4,6]},
+ {id:"t2-kot-wom",tier:2,book:"KOT",where:"Ch 19",title:"Interactive marketing (p. 540) · word of mouth and social media (p. 546) · buzz and viral marketing (p. 549) · opinion leaders (p. 551) · measuring word of mouth (p. 552)",pages:"pp. 540–552",why:"Background for advocacy, influence and calls to action.",st:[5]},
+ {id:"t3-piskorski",tier:3,group:"Research and frameworks",title:"“Social Strategies That Work”",src:"Mikołaj Jan Piskorski · Harvard Business Review",date:"Nov 2011",url:"https://hbr.org/2011/11/social-strategies-that-work",why:"People want to connect with people, not with companies. A good social strategy helps people connect while doing useful work for the firm. May need an HBR login.",st:[1,5]},
+ {id:"t3-ritson",tier:3,group:"Research and frameworks",title:"“Tactics without strategy is dumbing down our discipline”",src:"Mark Ritson · Marketing Week",date:"11 May 2016",url:"https://www.marketingweek.com/mark-ritson-beware-the-tactification-of-marketing/",why:"Research, segmentation, targeting and positioning come before tools and channels. A sharp opener for the strategy-vs-tactics point.",st:[1]},
+ {id:"t3-felix",tier:3,group:"Research and frameworks",title:"“Elements of strategic social media marketing: A holistic framework”",src:"Felix, Rauschnabel & Hinsch · Journal of Business Research 70, 118–126",date:"2017",url:"https://doi.org/10.1016/j.jbusres.2016.05.001",why:"Four big choices: scope (defender to explorer), culture (conservative to modern), structure (hierarchy to network), governance (autocracy to anarchy).",st:[1,6]},
+ {id:"t3-honeycomb",tier:3,group:"Research and frameworks",title:"“Social media? Get serious! Understanding the functional building blocks of social media”",src:"Kietzmann, Hermkens, McCarthy & Silvestre · Business Horizons 54(3), 241–251",date:"2011",url:"https://doi.org/10.1016/j.bushor.2011.01.005",why:"The “honeycomb”: seven building blocks (identity, conversations, sharing, presence, relationships, reputation, groups) for comparing what each platform is good at.",st:[4]},
+ {id:"t3-post",tier:3,group:"Research and frameworks",title:"Groundswell, and its POST method",src:"Charlene Li & Josh Bernoff · Harvard Business Press (book)",date:"2008",why:"People, Objectives, Strategy, Technology: choose the platform last. Charlene Li is also quoted in Tuten & Solomon p. 42.",st:[3,4]},
+ {id:"t3-amec",tier:3,group:"Research and frameworks",title:"AMEC Integrated Evaluation Framework",src:"AMEC (free to use)",date:"current",url:"https://amecorg.com/amecframework/",why:"A free planning-and-measurement tool: objectives, inputs, activities, outputs, out-takes, outcomes, impact. The Valid Metrics Framework in Zahay (p. 35) also came from AMEC.",st:[3,6]},
+ {id:"t3-binet",tier:3,group:"Research and frameworks",title:"Les Binet & Peter Field: effectiveness research",src:"IPA · includes The Long and the Short of It (2013)",date:"archive",url:"https://ipa.co.uk/knowledge/effectiveness-research-analysis/les-binet-peter-field",why:"Evidence on balancing long-term brand building with short-term sales (the “60:40” guide). Mostly UK campaigns, so use it with care.",st:[3]},
+ {id:"t3-datareportal",tier:3,group:"Data and industry guides",title:"Digital 2026: India",src:"DataReportal (Kepios)",date:"data to Oct 2025",url:"https://datareportal.com/reports/digital-2026-india",why:"500 million social media user identities in India (34.1% of people). Ad reach: YouTube 500M, Instagram 481M, Facebook 403M, Snapchat 213M, LinkedIn 170M members, X 22.2M.",st:[4]},
+ {id:"t3-sprout",tier:3,group:"Data and industry guides",title:"Sprout Social Index 2025",src:"Sprout Social · press release",date:"7 Jan 2025",url:"https://sproutsocial.com/insights/press/the-days-of-trend-chasing-are-over-new-research-from-sprout-social-reveals-a-third-of-consumers-think-jumping-on-viral-trends-is-embarrassing-for-brands/",why:"A third of consumers find it embarrassing when brands jump on viral trends. 73% say they will buy from a rival if a brand does not respond on social.",st:[2,5]},
+ {id:"t3-hootsuite",tier:3,group:"Data and industry guides",title:"“Master your 2026 social media strategy” (with free template)",src:"Hootsuite blog",date:"updated 2 Oct 2026",url:"https://blog.hootsuite.com/social-media-marketing-strategy/",why:"An industry seven-step version of the plan: goals, audience, competitors, audit, inspiration, content, measure. The article and template are free; the Hootsuite tool has no free plan.",st:[2,3,6]},
+ {id:"t3-hubspot",tier:3,group:"Data and industry guides",title:"Social Media course",src:"HubSpot Academy · free online course",date:"current",url:"https://academy.hubspot.com/courses/social-media",why:"Video lessons on SMART goals, personas and social listening. Good for self-study, or as optional work for students.",st:[1,3,4]},
+ {id:"t3-meta",tier:3,group:"News, 2025–2026",title:"“Meta aims to fully automate advertising with AI by 2026”",src:"exchange4media (citing the Wall Street Journal)",date:"3 Jun 2025",url:"https://www.exchange4media.com/digital-news/meta-aims-to-fully-automate-advertising-with-ai-by-2026-144037.html",why:"If AI makes the ads, picks the audience and splits the budget, the human job is the strategy: the objective and the audience.",st:[1]},
+ {id:"t3-hashtags",tier:3,group:"News, 2025–2026",title:"Instagram caps hashtags at five per post (since Dec 2025)",src:"Later blog",date:"21 Apr 2026",url:"https://later.com/blog/instagram-hashtags/",why:"Platform rules change under your plan. This is why Zahay says “be flexible” (p. 38).",st:[4,6]},
+ {id:"t3-itrules",tier:3,group:"News, 2025–2026",title:"“Govt tightens rules on AI-generated content, mandates labels and faster takedowns”",src:"Business Today",date:"10 Feb 2026",url:"https://www.businesstoday.in/amp/technology/story/govt-tightens-rules-on-ai-generated-content-mandates-labels-and-faster-takedowns-515505-2026-02-10",why:"India's amended IT Rules came into force on 20 Feb 2026. AI-made content must be clearly labelled, and platforms must act on some orders within three hours. A brand's social media policy should plan for both.",st:[6]},
+ {id:"t3-amul",tier:3,group:"News, 2025–2026",title:"“How topical humour became Amul's strongest brand asset”",src:"exchange4media",date:"13 Jun 2026",url:"https://www.exchange4media.com/marketing-news/how-topical-humour-became-amuls-strongest-brand-asset-155425.html",why:"An Indian brand that kept one voice for decades and moved it from hoardings to Instagram and X. A clear example of a social persona and always-on content.",st:[5]}
+],
+skim:[
+ {key:"tut",tab:"Tuten & Solomon · Ch 2 · pp. 29–58",label:"Tuten & Solomon, Social Media Marketing, 1st ed., Ch 2 “Strategic Planning with Social Media”",note:"Printed page numbers. In your PDF, add 5 (book p. 31 = PDF p. 36).",
+ pages:[
+  {p:"29",h:"Chapter opener",s:[],b:[{a:"skip",w:"Photo page with the chapter title."}]},
+  {p:"30",h:"Learning objectives",s:[],b:[{a:"read",f:1,w:"The seven questions on the page.",t:"These are the chapter's likely exam questions. Read them first, and try to answer them again at the end."}]},
+  {p:"31",h:"Strategic planning and social media marketing",s:[1],b:[
+   {a:"skim",w:"Paras 1–2: GM Buick's Regal launch and MomentOfTruth.com.",t:"A brand mixing social tools with TV and online ads. Example only."},
+   {a:"read",f:1,w:"Para starting “For marketers like those at Buick, strategic planning is…”",t:"The book's definition: set objectives, choose strategies and tactics, implement, then measure. Planning runs at three levels: corporate, business, then functional areas such as marketing. Also defines a marketing plan.",d:"Definition slide (the exam line)"},
+   {a:"skim",w:"Para starting “On second thought, what's wrong with jumping right into the game?” (runs to p. 33).",t:"Why plan: know the market and rivals, coordinate people, agree objectives, use limited resources well, define success."},
+   {a:"glance",w:"Fig. 1, The Structure of a Typical Marketing Plan (runs to p. 32).",t:"Situation analysis, objectives, strategies (target market and the 4 Ps), then implement and control."}]},
+  {p:"32",h:"Fig. 1 continued",s:[1],b:[{a:"glance",w:"SWOT, objectives, product, price, promotion and supply-chain strategies, then action plans, responsibility, timeline, budget, measurement.",t:"The social media plan on p. 33 borrows this shape."}]},
+  {p:"33",h:"Why social media belongs in the marketing plan",s:[1],b:[
+   {a:"skip",w:"Para starting “It's increasingly common for organizations…” (surveys of executives).",o:"2010 survey figures. Use DataReportal India 2026 instead."},
+   {a:"read",w:"Para starting “It makes sense to include social media marketing in a brand's marketing plan.”",t:"What social media can do inside a plan: build buzz and word of mouth, deliver coupons, run contests, collect data and leads, serve customers, support product research."},
+   {a:"read",f:1,w:"Para starting “Because the creative applications…” and Fig. 2, A Social Media Marketing Plan.",t:"A social media plan is written like an advertising (IMC) plan. Fig. 2 has seven parts: situation analysis, objectives, target audience, zones and vehicles, experience strategy, activation plan, manage and measure."}]},
+  {p:"34",h:"Fig. 2 continued",s:[1],b:[{a:"skim",w:"Parts III–VII and the questions under each zone.",t:"Use these questions as a checklist when students write plans.",o:"Mentions MySpace and Second Life. Swap for YouTube or Instagram."}]},
+  {p:"35",h:"Three phases of social media marketing maturity",s:[1],b:[
+   {a:"read",f:1,w:"Paras 1–2: “it's one thing to claim you use social media and quite another to say you have a strategy”.",t:"Stunts are one-off ploys for attention (Skittles handing its website to social media). Strategy ties social activity into the campaign (Starbucks).",d:"Definition and phases slides"},
+   {a:"skim",w:"Paras 3–5: maturity grows over time; the MarketingSherpa survey.",o:"2010 figures: 33% trial, 40% transition, 23% strategic. Say “in 2010” if you quote them."},
+   {a:"read",f:1,w:"“Trial Phase” paragraphs.",t:"Testing platforms without linking them to the marketing plan. Fine as a sandbox; a problem when a company never moves on.",d:"Phases slide"}]},
+  {p:"36",h:"Figures 3 and 4",s:[1],b:[{a:"glance",w:"Fig. 4, Maturity Lifecycle for Social Media Marketing.",t:"A curve from trial to transition to strategic. Easy to draw on the board."},{a:"skip",w:"Fig. 3, a web of social media marketing activities."}]},
+  {p:"37",h:"Transition and strategic phases",s:[1],b:[
+   {a:"skim",w:"Para 1: Pizza Hut's “Twitern” press release.",t:"A stunt, named among the nine worst social media mistakes of 2009. Keep the line about thousands of abandoned brand pages that never left the trial phase."},
+   {a:"read",f:1,w:"“Transition Phase”: first paragraph.",t:"Activity is still random, but more systematic thinking starts."},
+   {a:"skim",w:"The Beall's department stores story (three paragraphs)."},
+   {a:"read",f:1,w:"“Strategic Phase” paragraph.",t:"A formal planning process with clear objectives and metrics. Social media is part of the overall marketing plan. Benjamin Moore is the example.",d:"Phases slide"}]},
+  {p:"38",h:"The seven steps",s:[1,2],b:[
+   {a:"glance",w:"Fig. 5, Beall's social media mix sorted into the four zones.",s:[1]},
+   {a:"read",f:1,w:"“Social Media Campaigns: The Strategic Planning Process”: the bulleted list.",t:"The seven steps. Learn them in order.",d:"Seven questions table",s:[1,6]},
+   {a:"read",w:"“Situation Analysis”: first paragraph.",t:"Research the industry, competitors, product category and consumers, then make sense of the findings.",s:[2]}]},
+  {p:"39",h:"Situation analysis and SWOT",s:[2],b:[
+   {a:"read",f:1,w:"Para 1: SWOT.",t:"Strengths and weaknesses are internal and controllable. Opportunities and threats are external; you can only respond to them.",d:"Demo one (Google Trends)"},
+   {a:"read",f:1,w:"Para 2 and its three bullet questions: competitive social media analysis.",t:"Where are competitors active? How do they present themselves? Who are their fans, and how do they respond?",o:"RivalMap is an old tool. Use Meta Ad Library or Google Trends, as in your deck."},
+   {a:"read",f:1,w:"Para starting “Importantly, marketers have many approaches…”",t:"Ask whether social media is the right tool at all. “Don't be a hammer in search of a nail!”"},
+   {a:"skim",w:"Para on cultural issues, and the Smirnoff “icing” box.",t:"A viral trend can backfire on a brand. A good story for class."}]},
+  {p:"40",h:"Benjamin Moore's situation",s:[2],b:[
+   {a:"skim",w:"Paras 1–3: premium paint, housing slump, small budget, rivals' tiny Facebook pages, designers love the brand.",t:"A weakness (small budget) became an opportunity (rivals were not on social media yet). Term to note: lovemark."},
+   {a:"read",f:1,w:"Table 1, Benjamin Moore's SWOT Analysis.",t:"A model SWOT to show students."}]},
+  {p:"41",h:"Setting objectives",s:[3],b:[
+   {a:"read",w:"Para 1: share of voice.",t:"A brand's share of advertising compared with its competitors."},
+   {a:"read",f:1,w:"“Identify Social Media Marketing Objectives and Set Budgets”: the definition of an objective and the nine bullets.",t:"Awareness, reputation, website traffic, PR, search rankings, customer service, leads, lower acquisition and support costs, sales."},
+   {a:"read",f:1,w:"The five characteristics of an actionable objective, and the example after them.",t:"Specific (what, who, when, where), measurable, a change from a baseline, a time line, consistent and realistic. Example: browsing time from 5 to 10 minutes by the end of Q3.",d:"“A goal you can check” slide"}]},
+  {p:"42",h:"Social media is not free",s:[3],b:[
+   {a:"glance",w:"Fig. 6, objectives by maturity phase.",t:"Firms in the strategic phase report most objectives more often."},
+   {a:"read",f:1,w:"Paras starting “Why the focus on resources?” and “There's just one problem: Social media is not free.”",t:"Charlene Li: “Social media trades media costs for labor costs.” Content, people and development all cost money."}]},
+  {p:"43",h:"Budget methods",s:[3],b:[
+   {a:"skip",w:"Fig. 7, share of marketing budget by channel.",o:"2010 data."},
+   {a:"skim",w:"Para starting “Where will this money be spent?”",t:"Mostly staff time for content and monitoring; the social media manager role."},
+   {a:"read",f:1,w:"Paras on budgeting methods (run to p. 44).",t:"Percentage of ad spend; competitive parity (match rivals, though share of voice works differently on social); objective-and-task (cost out each objective)."}]},
+  {p:"44",h:"Budget example and the target audience",s:[3,4],b:[
+   {a:"read",w:"Objective-and-task, continued.",t:"It starts from what must be achieved, so it is the most logical of the three.",s:[3]},
+   {a:"glance",w:"Table 2, an illustrative budget for a corporate blog.",t:"US$283,000 in the first year. Shows why social media is not free.",s:[3]},
+   {a:"read",f:1,w:"“Profile the Target Audience of Social Consumers”: paras 1–3.",t:"Go beyond demographics: how much people take part, which channels and communities they use, how they behave there, which devices. Plot a typical day online.",d:"Seven questions, row 3",s:[4]},
+   {a:"skim",w:"Benjamin Moore's two audiences (runs to p. 45).",s:[4]}]},
+  {p:"45",h:"Channels, then the experience strategy",s:[4,5],b:[
+   {a:"skim",w:"Para 1: design professionals, and end consumers who feel unsure about décor choices.",s:[4]},
+   {a:"read",f:1,w:"“Select Social Media Channels and Vehicles”.",t:"The social media mix: a combination of vehicles across the four zones. Plan paid, owned and earned media to work together.",d:"Seven questions, row 4",s:[4]},
+   {a:"read",f:1,w:"“Create an Experience Strategy”: paras 1–2 and the positioning quiz.",t:"The message strategy flows from the brand's positioning statement. Quiz: “The computer for the rest of us” is Apple. A quick class opener.",s:[5]}]},
+  {p:"46",h:"Fig. 8, Benjamin Moore's social channels",s:[4],b:[{a:"glance",w:"The whole figure.",t:"Paid media drives traffic to owned media; good content in owned media creates earned media. Worth copying on the board."}]},
+  {p:"47",h:"The experience brief",s:[5],b:[
+   {a:"read",f:1,w:"Paras 1–2: creative brief, experience brief, and Griffin Farley's propagation brief.",t:"Plan “not for the people you reach, but for the people that they will reach”. Social media spreads through people.",d:"Seven questions, row 5"},
+   {a:"read",w:"The bold questions in the bullet list (skim the text under each).",t:"Goals, positioning, target audience, influencers, existing creative assets (the GEICO gecko), integration and timing, possible experiences."}]},
+  {p:"48",h:"Social persona",s:[5],b:[
+   {a:"read",w:"First two bullets: the content needed, and how engagement is shared."},
+   {a:"skim",w:"Para on discovery, briefing, ideation and concepting.",t:"How an agency moves from research to ideas to mock-ups."},
+   {a:"read",f:1,w:"Paras on the brand's social persona.",t:"How the brand behaves and speaks online. Ways in: humanise (GEICO), serve (Dell), give value (Nike). Forms: one corporate voice, many employees (Zappos), one person (Ford), a mascot (Travelocity). People have a built-in “BS alarm”."},
+   {a:"skim",w:"Last two paras: Benjamin Moore's insight (fear of choosing colours) and “Those who know more, know Benjamin Moore”."}]},
+  {p:"49",h:"Integrate and set a timeline",s:[6],b:[
+   {a:"skim",w:"Paras 1–2: how the Experts Exchange worked on Facebook, plus the print ads.",s:[5]},
+   {a:"read",f:1,w:"“Integrate with Other Promotional Components and Establish Campaign Timeline”: para 1.",t:"Social campaigns often have no fixed end date. Some brands are always on (Dell, Zappos); others run for a set period.",d:"Quiz Q4 (activation plan)"},
+   {a:"skim",w:"The Eat Pray Love movie launch."}]},
+  {p:"50",h:"Execute and measure: common mistakes",s:[6],b:[
+   {a:"skim",w:"Pizza Hut and Foursquare box.",o:"Foursquare check-ins are dated. The idea, social media as a loyalty and coupon tool, still holds."},
+   {a:"read",f:1,w:"“Execute and Measure Outcomes” and the first three mistakes.",t:"Staffing (a page needs people), Content (keep it fresh), Time Horizon (social builds slowly)."}]},
+  {p:"51",h:"More mistakes, structure and policy",s:[6],b:[
+   {a:"read",f:1,w:"Mistakes 4–6: Focus of Objectives, Benefits to Users, Measurement.",t:"The bad example (“respond within 24 hours, post three updates a day…”) lists actions, not results. Tom Peters: “What gets measured gets done.”",d:"“Most brands start at step 5” slide"},
+   {a:"skim",w:"“Develop a Planning Structure in the Organization”.",t:"Pages get abandoned when nobody owns them."},
+   {a:"read",w:"“The Social Media Policy”: para 1.",t:"A document with the rules for social media activity by the company and its employees."}]},
+  {p:"52",h:"What a social media policy covers",s:[6],b:[
+   {a:"skim",w:"Excerpts from the Microsoft, Sun and Intel policies."},
+   {a:"read",f:1,w:"The three WOMMA decisions (bold bullets).",t:"Standards of conduct (honest, polite); disclosure (#emp, #samp, #paid); protecting intellectual property, financial and copyrighted information."}]},
+  {p:"53",h:"Fig. 9, WOMMA disclosure guide",s:[6],b:[{a:"glance",w:"Disclosure lines for blogs, comments, microblogs (#spon, #paid, #samp), videos and podcasts.",t:"An older US version of today's ASCI rules in India, which come up in Session 8."}]},
+  {p:"54",h:"Organisational structure",s:[6],b:[
+   {a:"read",w:"Para 1: a department “silo” or a centre of excellence (Intel, American Express)."},
+   {a:"read",f:1,w:"The three models.",t:"Centralised (a senior team owns it all), distributed (every employee takes part; Best Buy's Twelpforce), combination (central rules, local execution; Kodak, IBM).",d:"Phases slide, speaker notes"},
+   {a:"read",w:"“Chapter Summary” begins.",s:[]}]},
+  {p:"55",h:"Chapter summary",s:[],b:[{a:"read",f:1,w:"The whole page.",t:"The seven steps in one list (step 7 worded “manage and measure”), the five traits of a good objective, the social profile, the three structures, the policy. Your fastest revision page.",d:"Seven questions and objectives slides"}]},
+  {p:"56",h:"Key terms, review questions, exercises",s:[],b:[
+   {a:"glance",w:"Key terms (36).",t:"Check you can explain each in one line."},
+   {a:"read",f:1,w:"Review questions 1–5.",t:"Ready-made exam questions: maturity phases, the three structures, the seven steps, budgeting methods."},
+   {a:"skip",w:"Exercises (Coca-Cola policy links).",o:"The links are from about 2011 and may no longer work."}]},
+  {p:"57–58",h:"Notes",s:[],b:[{a:"skip",w:"Endnotes."}]}
+ ]},
+ {key:"zah",tab:"Zahay et al. · Ch 2 · pp. 24–43",label:"Zahay et al., Social Media Marketing: A Strategic Approach, 3rd ed., Ch 2 “Goals and Strategies”",note:"Printed page numbers. In your 20-page scan, scan page n = book page n + 23.",
+ pages:[
+  {p:"24",h:"Chapter opener",s:[1],b:[
+   {a:"read",f:1,w:"The pull quote and the opening paragraph.",t:"“The single most important action… is to create a well-thought-out SMM plan.” A major reason SMM programmes fail is the lack of a good plan."},
+   {a:"glance",w:"Learning objectives (run to p. 25).",t:"Planning cycle, listening, the Valid Metrics Framework, strategies, linking goals to actions, word of mouth, best practices.",s:[]}]},
+  {p:"25",h:"What is a SMM plan? · The planning cycle",s:[1,6],b:[
+   {a:"read",f:1,w:"“What Is a SMM Plan?”",t:"A plan sets out goals and the actions to reach them, starting from the company's corporate and marketing strategies.",s:[1]},
+   {a:"read",f:1,w:"“SMM Planning Cycle” and Fig. 2.1.",t:"Listen, goals, strategies, target audience, tools, implement, monitor, tune, then back to listen. A cycle, not a straight line. Draw it.",d:"Close slide (“how will we know?”)",s:[1,6]},
+   {a:"read",w:"Bullets “Listening” and “Setting goals” (run to p. 26).",t:"Listening shows your current presence, what competitors do, and the words people use. Setting goals starts with a SWOT.",s:[2,3]}]},
+  {p:"26",h:"The rest of the cycle",s:[1,4,6],b:[
+   {a:"read",f:1,w:"The bold bullets: defining strategies, identifying the target audience, selecting tools, selecting platforms and channels, implementing, monitoring, tuning.",t:"One line each. Target one or more segments, not all. A platform is one site; a channel, such as mobile, is made of many. Tuning means constantly adjusting."},
+   {a:"skip",w:"Last paragraph: how the rest of the book is organised (runs to p. 27).",s:[]}]},
+  {p:"27",h:"Listen and observe: stages 1–2",s:[2],b:[
+   {a:"read",w:"“Listen and Observe: Five Stages”: intro paragraph.",t:"Before posting, find out where the audience hangs out and what they do there."},
+   {a:"read",f:1,w:"Stage #1 (the brand) and Stage #2 (competitors).",t:"What do people say about us, good and bad? What are competitors doing, who are they targeting, and what works?",d:"Demo one (Google Trends)"}]},
+  {p:"28",h:"Listen and observe: stages 3–5",s:[2],b:[
+   {a:"skim",w:"Stage #3 (industry or category) and “chatter data”.",t:"Listen at category level too. Privacy always matters."},
+   {a:"read",f:1,w:"Stage #4 (tone of the community).",t:"Learn the jargon, slang and unwritten rules, so the brand sounds like it belongs."},
+   {a:"read",w:"Stage #5 (different platforms), and the last paragraph.",t:"Each platform has a different audience. Big firms run a listening centre, or command post.",o:"Pew 2014 platform figures. Use DataReportal India 2026.",s:[2,4]}]},
+  {p:"29",h:"Box: listening for personal branding",s:[2],b:[{a:"skip",w:"Megan Marrs' five lessons and CEO mission statements (runs to p. 30).",t:"Not needed today. Save it for the LinkedIn profile session (S29)."}]},
+  {p:"30",h:"Listening centres",s:[2],b:[
+   {a:"skip",w:"“Internet minute” statistics.",o:"Figures from 2019–2020."},
+   {a:"read",f:1,w:"Para on “call-out” culture.",t:"Sprout Social: 46% of US customers have called out a brand on social media, and 35% would not buy again if they were ignored. A strong hook for class."},
+   {a:"read",w:"Dell's command post (2010) and the start of the NFL story.",t:"A listening centre is a permanent team that watches conversations."}]},
+  {p:"31",h:"The Super Bowl story",s:[2],b:[{a:"skim",w:"Super Bowl XLVI (2012), XLIX (2015) and Fig. 2.2.",t:"Traditional ads cannot listen; social media can. Facebook sold advertisers an audience built from Super Bowl conversations."}]},
+  {p:"32",h:"Super Bowl sentiment, then Cisco",s:[2],b:[
+   {a:"skim",w:"The Kaepernick boycott and negative sentiment in 2019.",t:"Listening also tracks social and political mood."},
+   {a:"read",w:"“Cisco Demonstrates the Importance of Social Media Listening in B2B Marketing” and Fig. 2.3."}]},
+  {p:"33",h:"Cisco's results · Setting goals",s:[2,3],b:[
+   {a:"read",f:1,w:"Paras on Cisco's results.",t:"“The foundation of a strong social media strategy starts with listening.” Cisco reports a 281% return on listening and now tracks over 8 million conversations a month. The best B2B example in the chapter.",s:[2]},
+   {a:"read",f:1,w:"“Setting Goals and Objectives” and the Vistaprint example.",t:"Goals must stay flexible. Vistaprint found customers asking for help on Twitter, moved service there, and saved phone costs.",s:[3]}]},
+  {p:"34",h:"Common objectives",s:[3],b:[
+   {a:"read",f:1,w:"Fig. 2.4 and the paragraph after it.",t:"The usual primary objectives: brand awareness, brand preference, leads or sales, loyalty, customer service. Awareness is the most common."},
+   {a:"skim",w:"Paras on search ranking (“content is king”).",t:"Fresh content shared on social media helps search rankings."},
+   {a:"read",w:"The four secondary objectives and the closing question.",t:"Positioning, new product ideas, crisis readiness, support for PR and ads. Choose a small set by asking what the business needs."}]},
+  {p:"35",h:"The Valid Metrics Framework",s:[3],b:[{a:"read",f:1,w:"The five terms and Fig. 2.5.",t:"Exposure (a chance to see) → engagement (interaction; always check how it is defined) → influence (changes opinion) → impact (business results) → advocacy (people recommend you).",o:"Mentions Klout, which closed in 2018."}]},
+  {p:"36",h:"The objectives cascade",s:[3],b:[
+   {a:"read",w:"Para 1: the five steps follow the purchase journey."},
+   {a:"read",f:1,w:"“Understanding Campaign-Specific and Platform-Specific Social Media Marketing Objectives” and Fig. 2.6.",t:"Corporate goals (financial, a year or more) → marketing objectives (sales or market share, one year) → social media objectives (per campaign and per platform, e.g. 25% more retweets). Objectives say what, never how.",d:"Objectives slide"}]},
+  {p:"37",h:"SMART · Determining strategies",s:[3,1],b:[
+   {a:"read",w:"Para 1: time frames, and few goals per campaign.",t:"Customer acquisition and loyalty rarely fit in one campaign.",s:[3]},
+   {a:"read",f:1,w:"SMART.",t:"Zahay's version: Specific, Measurable, Achievable, Realistic, Time delimited. (Tuten p. 219 says Appropriate.)",s:[3]},
+   {a:"read",f:1,w:"“Determining Strategies”: “What Are the Overall Goals?” and “What Was Learned from Listening?”",t:"Link to the mission and the wider marketing plan. Then answer the five listening questions.",s:[1,2]}]},
+  {p:"38",h:"Strategy defined · The Eight C's",s:[1,4,5],b:[
+   {a:"skim",w:"“What Best Practices Can Be Applied?”",s:[1]},
+   {a:"read",w:"“Goals May Change… Be Flexible”: para 1.",s:[1,6]},
+   {a:"read",f:1,w:"Para starting “Whatever the specific platforms and tactics used…”",t:"The definition: a broad statement of what you want to achieve for the brand on social media. Not random tweets, and not a platform just because it is popular.",d:"Definition and “backwards” slides",s:[1]},
+   {a:"read",f:1,w:"Box: The Eight C's of Strategy Development.",t:"Categorise, comprehend, converse, collaborate, contribute, connect, community, convert.",s:[4,5]},
+   {a:"read",w:"“Linking Goals with a Call to Action”: paras 1–2.",t:"Define the action you want, so that conversions can be measured.",s:[5]}]},
+  {p:"39",h:"Calls to action",s:[5],b:[
+   {a:"read",f:1,w:"Table 2.1, Marketing Goals and Lead Generation.",t:"Lead generation: sign up for a webinar, ask for a consultation. Brand building: watch a video, click, read, follow, sign up for a newsletter.",d:"Demo two (the button shows the goal)"},
+   {a:"read",f:1,w:"The six-step chain of actions.",t:"Click a post, sign up for a newsletter, sign up for a webinar, a sales call, purchase, become an advocate."},
+   {a:"skim",w:"Paras on writing a natural call to action.",t:"Every call to action answers “what's in it for me?”"}]},
+  {p:"40",h:"An army of advocates",s:[5],b:[
+   {a:"read",w:"“Self-Promotion Versus Building an Army of Advocates”.",t:"Advocacy is the top step of the Valid Metrics Framework. Word of mouth drives buying."},
+   {a:"glance",w:"Fig. 2.7, Factors That Influence Purchase Decisions.",o:"A 2014 survey of four countries. The point still holds."}]},
+  {p:"41",h:"Best practices",s:[6],b:[
+   {a:"read",w:"Paras 1–2: advocates defend the brand; an upset customer helped quickly can become a fan.",s:[5]},
+   {a:"read",f:1,w:"“Best Practices for Developing a Social Media Strategy”: all five.",t:"1 A road map (audience, how you will interact, how you will measure, how you will adjust). 2 Listen before you interact (the party example). 3 Welcome participation. 4 Be patient. 5 Be flexible."}]},
+  {p:"42–43",h:"Notes",s:[],b:[{a:"skip",w:"Endnotes.",t:"Note 21 leads to the Cisco ROI source and note 26 to the AMEC Valid Metrics source, if you want the originals."}]}
+ ]}
+],
+extras:[{id:"crosswalk",nav:"How the books line up",eyebrow:"How the books line up",title:"Same plan, three ways of saying it",intro:"The two textbooks and your Session 7 deck describe one process with different step names. This table lines them up so you can move between them in class.",
+ html:'<div class="tablewrap"><table><thead><tr><th>Tuten &amp; Solomon: seven steps <span class="ref">p. 38</span></th><th>Zahay: planning cycle <span class="ref">Fig. 2.1, p. 25</span></th><th>Your Session 7 deck: seven questions</th></tr></thead><tbody>'+
+ '<tr><td>1 · Situation analysis</td><td>Listen (SWOT is done while setting goals, <span class="ref">pp. 25–26</span>)</td><td>1 · Where are we now?</td></tr>'+
+ '<tr><td>2 · State objectives</td><td>Goals, then Strategies</td><td>2 · What do we want?</td></tr>'+
+ '<tr><td>3 · Gather insight into and target segments</td><td>Target audience</td><td>3 · Who is it for?</td></tr>'+
+ '<tr><td>4 · Select channels and vehicles</td><td>Tools; platforms and channels described on <span class="ref">p. 26</span></td><td>4 · Where are they?</td></tr>'+
+ '<tr><td>5 · Create an experience strategy</td><td>Strategies (the Eight C’s, <span class="ref">p. 38</span>)</td><td>5 · What will we say?</td></tr>'+
+ '<tr><td>6 · Establish an activation plan (who, when, budget)</td><td>Implement</td><td>6 · Who does what, when?</td></tr>'+
+ '<tr><td>7 · Execute and measure</td><td>Monitor, Tune, then back to Listen</td><td>7 · How will we know?</td></tr>'+
+ '</tbody></table></div><div class="cards3"><div><b>SMART in Tuten &amp; Solomon</b> <span class="ref">p. 219</span><p>Specific, Measurable, <b>Appropriate</b>, Realistic, Time-oriented.</p></div><div><b>SMART in Zahay</b> <span class="ref">p. 37</span><p>Specific, Measurable, <b>Achievable</b>, Realistic, Time delimited.</p></div><div><b>Tuten’s five marks</b> <span class="ref">pp. 41, 55</span><p>Specific (what, who, when, where), measurable, a change from a baseline, a time line, consistent and realistic. Your deck uses these.</p></div></div>'}],
+notes:[
+ "<b>Checked against your copies.</b> Tuten &amp; Solomon, <i>Social Media Marketing</i>, 1st ed. (Pearson, 2014), the PDF in SMM › Books: printed page numbers; PDF page = book page + 5. Zahay et al., 3rd ed. (Cengage, 2023): Chapter 2 from your 20-page scan (scan page <i>n</i> = book page <i>n</i> + 23), other chapters from your contents scan, which gives the page where each section starts. Kotler &amp; Keller, <i>Marketing Management</i>, 14th ed. (Pearson, 2012), the PDF in BGS › Resources: PDF page = book page + 23.",
+ "<b>Chapter titles only.</b> Tuten, 5th ed. (SAGE, 2023) and Tuten &amp; Solomon, 4th ed. (SAGE, 2020): chapter titles confirmed on SAGE's site, page numbers not. <i>Social Media Marketing All-in-One For Dummies</i>, 5th ed.: chapter and section titles from Wiley's sample pages, page numbers not. The 5th edition I could find is dated 2021 (ISBN 978-1-119-69687-2); the syllabus lists 2023. Palkar &amp; Jadhav, <i>Internet Age – Marketing with Social Media</i> (Himalaya, 2015): contents not found, so it is left out.",
+ "<b>About “SMM Reading Index.xlsx” in this project.</b> Its page numbers for “Zimmerman &amp; Sahlin (All-in-One)” and “Singh &amp; Diamond (4th Ed)” do not match any book I could check. Treat that file's non-Tuten page numbers as unchecked."
+],
+footer:"Module 1 · S7. Page numbers checked October 2026. Tier 3 links can move; check the date on any rule before you quote it in class."
+};
+
+</script>
+<script>
+/* Topic page renderer. Needs window.CATALOG and window.TOPIC. */
+(function(){
+"use strict";
+var T=window.TOPIC, C=window.CATALOG;
+var STOPS=T.stops, R=T.readings, N=STOPS.length;
+var MOD=C.modules.filter(function(m){return m.id===T.module;})[0];
+var KEY="smm-rm-"+T.id;
+
+/* ---------- helpers ---------- */
+function el(tag,attrs,html){var e=document.createElement(tag); if(attrs){for(var k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k,attrs[k]); }} if(html!=null) e.innerHTML=html; return e;}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function stop(id){for(var i=0;i<N;i++) if(STOPS[i].id===id) return STOPS[i];}
+function byTier(t){return R.filter(function(r){return r.tier===t;});}
+function smooth(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"; }catch(e){ return "auto"; } }
+function go(id){ var t=document.getElementById(id); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); }
+var done={};
+try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
+function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+var TIERNAME=["Tier 1 · Primary","Tier 2 · Adjacent","Tier 3 · Outside the syllabus"];
+var ACT={read:"Read",skim:"Skim",glance:"Glance",skip:"Skip"};
+var MIN={read:2,skim:1,glance:0.5,skip:0};
+
+var app=document.getElementById("app");
+document.title=T.title+" · SMM Reading Map";
+
+/* ---------- top bar ---------- */
+var ready=MOD.topics.filter(function(t){return t.file;});
+var idx=MOD.topics.map(function(t){return t.file;}).indexOf(T.file);
+var topicNo=idx+1;
+var jumps=[["route","Road map"],["skim","Skim guide"],["map","Tier map"],["tier1","Tier 1"],["tier2","Tier 2"],["tier3","Tier 3"]];
+(T.extras||[]).forEach(function(x){jumps.push([x.id,x.nav||x.title]);});
+jumps.push(["notes","Notes"]);
+var top=el("nav",{class:"topbar","aria-label":"Page"});
+top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
+  jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
+app.appendChild(top);
+
+/* ---------- hero ---------- */
+var prev=null,next=null;
+for(var i=idx-1;i>=0;i--){ if(MOD.topics[i].file){prev=MOD.topics[i];break;} }
+for(var j=idx+1;j<MOD.topics.length;j++){ if(MOD.topics[j].file){next=MOD.topics[j];break;} }
+var hero=el("header",{class:"hero"});
+hero.innerHTML='<div class="wrap"><div class="eyebrow">Module '+MOD.n+' · '+esc(MOD.title)+' · '+esc(T.session)+'</div>'+
+ '<h1>'+esc(T.title)+'</h1><p class="lede">'+T.lede+'</p>'+(T.coursePlan?'<p class="cp"><b>Course plan:</b> '+T.coursePlan+'</p>':'')+
+ '<div class="legend">'+
+  '<div class="tier"><span class="tierchip t1">Tier 1 · '+byTier(1).length+'</span><b>Primary reading</b><p>'+esc(T.tierText[0])+'</p></div>'+
+  '<div class="tier l2"><span class="tierchip t2">Tier 2 · '+byTier(2).length+'</span><b>Adjacent reading</b><p>'+esc(T.tierText[1])+'</p></div>'+
+  '<div class="tier l3"><span class="tierchip t3">Tier 3 · '+byTier(3).length+'</span><b>Outside the syllabus</b><p>'+esc(T.tierText[2])+'</p></div>'+
+ '</div><div class="pager">'+
+  (prev?'<a href="'+prev.file+'">← '+esc(prev.s)+' · '+esc(prev.title)+'</a>':'')+
+  '<a href="index.html#'+MOD.id+'">All modules</a>'+
+  (next?'<a href="'+next.file+'">'+esc(next.s)+' · '+esc(next.title)+' →</a>':'')+
+ '</div></div>';
+app.appendChild(hero);
+var main=el("main",{}); app.appendChild(main);
+function section(id,eyebrow,title,intro){
+  var s=el("section",{class:"block",id:id});
+  s.innerHTML='<div class="wrap"><header><div class="eyebrow">'+eyebrow+'</div><h2>'+esc(title)+'</h2>'+(intro?'<p>'+intro+'</p>':'')+'</header></div>';
+  main.appendChild(s); return s.firstChild;
+}
+
+/* ---------- skim totals ---------- */
+var SK=T.skim||[];
+function totalMin(book,fast){ return Math.round(book.pages.reduce(function(s,pg){return s+pg.b.reduce(function(t,b){return t+((!fast||b.f)?(b.m!=null?b.m:MIN[b.a]):0);},0);},0)); }
+var TOT={};
+SK.forEach(function(b){ TOT[b.key]=totalMin(b,false); TOT[b.key+"-fast"]=totalMin(b,true); });
+TOT.fast=SK.reduce(function(s,b){return s+TOT[b.key+"-fast"];},0);
+function fillTotals(txt){ return String(txt).replace(/\{min:([a-z0-9-]+)\}/g,function(_,k){return TOT[k]!=null?TOT[k]:"?";}); }
+
+/* ---------- Road map ---------- */
+var rw=section("route","Road map · the essential topics",T.routeTitle,T.routeIntro);
+var ol=el("ol",{class:"route"});
+STOPS.forEach(function(t){
+  var counts=[1,2,3].map(function(n){return R.filter(function(r){return r.tier===n && r.st.indexOf(t.id)>-1;}).length;});
+  var li=el("li",{class:"stop",id:"stop-"+t.id});
+  var learn=t.learn.map(function(l){return "<li>"+esc(l[0])+(l[1]?" <span class=\"ref acc\">"+esc(l[1])+"</span>":"")+"</li>";}).join("");
+  li.innerHTML='<div class="dot" aria-hidden="true">'+t.id+'</div><div class="card"><div class="eyebrow">Stop '+t.id+' of '+N+'</div><h3>'+esc(t.name)+'</h3>'+
+    '<p class="plain">'+esc(t.plain)+'</p><div class="cols"><ul class="learn">'+learn+'</ul><div class="side">'+
+    '<div class="box"><div class="eyebrow">Be ready to answer</div><p>'+esc(t.ask)+'</p></div>'+
+    '<div class="box"><div class="eyebrow">Readings for this stop</div><div class="tiercount"><span class="tierchip t1">Tier 1 · '+counts[0]+'</span><span class="tierchip t2">Tier 2 · '+counts[1]+'</span><span class="tierchip t3">Tier 3 · '+counts[2]+'</span></div>'+
+    '<div class="linkrow"><button class="linkish" type="button" data-act="skim" data-stop="'+t.id+'">Skim guide</button><button class="linkish" type="button" data-act="map" data-stop="'+t.id+'">Tier map</button><button class="linkish" type="button" data-act="list" data-stop="'+t.id+'">Reading lists</button></div></div></div></div></div>';
+  ol.appendChild(li);
+});
+rw.appendChild(ol);
+if(T.plan&&T.plan.length){
+  var plan=el("div",{class:"plan","aria-label":"Suggested study plan"});
+  T.plan.forEach(function(p){ plan.appendChild(el("div",{class:"s p"+p.tier},'<div class="eyebrow">'+esc(fillTotals(p.when))+'</div><p>'+fillTotals(p.text)+'</p>')); });
+  rw.appendChild(plan);
+  rw.appendChild(el("p",{class:"muted",style:"font-size:.88rem;margin-top:10px"},"Times are rough guides, worked out from the skim guide below."));
+}
+
+/* ---------- Skim guide ---------- */
+var sw=section("skim","Tier 1 skim guide · page by page",T.skimTitle||"What to read, skim and skip",T.skimIntro);
+sw.appendChild(el("div",{class:"skimkey","aria-label":"How to read the marks"},
+  '<span><b class="act read">Read</b> Definitions, lists and models. Read every line.</span>'+
+  '<span><b class="act skim">Skim</b> Examples and stories. First and last line of each paragraph.</span>'+
+  '<span><b class="act glance">Glance</b> Figures and tables. Look for the shape.</span>'+
+  '<span><b class="act skip">Skip</b> Old data, notes, side topics.</span>'+
+  '<span><b class="fast">Fast route</b> The minimum to teach the hour.</span>'));
+var skimBar=el("div",{class:"skimbar"});
+var seg=el("div",{class:"seg",role:"group","aria-label":"Choose a book"});
+SK.forEach(function(b,i){ seg.appendChild(el("button",{type:"button","data-book":b.key,"aria-pressed":String(i===0)},esc(b.tab))); });
+skimBar.appendChild(seg);
+skimBar.appendChild(el("label",{class:"fasttoggle"},'<input type="checkbox" id="fastOnly-'+T.id+'"> Show the fast route only'));
+sw.appendChild(skimBar);
+var skimBanner=el("div",{class:"filterbanner"}); skimBanner.hidden=true; sw.appendChild(skimBanner);
+var skimSum=el("p",{class:"skimsum"}); sw.appendChild(skimSum);
+var skimList=el("div",{}); sw.appendChild(skimList);
+if(T.skimNote) sw.appendChild(el("p",{class:"skimnote"},T.skimNote));
+var skimBook=SK.length?SK[0].key:null, fastOnly=false, skimStop=0;
+function bookByKey(k){return SK.filter(function(b){return b.key===k;})[0];}
+function blockStops(pg,b){ return b.s||pg.s||[]; }
+function skimDoneCount(B){ return B.pages.filter(function(pg){return done["skim-"+B.key+"-"+pg.p];}).length; }
+function renderSkim(){
+  var B=bookByKey(skimBook); skimList.innerHTML=""; if(!B) return;
+  skimList.appendChild(el("div",{class:"booklabel"},esc(B.label)+' <small>'+esc(B.note)+'</small>'));
+  var wrap=el("div",{}), shown=0;
+  B.pages.forEach(function(pg){
+    var blocks=pg.b.filter(function(b){ if(fastOnly && !b.f) return false; if(skimStop){ return blockStops(pg,b).indexOf(skimStop)>-1; } return true; });
+    if(!blocks.length) return;
+    shown++;
+    var key="skim-"+B.key+"-"+pg.p;
+    var row=el("div",{class:"skimrow",id:"skim-"+B.key+"-"+String(pg.p).replace(/[^0-9a-z]/gi,"-")});
+    if(done[key]) row.classList.add("donepage");
+    var items=blocks.map(function(b){
+      var tags="";
+      if(b.f) tags+='<span class="fast">Fast route</span>';
+      var st=blockStops(pg,b); if(st.length && st.length<N && !skimStop) tags+='<span class="tag-stop">Stop '+st.join(", ")+'</span>';
+      if(b.d) tags+='<span class="tag-deck">In your deck: '+esc(b.d)+'</span>';
+      if(b.o) tags+='<span class="tag-old">Dated: '+esc(b.o)+'</span>';
+      return '<li><span class="act '+b.a+'">'+ACT[b.a]+'</span><div><div class="what">'+esc(b.w)+'</div>'+(b.t?'<p class="take">'+esc(b.t)+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+'</div></li>';
+    }).join("");
+    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b><label><input type="checkbox"'+(done[key]?' checked':'')+'> Done</label></div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
+    row.querySelector("input").addEventListener("change",function(e){
+      if(e.target.checked) done[key]=1; else delete done[key];
+      row.classList.toggle("donepage",e.target.checked); saveDone(); updateSkimSum();
+    });
+    wrap.appendChild(row);
+  });
+  if(!shown){
+    var custom=skimStop && T.skimEmpty && T.skimEmpty[skimStop];
+    wrap.appendChild(el("p",{class:"empty"},custom?custom+' <button class="linkish" type="button" data-act="tier" data-tier="3" data-stop="'+skimStop+'">Tier 3 list for this stop</button>':"Nothing in this book for stop "+skimStop+". Try the other book, or show all stops."));
+  }
+  skimList.appendChild(wrap);
+  skimBanner.hidden=!skimStop;
+  if(skimStop) skimBanner.innerHTML='Showing only the parts for <b>Stop '+skimStop+' · '+esc(stop(skimStop).name)+'</b><button class="linkish" type="button" data-clear="skim">Show every page</button><button class="linkish" type="button" data-act="list" data-stop="'+skimStop+'">Tier 1 list for this stop</button>';
+  updateSkimSum();
+}
+function updateSkimSum(){
+  var B=bookByKey(skimBook); if(!B){skimSum.textContent="";return;}
+  skimSum.textContent="Full skim about "+TOT[B.key]+" min · fast route about "+TOT[B.key+"-fast"]+" min · pages done: "+skimDoneCount(B)+" of "+B.pages.length+".";
+}
+function setSkimBook(k){ skimBook=k; Array.prototype.forEach.call(seg.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-book")===k));}); renderSkim(); }
+function setSkimStop(id){
+  skimStop=id||0;
+  /* switch to a book that has parts for this stop, if the current one has none */
+  if(skimStop){
+    var has=function(B){return B.pages.some(function(pg){return pg.b.some(function(b){return blockStops(pg,b).indexOf(skimStop)>-1;});});};
+    var cur=bookByKey(skimBook);
+    if(cur && !has(cur)){ var alt=SK.filter(has)[0]; if(alt){ setSkimBook(alt.key); return; } }
+  }
+  renderSkim();
+}
+seg.addEventListener("click",function(e){ var b=e.target.closest("button"); if(b) setSkimBook(b.getAttribute("data-book")); });
+skimBar.querySelector("input").addEventListener("change",function(e){ fastOnly=e.target.checked; renderSkim(); });
+
+/* ---------- Tier map ---------- */
+var mw=section("map","Tier map · how it all connects",T.mapTitle||"One topic in the middle, three rings of reading around it",
+  "Each spoke is one stop. Moving outwards, the rings go from the syllabus books (Tier 1) to other books (Tier 2) to outside material (Tier 3). Tap a stop's circle to see its readings below the map. Tap a ring box to jump straight there: Tier 1 opens the skim guide for that stop, Tier 2 and Tier 3 open their reading lists.");
+var topicbar=el("div",{class:"topicbar",role:"group","aria-label":"Choose a stop"});
+mw.appendChild(topicbar);
+var mg=el("div",{class:"mapgrid"}); mw.appendChild(mg);
+var mapCol=el("div",{}); mg.appendChild(mapCol);
+var mapbox=el("div",{class:"mapbox"}); mapCol.appendChild(mapbox);
+mapCol.appendChild(el("p",{class:"maphint"},"On a phone, swipe sideways to see the whole map."));
+mapCol.appendChild(el("div",{class:"mapkey"},
+ '<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="2.2"/><path d="M26 1 L33 5 L26 9 Z" fill="currentColor"/></svg>'+esc(T.flowLabel||"Order of the stops")+'</span>'+
+ (T.links.some(function(l){return l.loop;})?'<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="26" y2="5" stroke="var(--a)" stroke-width="2.6"/><path d="M26 1 L33 5 L26 9 Z" fill="var(--a)"/></svg>'+esc(T.loopLabel||"Feedback loop")+'</span>':'')+
+ '<span><svg width="34" height="10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="5 4"/></svg>Cross-link between stops</span>'+
+ '<span><span class="tierchip t1">Tier 1</span><span class="tierchip t2">Tier 2</span><span class="tierchip t3">Tier 3</span></span>'));
+var detail=el("aside",{class:"detail","aria-live":"polite"}); mg.appendChild(detail);
+
+var NS="http://www.w3.org/2000/svg";
+function sv(tag,attrs,text){var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; return e;}
+var CX=0, CY=0, RT=170, RN=54, BW=152, BH=52;
+var STEP=(N===5)?170:120;
+var RR=[315,315+STEP,315+2*STEP];
+var START=(N===4)?-45:-90;
+var ANG={}; STOPS.forEach(function(t,i){ ANG[t.id]=START+i*360/N; });
+function pt(r,deg){var a=deg*Math.PI/180; return [CX+r*Math.cos(a), CY+r*Math.sin(a)];}
+var svg=sv("svg",{role:"img","aria-label":"Tier map for "+T.title+": "+N+" stops around the centre, each with Tier 1, Tier 2 and Tier 3 readings on rings."});
+mapbox.appendChild(svg);
+var defs=sv("defs",{});
+var m1=sv("marker",{id:"ah-"+T.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"}); m1.appendChild(sv("path",{d:"M0 0 L10 5 L0 10 Z","class":"arrowhead"}));
+var m2=sv("marker",{id:"ahA-"+T.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"}); m2.appendChild(sv("path",{d:"M0 0 L10 5 L0 10 Z","class":"arrowhead acc"}));
+defs.appendChild(m1); defs.appendChild(m2); svg.appendChild(defs);
+RR.forEach(function(r,i){ svg.appendChild(sv("circle",{cx:CX,cy:CY,r:r,"class":"ring r"+(i+1)})); });
+/* ring labels go in the gap between spokes closest to the lower right */
+var gaps=STOPS.map(function(t,i){ return START+(i+0.5)*360/N; });
+var best=gaps.slice().sort(function(a,b){ function d(x){var v=((x-60)%360+540)%360-180; return Math.abs(v);} return d(a)-d(b); })[0];
+["TIER 1 · PRIMARY","TIER 2 · ADJACENT","TIER 3 · OUTSIDE"].forEach(function(lbl,i){ var p=pt(RR[i],best); svg.appendChild(sv("text",{x:p[0].toFixed(1),y:(p[1]+4).toFixed(1),"text-anchor":"middle","class":"ringlabel"},lbl)); });
+var linkLayer=sv("g",{}); svg.appendChild(linkLayer);
+var gapDeg=Math.asin((RN+8)/RT)*180/Math.PI+2;
+for(var k=0;k<N-1;k++){
+  var a0=ANG[STOPS[k].id]+gapDeg, a1=ANG[STOPS[k+1].id]-gapDeg;
+  var q0=pt(RT,a0), q1=pt(RT,a1);
+  var fl=sv("path",{d:"M"+q0[0].toFixed(1)+" "+q0[1].toFixed(1)+" A"+RT+" "+RT+" 0 0 1 "+q1[0].toFixed(1)+" "+q1[1].toFixed(1),"class":"flow","marker-end":"url(#ah-"+T.id+")"});
+  fl.appendChild(sv("title",{},"Stop "+STOPS[k].id+" to stop "+STOPS[k+1].id));
+  linkLayer.appendChild(fl);
+}
+var chordEls=[];
+(T.links||[]).forEach(function(L){
+  var pa=pt(RT,ANG[L.a]), pb=pt(RT,ANG[L.b]);
+  var dx=pb[0]-pa[0], dy=pb[1]-pa[1], len=Math.sqrt(dx*dx+dy*dy), ux=dx/len, uy=dy/len;
+  var trim=RN+6, extra=L.loop?4:0;
+  var sx=pa[0]+ux*trim, sy=pa[1]+uy*trim, ex=pb[0]-ux*(trim+extra), ey=pb[1]-uy*(trim+extra);
+  var mx=(pa[0]+pb[0])/2, my=(pa[1]+pb[1])/2, dm=Math.sqrt(mx*mx+my*my);
+  var safe=RN+24, dctrl=Math.max(2*safe-dm, dm*0.75);
+  var vx,vy; if(dm<1){ vx=-uy; vy=ux; } else { vx=mx/dm; vy=my/dm; }
+  var qx=vx*dctrl, qy=vy*dctrl;
+  var attrs={d:"M"+sx.toFixed(1)+" "+sy.toFixed(1)+" Q"+qx.toFixed(1)+" "+qy.toFixed(1)+" "+ex.toFixed(1)+" "+ey.toFixed(1),"class":L.loop?"loop":"cross"};
+  if(L.loop) attrs["marker-end"]="url(#ahA-"+T.id+")";
+  var p=sv("path",attrs); p.appendChild(sv("title",{},L.text)); linkLayer.appendChild(p);
+  chordEls.push({el:p,L:L});
+});
+svg.appendChild(sv("circle",{cx:CX,cy:CY,r:RN+2,"class":"centre"}));
+var cl=T.centre||["SMM","topic"];
+svg.appendChild(sv("text",{x:CX,y:CY-3,"text-anchor":"middle","class":"centretext"},cl[0]));
+svg.appendChild(sv("text",{x:CX,y:CY+17,"text-anchor":"middle","class":"centretext"},cl[1]));
+var spoke={}, nodes=[];
+var minX=-RN-10,maxX=RN+10,minY=-RN-10,maxY=RN+10;
+function grow(x,y,w,h){ minX=Math.min(minX,x-w/2); maxX=Math.max(maxX,x+w/2); minY=Math.min(minY,y-h/2); maxY=Math.max(maxY,y+h/2); }
+STOPS.forEach(function(t){
+  var g=sv("g",{"class":"spokegroup"});
+  var pa=pt(RT+RN,ANG[t.id]), pb=pt(RR[2],ANG[t.id]);
+  g.appendChild(sv("line",{x1:pa[0].toFixed(1),y1:pa[1].toFixed(1),x2:pb[0].toFixed(1),y2:pb[1].toFixed(1),"class":"spoke"}));
+  ["t1","t2","t3"].forEach(function(key,ix){
+    var c=pt(RR[ix],ANG[t.id]); grow(c[0],c[1],BW,BH);
+    var lines=t.map[key];
+    var sat=sv("g",{"class":"sat s"+(ix+1),tabindex:"0",role:"button","aria-label":"Stop "+t.id+", "+TIERNAME[ix]+": "+lines.join(", ")+". Go to "+(ix===0?"the skim guide":"the Tier "+(ix+1)+" list")});
+    sat.appendChild(sv("rect",{x:(c[0]-BW/2).toFixed(1),y:(c[1]-BH/2).toFixed(1),width:BW,height:BH,rx:7}));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]-12).toFixed(1),"text-anchor":"middle","class":"txt"},lines[0]));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+6).toFixed(1),"text-anchor":"middle","class":"txt"},lines[1]));
+    sat.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+21).toFixed(1),"text-anchor":"middle","class":"tag"},["TIER 1 → SKIM","TIER 2 → LIST","TIER 3 → LIST"][ix]));
+    sat.appendChild(sv("title",{},t.name+" · "+TIERNAME[ix]+": "+lines.join(", ")));
+    var act=function(){ jumpTier(t.id,ix+1); };
+    sat.addEventListener("click",act);
+    sat.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(); } });
+    g.appendChild(sat);
+  });
+  svg.appendChild(g);
+  var c=pt(RT,ANG[t.id]);
+  var node=sv("g",{"class":"tnode",tabindex:"0",role:"button","aria-label":"Stop "+t.id+": "+t.name});
+  node.appendChild(sv("circle",{cx:c[0].toFixed(1),cy:c[1].toFixed(1),r:RN}));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]-18).toFixed(1),"text-anchor":"middle","class":"num"},String(t.id)));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+2).toFixed(1),"text-anchor":"middle","class":"lab"},t.short[0]));
+  node.appendChild(sv("text",{x:c[0].toFixed(1),y:(c[1]+20).toFixed(1),"text-anchor":"middle","class":"lab"},t.short[1]||""));
+  node.addEventListener("click",function(){select(t.id);});
+  node.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(t.id);} });
+  nodes.push(node);
+  spoke[t.id]={g:g,node:node};
+});
+nodes.forEach(function(n){ svg.appendChild(n); });
+var pad=16;
+svg.setAttribute("viewBox",[(minX-pad).toFixed(0),(minY-pad).toFixed(0),(maxX-minX+2*pad).toFixed(0),(maxY-minY+2*pad).toFixed(0)].join(" "));
+
+STOPS.forEach(function(t){
+  var b=el("button",{type:"button","aria-pressed":"false","data-stop":t.id},t.id+" · "+esc(t.name));
+  b.addEventListener("click",function(){select(t.id);});
+  topicbar.appendChild(b);
+});
+function readingLine(r){
+  if(r.tier===3){
+    var head=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':'<b>'+esc(r.title)+'</b>';
+    return head+' <span class="src">· '+esc(r.src)+' · '+esc(r.date)+'</span>';
+  }
+  var b=T.books[r.book];
+  return '<span class="src">'+esc(b.short)+' · '+esc(r.where)+' ·</span> '+esc(r.title)+' <span class="ref">'+esc(r.pages)+'</span>';
+}
+var current=1;
+function renderDetail(id){
+  var t=stop(id);
+  var html='<div class="eyebrow">Stop '+t.id+' of '+N+' · readings on this spoke</div><h3>'+esc(t.name)+'</h3><p class="plain">'+esc(t.plain)+'</p>'+
+    '<div class="go"><button type="button" data-act="skim" data-stop="'+id+'"><span class="tierchip t1">Tier 1</span>Skim guide for this stop</button>'+
+    '<button type="button" data-act="tier" data-tier="1" data-stop="'+id+'"><span class="tierchip t1">Tier 1</span>List</button>'+
+    '<button type="button" data-act="tier" data-tier="2" data-stop="'+id+'"><span class="tierchip t2">Tier 2</span>List</button>'+
+    '<button type="button" data-act="tier" data-tier="3" data-stop="'+id+'"><span class="tierchip t3">Tier 3</span>List</button></div><div class="tgs">';
+  [1,2,3].forEach(function(n){
+    var items=R.filter(function(r){return r.tier===n && r.st.indexOf(id)>-1 && !r.hideInDetail;});
+    html+='<div class="tg g'+n+'"><h4><span class="tierchip t'+n+'">'+TIERNAME[n-1]+'</span></h4><ul>'+(items.length?items.map(function(r){return "<li>"+readingLine(r)+"</li>";}).join(""):'<li class="muted">Nothing in this tier for this stop.</li>')+'</ul></div>';
+  });
+  html+='</div>';
+  var rel=(T.links||[]).filter(function(L){return L.a===id||L.b===id;});
+  var pos=STOPS.map(function(s){return s.id;}).indexOf(id);
+  var prev=pos>0?'<li>Comes after stop '+STOPS[pos-1].id+': '+esc(STOPS[pos-1].name)+'.</li>':'';
+  var next=pos<N-1?'<li>Leads to stop '+STOPS[pos+1].id+': '+esc(STOPS[pos+1].name)+'.</li>':'';
+  html+='<div class="links"><b>Connects to</b><ul>'+prev+next+rel.map(function(L){var o=L.a===id?L.b:L.a; return '<li>Stop '+o+' ('+esc(stop(o).name)+'): '+esc(L.text)+'</li>';}).join("")+(t.elsewhere?'<li>'+t.elsewhere+'</li>':'')+'</ul></div>';
+  detail.innerHTML=html;
+}
+function select(id){
+  current=id;
+  STOPS.forEach(function(t){ var on=t.id===id; spoke[t.id].g.classList.toggle("dim",!on); spoke[t.id].node.classList.toggle("sel",on); });
+  chordEls.forEach(function(c){ c.el.classList.toggle("crosssel", !c.L.loop && (c.L.a===id||c.L.b===id)); });
+  Array.prototype.forEach.call(topicbar.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(Number(b.getAttribute("data-stop"))===id));});
+  renderDetail(id);
+}
+
+/* ---------- Reading lists ---------- */
+var lw=section("lists","Reading lists · book, section and page","Everything to read, by tier","Tick items off as you go; the ticks stay in this browser only. Use the buttons to show one stop at a time.");
+var filters=el("div",{class:"filters",role:"group","aria-label":"Filter by stop"},'<span class="lbl">Show:</span>'); lw.appendChild(filters);
+var progress=el("p",{class:"progress"}); lw.appendChild(progress);
+var listBoxes={};
+[1,2,3].forEach(function(n){
+  var blk=el("div",{class:"tierblock b"+n,id:"tier"+n});
+  blk.innerHTML='<div class="th"><h3>'+TIERNAME[n-1]+'</h3><span class="count"></span><p>'+esc(T.tierIntro[n-1])+'</p></div>';
+  var box=el("div",{}); blk.appendChild(box); lw.appendChild(blk);
+  listBoxes[n]={box:box,count:blk.querySelector(".count")};
+});
+var filter=0;
+[{id:0,name:"All stops"}].concat(STOPS).forEach(function(t){
+  var b=el("button",{type:"button","aria-pressed":String(t.id===0),"data-f":t.id}, t.id===0?"All stops":(t.id+" · "+esc(t.name)));
+  b.addEventListener("click",function(){setFilter(t.id);});
+  filters.appendChild(b);
+});
+function itemHTML(r){
+  var chk='<input type="checkbox" aria-label="Mark as read"'+(done[r.id]?' checked':'')+'>';
+  var tags='<div class="meta">'+r.st.map(function(id){return '<span>'+id+' · '+esc(stop(id).short.join(" "))+'</span>';}).join("")+'</div>';
+  if(r.tier===3){
+    var title=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':esc(r.title);
+    return chk+'<div class="main"><div class="where">'+esc(r.src)+'</div><div class="title">'+title+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg">'+esc(r.date)+'</span>';
+  }
+  return chk+'<div class="main"><div class="where">'+esc(r.where)+'</div><div class="title">'+esc(r.title)+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg'+(r.unv?' unv':'')+'">'+esc(r.pages)+'</span>';
+}
+function renderLists(){
+  [1,2,3].forEach(function(n){
+    var box=listBoxes[n].box; box.innerHTML="";
+    var items=byTier(n).filter(function(r){return filter===0 || r.st.indexOf(filter)>-1;});
+    listBoxes[n].count.textContent=items.length+(filter===0?" items":" for stop "+filter);
+    if(!items.length){ box.appendChild(el("p",{class:"empty"},"Nothing in this tier for this stop.")); return; }
+    var groups=[], keyOf=function(r){return n===3?r.group:r.book;};
+    items.forEach(function(r){var k=keyOf(r); var g=groups.filter(function(x){return x.k===k;})[0]; if(!g){g={k:k,items:[]};groups.push(g);} g.items.push(r);});
+    groups.forEach(function(g){
+      var lab;
+      if(n===3){ lab=el("div",{class:"booklabel"},esc(g.k)); }
+      else {
+        var b=T.books[g.k];
+        var sk=(n===1 && b.skim)?b.skim:"";
+        lab=el("div",{class:"booklabel"},esc(b.label)+' <small>'+esc(b.sub)+(sk?' · <button class="linkish" type="button" data-skimbook="'+sk+'">page-by-page skim guide</button>':'')+'</small>');
+      }
+      box.appendChild(lab);
+      var ul=el("ul",{class:"items"});
+      g.items.forEach(function(r){
+        var li=el("li",{},itemHTML(r));
+        if(done[r.id]) li.classList.add("done");
+        li.querySelector("input").addEventListener("change",function(e){ if(e.target.checked) done[r.id]=1; else delete done[r.id]; li.classList.toggle("done",e.target.checked); saveDone(); updateProgress(); });
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+    });
+  });
+  updateProgress();
+}
+function updateProgress(){
+  var c=[1,2,3].map(function(n){var all=byTier(n); return all.filter(function(r){return done[r.id];}).length+" of "+all.length;});
+  progress.textContent="Read so far: Tier 1 "+c[0]+" · Tier 2 "+c[1]+" · Tier 3 "+c[2]+".";
+}
+function setFilter(id){
+  filter=id;
+  Array.prototype.forEach.call(filters.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(Number(b.getAttribute("data-f"))===id));});
+  renderLists();
+}
+
+/* ---------- Extras and notes ---------- */
+(T.extras||[]).forEach(function(x){ var w=section(x.id,x.eyebrow,x.title,x.intro); w.appendChild(el("div",{},x.html)); });
+var nw=section("notes","Notes on editions and page numbers","What was checked, and what was not");
+nw.appendChild(el("div",{class:"notes"},T.notes.map(function(p){return "<p>"+p+"</p>";}).join("")));
+app.appendChild(el("footer",{},'<div class="wrap">'+T.footer+'</div>'));
+
+/* ---------- Jumps from the map, road map and panels ---------- */
+function jumpTier(id,tier){
+  select(id);
+  if(tier===1){ setSkimStop(id); go("skim"); }
+  else { setFilter(id); go("tier"+tier); }
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act],[data-clear],[data-skimbook]"); if(!b) return;
+  if(b.hasAttribute("data-skimbook")){ setSkimStop(0); setSkimBook(b.getAttribute("data-skimbook")); go("skim"); return; }
+  if(b.getAttribute("data-clear")==="skim"){ setSkimStop(0); return; }
+  var id=Number(b.getAttribute("data-stop")), a=b.getAttribute("data-act");
+  if(a==="skim"){ select(id); setSkimStop(id); go("skim"); }
+  else if(a==="map"){ select(id); go("map"); }
+  else if(a==="list"){ setFilter(id); go("tier1"); }
+  else if(a==="tier"){ setFilter(id); go("tier"+b.getAttribute("data-tier")); }
+});
+
+renderSkim();
+select(1);
+renderLists();
+})();
+
+</script>
+</body>
+</html>
