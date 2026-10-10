@@ -302,6 +302,11 @@ ul.items li .pg{font-family:var(--mono);font-size:.86rem;font-variant-numeric:ta
 .b3 ul.items li .pg{background:transparent;outline:1px dashed var(--a);outline-offset:-1px}
 ul.items li .pg.unv{background:var(--sunk);color:var(--muted);outline:none}
 ul.items li.done .title,ul.items li.done .why{opacity:.55}
+ul.items li .cov{margin-top:7px;font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+ul.items li .cov::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--a-mid)}
+ul.items li.part .cov{color:var(--a)}
+ul.items li.part .cov::before{background:linear-gradient(90deg,var(--a) 50%,transparent 50%);border-color:var(--a)}
+ul.items li.done .cov::before{background:var(--a);border-color:var(--a)}
 ul.items li a.out{font-weight:700}
 @media (max-width:560px){ul.items li{grid-template-columns:24px minmax(0,1fr)} ul.items li .pg{grid-column:2;justify-self:start;white-space:normal}}
 .empty{padding:14px 0;color:var(--muted);font-size:.95rem}
@@ -475,10 +480,12 @@ function save(){ try{ localStorage.setItem(KEY,JSON.stringify(open)); }catch(e){
 /* reading progress saved by each topic page (ticked readings / all readings) */
 function progressHTML(file){
   var p=null; try{ p=JSON.parse(localStorage.getItem("smm-rm-sum-"+file)||"null"); }catch(e){ p=null; }
-  if(!p || !p.t || !p.d) return "";
-  var pct=Math.floor(p.d*100/p.t), full=p.d>=p.t;
-  return '<span class="tprog'+(full?' full':'')+'"><span class="tbar" aria-hidden="true"><i style="width:'+Math.min(100,p.d*100/p.t)+'%"></i></span>'+
-    (full?'All '+p.t+' readings done':pct+'% read · '+p.d+' of '+p.t)+'</span>';
+  if(!p || !p.t) return "";
+  var pct=(p.p!=null)?p.p:p.d*100/p.t, full=p.d>=p.t;
+  if(!pct && !p.d) return "";
+  var shown=(pct>0 && pct<1)?"<1":Math.floor(pct);
+  return '<span class="tprog'+(full?' full':'')+'"><span class="tbar" aria-hidden="true"><i style="width:'+Math.min(100,pct)+'%"></i></span>'+
+    (full?'All '+p.t+' readings done':shown+'% read · '+p.d+' of '+p.t+' readings done')+'</span>';
 }
 
 var total=0, readyN=0;

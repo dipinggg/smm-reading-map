@@ -14,10 +14,12 @@ function save(){ try{ localStorage.setItem(KEY,JSON.stringify(open)); }catch(e){
 /* reading progress saved by each topic page (ticked readings / all readings) */
 function progressHTML(file){
   var p=null; try{ p=JSON.parse(localStorage.getItem("smm-rm-sum-"+file)||"null"); }catch(e){ p=null; }
-  if(!p || !p.t || !p.d) return "";
-  var pct=Math.floor(p.d*100/p.t), full=p.d>=p.t;
-  return '<span class="tprog'+(full?' full':'')+'"><span class="tbar" aria-hidden="true"><i style="width:'+Math.min(100,p.d*100/p.t)+'%"></i></span>'+
-    (full?'All '+p.t+' readings done':pct+'% read · '+p.d+' of '+p.t)+'</span>';
+  if(!p || !p.t) return "";
+  var pct=(p.p!=null)?p.p:p.d*100/p.t, full=p.d>=p.t;
+  if(!pct && !p.d) return "";
+  var shown=(pct>0 && pct<1)?"<1":Math.floor(pct);
+  return '<span class="tprog'+(full?' full':'')+'"><span class="tbar" aria-hidden="true"><i style="width:'+Math.min(100,pct)+'%"></i></span>'+
+    (full?'All '+p.t+' readings done':shown+'% read · '+p.d+' of '+p.t+' readings done')+'</span>';
 }
 
 var total=0, readyN=0;

@@ -302,6 +302,11 @@ ul.items li .pg{font-family:var(--mono);font-size:.86rem;font-variant-numeric:ta
 .b3 ul.items li .pg{background:transparent;outline:1px dashed var(--a);outline-offset:-1px}
 ul.items li .pg.unv{background:var(--sunk);color:var(--muted);outline:none}
 ul.items li.done .title,ul.items li.done .why{opacity:.55}
+ul.items li .cov{margin-top:7px;font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+ul.items li .cov::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--a-mid)}
+ul.items li.part .cov{color:var(--a)}
+ul.items li.part .cov::before{background:linear-gradient(90deg,var(--a) 50%,transparent 50%);border-color:var(--a)}
+ul.items li.done .cov::before{background:var(--a);border-color:var(--a)}
 ul.items li a.out{font-weight:700}
 @media (max-width:560px){ul.items li{grid-template-columns:24px minmax(0,1fr)} ul.items li .pg{grid-column:2;justify-self:start;white-space:normal}}
 .empty{padding:14px 0;color:var(--muted);font-size:.95rem}
@@ -617,7 +622,7 @@ function smooth(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").ma
 function go(id){ var t=document.getElementById(id); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); }
 var done={};
 try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
-function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} updateReadbar(); }
+function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} syncAll(); }
 var TIERNAME=["Tier 1 · Primary","Tier 2 · Adjacent","Tier 3 · Outside the syllabus"];
 var ACT={read:"Read",skim:"Skim",glance:"Glance",skip:"Skip"};
 var MIN={read:2,skim:1,glance:0.5,skip:0};
@@ -652,27 +657,31 @@ rb.innerHTML='<div class="wrap">'+
    }).join("")+'<span class="rb-skim"></span></div>'+
  '</div>';
 top.appendChild(rb);
+function fmtPct(v){ return (v>0 && v<1) ? "<1%" : Math.floor(v+1e-9)+"%"; }
+function credit(r){ var c=COVER[r.id]; return c ? pagesTicked(r)/c.length : (done[r.id]?1:0); }
 function updateReadbar(){
   if(!rb) return;
-  var tot=0, dn=0, tiers=rb.querySelectorAll(".rb-t");
+  /* a reading linked to skim pages earns part credit as its pages are ticked, so every skim tick moves the bar */
+  var tot=0, dn=0, cr=0, pt=0, tiers=rb.querySelectorAll(".rb-t");
   [1,2,3].forEach(function(n){
-    var all=byTier(n), d=all.filter(function(r){return done[r.id];}).length;
-    tot+=all.length; dn+=d;
-    var p=all.length?Math.floor(d*100/all.length):0;
-    var seg=rb.querySelector(".rb-seg.s"+n); if(seg) seg.firstChild.style.width=(all.length?d*100/all.length:0)+"%";
-    var t=tiers[n-1];
-    t.querySelector(".rb-n").textContent=p+"%";
-    t.setAttribute("aria-label",TIERNAME[n-1]+": "+d+" of "+all.length+" read ("+p+"%). Go to the list.");
-    t.title=TIERNAME[n-1]+": "+d+" of "+all.length+" read";
+    var all=byTier(n), d=all.filter(isRead).length, part=all.filter(function(r){return !isRead(r) && pagesTicked(r)>0;}).length;
+    var c=all.reduce(function(s,r){return s+credit(r);},0);
+    tot+=all.length; dn+=d; cr+=c; pt+=part;
+    var pv=all.length?c*100/all.length:0, p=fmtPct(pv);
+    var seg=rb.querySelector(".rb-seg.s"+n); if(seg) seg.firstChild.style.width=(all.length?c*100/all.length:0)+"%";
+    var t=tiers[n-1], txt=d+" of "+all.length+" read"+(part?", "+part+" part-read":"");
+    t.querySelector(".rb-n").textContent=p;
+    t.setAttribute("aria-label",TIERNAME[n-1]+": "+txt+" ("+p+"). Go to the list.");
+    t.title=TIERNAME[n-1]+": "+txt;
     t.classList.toggle("full",all.length>0 && d===all.length);
   });
-  var pct=tot?Math.floor(dn*100/tot):0, complete=tot>0 && dn===tot;
-  rb.querySelector(".rb-pct").textContent=pct+"%";
-  rb.querySelector(".rb-lab").textContent=complete?"All "+tot+" readings done":dn+" of "+tot+" readings done";
+  var pv=tot?cr*100/tot:0, complete=tot>0 && dn===tot;
+  rb.querySelector(".rb-pct").textContent=fmtPct(pv);
+  rb.querySelector(".rb-lab").textContent=complete?"All "+tot+" readings done":dn+" of "+tot+" readings done"+(pt?" · "+pt+" part-read":"");
   rb.classList.toggle("complete",complete);
   var sp=0, st=0; (T.skim||[]).forEach(function(B){ st+=B.pages.length; sp+=skimDoneCount(B); });
   rb.querySelector(".rb-skim").textContent=st?"Skim guide: "+sp+" of "+st+" pages":"";
-  try{ localStorage.setItem("smm-rm-sum-"+T.file,JSON.stringify({d:dn,t:tot})); }catch(e){}
+  try{ localStorage.setItem("smm-rm-sum-"+T.file,JSON.stringify({d:dn,t:tot,p:Math.round(pv*10)/10})); }catch(e){}
 }
 /* keep jump targets clear of the sticky bar, whatever its height */
 function setBarHeight(){ document.documentElement.style.setProperty("--tbh",top.offsetHeight+"px"); }
@@ -705,6 +714,47 @@ function section(id,eyebrow,title,intro){
 
 /* ---------- skim totals ---------- */
 var SK=T.skim||[];
+
+/* ---------- skim pages <-> Tier 1 readings ----------
+   A Tier 1 reading from a book that has a skim guide is linked to the skim pages inside its page range.
+   It counts as read when all of those pages are ticked, and ticking it in the reading list ticks those pages.
+   Readings with no skim pages (other books, Tier 2 and 3) are ticked on their own. */
+function pageNums(str){ var out=[]; String(str).replace(/(\d+)\s*[\u2013-]\s*(\d+)|(\d+)/g,function(m,a,b,c){ if(c) out.push(+c); else for(var i=+a;i<=+b;i++) out.push(i); return m; }); return out; }
+var COVER={}, LABEL={};
+R.forEach(function(r){
+  if(r.tier!==1) return;
+  var bk=T.books[r.book], B=(bk && bk.skim)?SK.filter(function(x){return x.key===bk.skim;})[0]:null;
+  if(!B) return;
+  var want=pageNums(r.pages), keys=[];
+  B.pages.forEach(function(pg){
+    if(pageNums(pg.pl||pg.p).some(function(n){return want.indexOf(n)>-1;})){ var k="skim-"+B.key+"-"+pg.p; keys.push(k); LABEL[k]=pg.pl||("p. "+pg.p); }
+  });
+  if(keys.length) COVER[r.id]=keys;
+});
+/* a tick made earlier straight on a linked reading becomes ticks on its skim pages */
+(function(){ var moved=false;
+  Object.keys(COVER).forEach(function(id){ if(done[id]){ COVER[id].forEach(function(k){ done[k]=1; }); delete done[id]; moved=true; } });
+  if(moved){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+})();
+function isRead(r){ var c=COVER[r.id]; return c ? c.every(function(k){return done[k];}) : !!done[r.id]; }
+function pagesTicked(r){ var c=COVER[r.id]; return c ? c.filter(function(k){return done[k];}).length : 0; }
+function coverText(r){
+  var c=COVER[r.id], d=pagesTicked(r);
+  if(c.length===1) return "Linked to skim page "+LABEL[c[0]]+(d?" · ticked":" · not ticked yet");
+  return "Linked to the skim guide · "+d+" of "+c.length+" pages ticked";
+}
+var skimEls={}, listEls={};
+function syncAll(){
+  Object.keys(skimEls).forEach(function(k){ var e=skimEls[k]; e.input.checked=!!done[k]; e.row.classList.toggle("donepage",!!done[k]); });
+  Object.keys(listEls).forEach(function(id){
+    var e=listEls[id], r=e.r, d=isRead(r), part=!d && pagesTicked(r)>0;
+    e.input.checked=d; e.input.indeterminate=part; e.li.classList.toggle("done",d); e.li.classList.toggle("part",part);
+    if(e.cov) e.cov.textContent=coverText(r);
+  });
+  if(typeof progress!=="undefined" && progress) updateProgress();
+  if(typeof skimSum!=="undefined" && skimSum) updateSkimSum();
+  updateReadbar();
+}
 function totalMin(book,fast){ return Math.round(book.pages.reduce(function(s,pg){return s+pg.b.reduce(function(t,b){return t+((!fast||b.f)?(b.m!=null?b.m:MIN[b.a]):0);},0);},0)); }
 var TOT={};
 SK.forEach(function(b){ TOT[b.key]=totalMin(b,false); TOT[b.key+"-fast"]=totalMin(b,true); });
@@ -756,7 +806,7 @@ function bookByKey(k){return SK.filter(function(b){return b.key===k;})[0];}
 function blockStops(pg,b){ return b.s||pg.s||[]; }
 function skimDoneCount(B){ return B.pages.filter(function(pg){return done["skim-"+B.key+"-"+pg.p];}).length; }
 function renderSkim(){
-  var B=bookByKey(skimBook); skimList.innerHTML=""; if(!B) return;
+  var B=bookByKey(skimBook); skimList.innerHTML=""; skimEls={}; if(!B) return;
   skimList.appendChild(el("div",{class:"booklabel"},esc(B.label)+' <small>'+esc(B.note)+'</small>'));
   var wrap=el("div",{}), shown=0;
   B.pages.forEach(function(pg){
@@ -775,9 +825,10 @@ function renderSkim(){
       return '<li><span class="act '+b.a+'">'+ACT[b.a]+'</span><div><div class="what">'+esc(b.w)+'</div>'+(b.t?'<p class="take">'+esc(b.t)+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+'</div></li>';
     }).join("");
     row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b><label><input type="checkbox"'+(done[key]?' checked':'')+'> Done</label></div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
-    row.querySelector("input").addEventListener("change",function(e){
+    var inp=row.querySelector("input"); skimEls[key]={row:row,input:inp};
+    inp.addEventListener("change",function(e){
       if(e.target.checked) done[key]=1; else delete done[key];
-      row.classList.toggle("donepage",e.target.checked); saveDone(); updateSkimSum();
+      saveDone();
     });
     wrap.appendChild(row);
   });
@@ -967,17 +1018,18 @@ var filter=0;
   filters.appendChild(b);
 });
 function itemHTML(r){
-  var chk='<input type="checkbox" aria-label="Mark as read"'+(done[r.id]?' checked':'')+'>';
+  var chk='<input type="checkbox" aria-label="Mark as read"'+(isRead(r)?' checked':'')+'>';
   var tags='<div class="meta">'+r.st.map(function(id){return '<span>'+id+' · '+esc(stop(id).short.join(" "))+'</span>';}).join("")+'</div>';
   if(r.tier===3){
     var title=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':esc(r.title);
     return chk+'<div class="main"><div class="where">'+esc(r.src)+'</div><div class="title">'+title+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg">'+esc(r.date)+'</span>';
   }
-  return chk+'<div class="main"><div class="where">'+esc(r.where)+'</div><div class="title">'+esc(r.title)+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg'+(r.unv?' unv':'')+'">'+esc(r.pages)+'</span>';
+  return chk+'<div class="main"><div class="where">'+esc(r.where)+'</div><div class="title">'+esc(r.title)+'</div><p class="why">'+esc(r.why)+'</p>'+tags+(COVER[r.id]?'<div class="cov"></div>':'')+'</div><span class="pg'+(r.unv?' unv':'')+'">'+esc(r.pages)+'</span>';
 }
 function renderLists(){
   [1,2,3].forEach(function(n){
     var box=listBoxes[n].box; box.innerHTML="";
+    if(n===1) listEls={};
     var items=byTier(n).filter(function(r){return filter===0 || r.st.indexOf(filter)>-1;});
     listBoxes[n].count.textContent=items.length+(filter===0?" items":" for stop "+filter);
     if(!items.length){ box.appendChild(el("p",{class:"empty"},"Nothing in this tier for this stop.")); return; }
@@ -994,18 +1046,23 @@ function renderLists(){
       box.appendChild(lab);
       var ul=el("ul",{class:"items"});
       g.items.forEach(function(r){
-        var li=el("li",{},itemHTML(r));
-        if(done[r.id]) li.classList.add("done");
-        li.querySelector("input").addEventListener("change",function(e){ if(e.target.checked) done[r.id]=1; else delete done[r.id]; li.classList.toggle("done",e.target.checked); saveDone(); updateProgress(); });
+        var li=el("li",{},itemHTML(r)), inp=li.querySelector("input");
+        listEls[r.id]={r:r,li:li,input:inp,cov:li.querySelector(".cov")};
+        inp.addEventListener("change",function(e){
+          var c=COVER[r.id];
+          if(c) c.forEach(function(k){ if(e.target.checked) done[k]=1; else delete done[k]; });
+          else { if(e.target.checked) done[r.id]=1; else delete done[r.id]; }
+          saveDone();
+        });
         ul.appendChild(li);
       });
       box.appendChild(ul);
     });
   });
-  updateProgress();
+  syncAll();
 }
 function updateProgress(){
-  var c=[1,2,3].map(function(n){var all=byTier(n); return all.filter(function(r){return done[r.id];}).length+" of "+all.length;});
+  var c=[1,2,3].map(function(n){var all=byTier(n); return all.filter(isRead).length+" of "+all.length;});
   progress.textContent="Read so far: Tier 1 "+c[0]+" · Tier 2 "+c[1]+" · Tier 3 "+c[2]+".";
 }
 function setFilter(id){
