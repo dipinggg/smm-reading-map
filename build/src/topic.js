@@ -15,7 +15,7 @@ function smooth(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").ma
 function go(id){ var t=document.getElementById(id); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); }
 var done={};
 try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
-function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} updateReadbar(); }
 var TIERNAME=["Tier 1 · Primary","Tier 2 · Adjacent","Tier 3 · Outside the syllabus"];
 var ACT={read:"Read",skim:"Skim",glance:"Glance",skip:"Skip"};
 var MIN={read:2,skim:1,glance:0.5,skip:0};
@@ -34,6 +34,48 @@ var top=el("nav",{class:"topbar","aria-label":"Page"});
 top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
   jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
 app.appendChild(top);
+
+/* ---------- reading progress: a strip inside the sticky top bar ----------
+   The bar is split into Tier 1, 2 and 3, each as wide as its share of the reading list,
+   and each fills as its items are ticked. Skim-guide pages are counted separately. */
+var TCOUNT=[1,2,3].map(function(n){return byTier(n).length;});
+var rb=el("div",{class:"readbar",role:"group","aria-label":"Reading progress"});
+rb.innerHTML='<div class="wrap">'+
+  '<div class="rb-total"><b class="rb-pct" aria-live="polite">0%</b><span class="rb-lab"></span></div>'+
+  '<div class="rb-track" aria-hidden="true">'+[1,2,3].map(function(n){
+     return TCOUNT[n-1]?'<a class="rb-seg s'+n+'" href="#tier'+n+'" tabindex="-1" style="flex-grow:'+TCOUNT[n-1]+'"><i></i></a>':'';
+   }).join("")+'</div>'+
+  '<div class="rb-tiers">'+[1,2,3].map(function(n){
+     return '<a class="rb-t" href="#tier'+n+'"><span class="tierchip t'+n+'">T'+n+'</span><span class="rb-n">0%</span></a>';
+   }).join("")+'<span class="rb-skim"></span></div>'+
+ '</div>';
+top.appendChild(rb);
+function updateReadbar(){
+  if(!rb) return;
+  var tot=0, dn=0, tiers=rb.querySelectorAll(".rb-t");
+  [1,2,3].forEach(function(n){
+    var all=byTier(n), d=all.filter(function(r){return done[r.id];}).length;
+    tot+=all.length; dn+=d;
+    var p=all.length?Math.floor(d*100/all.length):0;
+    var seg=rb.querySelector(".rb-seg.s"+n); if(seg) seg.firstChild.style.width=(all.length?d*100/all.length:0)+"%";
+    var t=tiers[n-1];
+    t.querySelector(".rb-n").textContent=p+"%";
+    t.setAttribute("aria-label",TIERNAME[n-1]+": "+d+" of "+all.length+" read ("+p+"%). Go to the list.");
+    t.title=TIERNAME[n-1]+": "+d+" of "+all.length+" read";
+    t.classList.toggle("full",all.length>0 && d===all.length);
+  });
+  var pct=tot?Math.floor(dn*100/tot):0, complete=tot>0 && dn===tot;
+  rb.querySelector(".rb-pct").textContent=pct+"%";
+  rb.querySelector(".rb-lab").textContent=complete?"All "+tot+" readings done":dn+" of "+tot+" readings done";
+  rb.classList.toggle("complete",complete);
+  var sp=0, st=0; (T.skim||[]).forEach(function(B){ st+=B.pages.length; sp+=skimDoneCount(B); });
+  rb.querySelector(".rb-skim").textContent=st?"Skim guide: "+sp+" of "+st+" pages":"";
+  try{ localStorage.setItem("smm-rm-sum-"+T.file,JSON.stringify({d:dn,t:tot})); }catch(e){}
+}
+/* keep jump targets clear of the sticky bar, whatever its height */
+function setBarHeight(){ document.documentElement.style.setProperty("--tbh",top.offsetHeight+"px"); }
+setBarHeight();
+if(window.ResizeObserver){ new ResizeObserver(setBarHeight).observe(top); } else { window.addEventListener("resize",setBarHeight); }
 
 /* ---------- hero ---------- */
 var prev=null,next=null;
@@ -396,4 +438,5 @@ document.addEventListener("click",function(e){
 renderSkim();
 select(1);
 renderLists();
+updateReadbar();
 })();

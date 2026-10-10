@@ -87,6 +87,30 @@ button{font:inherit}
 .topbar .jump a{flex:none;text-decoration:none;font-size:.86rem;padding:.3em .7em;border-radius:999px;color:var(--muted);border:1px solid transparent}
 .topbar .jump a:hover{color:var(--ink);border-color:var(--line)}
 @media (max-width:760px){.topbar .jump{flex-basis:100%}.topbar .jump a:first-child{margin-left:0}}
+/* reading progress strip, inside the sticky top bar */
+.readbar{border-top:1px solid var(--line)}
+.topbar .readbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-block:7px}
+.rb-total{display:flex;align-items:baseline;gap:8px;flex:none}
+.rb-pct{font-family:var(--mono);font-size:.98rem;font-weight:500;color:var(--a);min-width:4ch}
+.rb-lab{font-size:.82rem;color:var(--muted);white-space:nowrap}
+.rb-track{flex:1 1 64px;min-width:64px;display:flex;gap:4px;height:9px}
+.rb-seg{display:block;position:relative;height:100%;min-width:12px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.rb-seg i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:inherit;transition:width .35s ease}
+.rb-seg.s1 i{background:var(--a)}
+.rb-seg.s2 i{background:var(--a-mid)}
+.rb-seg.s3 i{background:repeating-linear-gradient(135deg,var(--a) 0 3px,transparent 3px 6px)}
+.rb-tiers{display:flex;align-items:center;gap:12px;flex:none}
+.rb-t{display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:var(--ink);font-family:var(--mono);font-size:.8rem;border-radius:6px;padding:2px 3px}
+.rb-t:hover{background:var(--a-soft)}
+.rb-t .tierchip{font-size:.66rem;padding:.05em .42em}
+.rb-n{min-width:4ch}
+.rb-t.full .rb-n::after{content:" \2713";color:var(--a)}
+.rb-skim{font-size:.8rem;color:var(--muted);padding-left:12px;border-left:1px solid var(--line);white-space:nowrap}
+.readbar.complete .rb-lab{color:var(--a);font-weight:700}
+@media (max-width:980px){.rb-skim{display:none}}
+@media (max-width:760px){.rb-lab{display:none}.topbar .readbar .wrap{gap:6px 10px;padding-block:6px}.rb-tiers{gap:6px}.rb-t{font-size:.74rem}}
+@media (prefers-reduced-motion:reduce){.rb-seg i{transition:none}}
+section.block{scroll-margin-top:calc(var(--tbh,50px) - 40px)}
 
 /* ---------- Topic hero ---------- */
 header.hero{padding-block:40px 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--a-soft),var(--bg) 70%)}
@@ -257,7 +281,7 @@ svg .crosssel{opacity:1;stroke:var(--ink);stroke-width:2.2}
 .filters button{font-size:.88rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.35em .8em;border-radius:999px}
 .filters button[aria-pressed="true"]{background:var(--a);color:var(--on-a);border-color:var(--a)}
 .progress{font-size:.9rem;color:var(--muted);margin:6px 0 0}
-.tierblock{margin-top:30px;scroll-margin-top:70px}
+.tierblock{margin-top:30px;scroll-margin-top:calc(var(--tbh,50px) + 16px)}
 .tierblock > .th{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-bottom:10px;border-bottom:3px solid var(--a)}
 .tierblock.b2 > .th{border-bottom-color:var(--a-mid)}
 .tierblock.b3 > .th{border-bottom:3px dashed var(--a)}
@@ -328,6 +352,10 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
 .module .topics li.ready .tn a::after{content:" \2192";color:var(--a)}
 .module .topics li.ready .tn a:hover{text-decoration:underline}
 .module .topics li.ready .st{background:var(--a);color:var(--on-a)}
+.module .topics li .tprog{display:flex;align-items:center;gap:8px;margin-top:4px;font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.module .topics li .tbar{position:relative;flex:0 0 90px;height:6px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.module .topics li .tbar i{position:absolute;left:0;top:0;bottom:0;background:var(--a);border-radius:inherit}
+.module .topics li .tprog.full{color:var(--a);font-weight:500}
 .module .topics li.soon .tn{color:var(--muted)}
 .module .topics li.soon .st{color:var(--muted);outline:1px dashed var(--line);outline-offset:-1px}
 .howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -616,7 +644,7 @@ function smooth(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").ma
 function go(id){ var t=document.getElementById(id); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); }
 var done={};
 try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
-function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+function saveDone(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} updateReadbar(); }
 var TIERNAME=["Tier 1 · Primary","Tier 2 · Adjacent","Tier 3 · Outside the syllabus"];
 var ACT={read:"Read",skim:"Skim",glance:"Glance",skip:"Skip"};
 var MIN={read:2,skim:1,glance:0.5,skip:0};
@@ -635,6 +663,48 @@ var top=el("nav",{class:"topbar","aria-label":"Page"});
 top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
   jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
 app.appendChild(top);
+
+/* ---------- reading progress: a strip inside the sticky top bar ----------
+   The bar is split into Tier 1, 2 and 3, each as wide as its share of the reading list,
+   and each fills as its items are ticked. Skim-guide pages are counted separately. */
+var TCOUNT=[1,2,3].map(function(n){return byTier(n).length;});
+var rb=el("div",{class:"readbar",role:"group","aria-label":"Reading progress"});
+rb.innerHTML='<div class="wrap">'+
+  '<div class="rb-total"><b class="rb-pct" aria-live="polite">0%</b><span class="rb-lab"></span></div>'+
+  '<div class="rb-track" aria-hidden="true">'+[1,2,3].map(function(n){
+     return TCOUNT[n-1]?'<a class="rb-seg s'+n+'" href="#tier'+n+'" tabindex="-1" style="flex-grow:'+TCOUNT[n-1]+'"><i></i></a>':'';
+   }).join("")+'</div>'+
+  '<div class="rb-tiers">'+[1,2,3].map(function(n){
+     return '<a class="rb-t" href="#tier'+n+'"><span class="tierchip t'+n+'">T'+n+'</span><span class="rb-n">0%</span></a>';
+   }).join("")+'<span class="rb-skim"></span></div>'+
+ '</div>';
+top.appendChild(rb);
+function updateReadbar(){
+  if(!rb) return;
+  var tot=0, dn=0, tiers=rb.querySelectorAll(".rb-t");
+  [1,2,3].forEach(function(n){
+    var all=byTier(n), d=all.filter(function(r){return done[r.id];}).length;
+    tot+=all.length; dn+=d;
+    var p=all.length?Math.floor(d*100/all.length):0;
+    var seg=rb.querySelector(".rb-seg.s"+n); if(seg) seg.firstChild.style.width=(all.length?d*100/all.length:0)+"%";
+    var t=tiers[n-1];
+    t.querySelector(".rb-n").textContent=p+"%";
+    t.setAttribute("aria-label",TIERNAME[n-1]+": "+d+" of "+all.length+" read ("+p+"%). Go to the list.");
+    t.title=TIERNAME[n-1]+": "+d+" of "+all.length+" read";
+    t.classList.toggle("full",all.length>0 && d===all.length);
+  });
+  var pct=tot?Math.floor(dn*100/tot):0, complete=tot>0 && dn===tot;
+  rb.querySelector(".rb-pct").textContent=pct+"%";
+  rb.querySelector(".rb-lab").textContent=complete?"All "+tot+" readings done":dn+" of "+tot+" readings done";
+  rb.classList.toggle("complete",complete);
+  var sp=0, st=0; (T.skim||[]).forEach(function(B){ st+=B.pages.length; sp+=skimDoneCount(B); });
+  rb.querySelector(".rb-skim").textContent=st?"Skim guide: "+sp+" of "+st+" pages":"";
+  try{ localStorage.setItem("smm-rm-sum-"+T.file,JSON.stringify({d:dn,t:tot})); }catch(e){}
+}
+/* keep jump targets clear of the sticky bar, whatever its height */
+function setBarHeight(){ document.documentElement.style.setProperty("--tbh",top.offsetHeight+"px"); }
+setBarHeight();
+if(window.ResizeObserver){ new ResizeObserver(setBarHeight).observe(top); } else { window.addEventListener("resize",setBarHeight); }
 
 /* ---------- hero ---------- */
 var prev=null,next=null;
@@ -997,6 +1067,7 @@ document.addEventListener("click",function(e){
 renderSkim();
 select(1);
 renderLists();
+updateReadbar();
 })();
 
 </script>

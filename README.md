@@ -7,7 +7,8 @@ Open the site: the hub page lists the five modules. Tap a module to see its topi
 - a road map of six essential stops, with book and page numbers;
 - a page-by-page Tier 1 skim guide (read, skim, glance, skip);
 - a clickable tier map (Tier 1 box → skim guide for that stop; Tier 2 / Tier 3 box → that reading list);
-- reading lists in three tiers, plus lab tables.
+- reading lists in three tiers, plus lab tables;
+- a reading-progress strip under the top menu: overall % of the reading list, % per tier, and skim-guide pages done. The home page shows each topic's progress too.
 
 Ready so far: S7 (strategies), S9–S14 (Module 2 content process).
 

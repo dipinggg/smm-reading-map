@@ -11,6 +11,15 @@ var hash=(location.hash||"").replace("#","");
 if(/^m[1-5]$/.test(hash)) open[hash]=1;
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(open)); }catch(e){} }
 
+/* reading progress saved by each topic page (ticked readings / all readings) */
+function progressHTML(file){
+  var p=null; try{ p=JSON.parse(localStorage.getItem("smm-rm-sum-"+file)||"null"); }catch(e){ p=null; }
+  if(!p || !p.t || !p.d) return "";
+  var pct=Math.floor(p.d*100/p.t), full=p.d>=p.t;
+  return '<span class="tprog'+(full?' full':'')+'"><span class="tbar" aria-hidden="true"><i style="width:'+Math.min(100,p.d*100/p.t)+'%"></i></span>'+
+    (full?'All '+p.t+' readings done':pct+'% read · '+p.d+' of '+p.t)+'</span>';
+}
+
 var total=0, readyN=0;
 C.modules.forEach(function(m){ total+=m.topics.length; readyN+=m.topics.filter(function(t){return t.file;}).length; });
 document.getElementById("statReady").textContent=readyN;
@@ -24,7 +33,7 @@ C.modules.forEach(function(m){
   li.id=m.id;
   var tid="topics-"+m.id;
   var rows=m.topics.map(function(t){
-    if(t.file) return '<li class="ready"><span class="sn">'+esc(t.s)+'</span><span class="tn"><a href="'+t.file+'">'+esc(t.title)+'</a></span><span class="st">Ready</span></li>';
+    if(t.file) return '<li class="ready"><span class="sn">'+esc(t.s)+'</span><span class="tn"><a href="'+t.file+'">'+esc(t.title)+'</a>'+progressHTML(t.file)+'</span><span class="st">Ready</span></li>';
     return '<li class="soon"><span class="sn">'+esc(t.s)+'</span><span class="tn">'+esc(t.title)+'</span><span class="st">Coming</span></li>';
   }).join("");
   li.innerHTML='<button type="button" aria-expanded="'+(open[m.id]?"true":"false")+'" aria-controls="'+tid+'">'+
