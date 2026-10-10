@@ -254,7 +254,7 @@ skimBar.querySelector("input").addEventListener("change",function(e){ fastOnly=e
 
 /* ---------- Tier map ---------- */
 var mw=section("map","Tier map · how it all connects",T.mapTitle||"One topic in the middle, three rings of reading around it",
-  "Each spoke is one stop. Moving outwards, the rings go from the syllabus books (Tier 1) to other books (Tier 2) to outside material (Tier 3). Tap a stop's circle to see its readings below the map. Tap a ring box to jump straight there: Tier 1 opens the skim guide for that stop, Tier 2 and Tier 3 open their reading lists.");
+  "Each spoke is one stop. Moving outwards, the rings go from the syllabus books (Tier 1) to other books (Tier 2) to outside material (Tier 3). Tap a stop's name above the map to open the Tier 1 skim guide for that stop. Tap a stop's circle to see its readings below the map. Tap a ring box to jump straight there: Tier 1 opens the skim guide for that stop, Tier 2 and Tier 3 open their reading lists.");
 var topicbar=el("div",{class:"topicbar",role:"group","aria-label":"Choose a stop"});
 mw.appendChild(topicbar);
 var mg=el("div",{class:"mapgrid"}); mw.appendChild(mg);
@@ -353,8 +353,9 @@ var pad=16;
 svg.setAttribute("viewBox",[(minX-pad).toFixed(0),(minY-pad).toFixed(0),(maxX-minX+2*pad).toFixed(0),(maxY-minY+2*pad).toFixed(0)].join(" "));
 
 STOPS.forEach(function(t){
-  var b=el("button",{type:"button","aria-pressed":"false","data-stop":t.id},t.id+" · "+esc(t.name));
-  b.addEventListener("click",function(){select(t.id);});
+  var b=el("button",{type:"button","aria-pressed":"false","data-stop":t.id,title:"Open the Tier 1 skim guide for this stop"},t.id+" · "+esc(t.name)+'<span class="go-skim" aria-hidden="true"> \u2191</span>');
+  b.setAttribute("aria-label","Stop "+t.id+": "+t.name+". Open the Tier 1 skim guide for this stop.");
+  b.addEventListener("click",function(){ jumpTier(t.id,1); });
   topicbar.appendChild(b);
 });
 function readingLine(r){
