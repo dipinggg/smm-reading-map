@@ -370,6 +370,47 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
 .howto > div p{font-size:.95rem;color:var(--muted);margin-top:4px}
 @media (max-width:760px){.howto{grid-template-columns:1fr}}
 
+/* ---------- module glossary ---------- */
+.mgloss{padding:0 20px 20px 80px}
+@media (max-width:600px){.mgloss{padding:0 14px 16px 14px}}
+.mgloss .gloss{border-top:1px dashed var(--line);padding-top:16px}
+.gl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.gl-head h3{font-size:1.1rem}
+.gl-count{font-family:var(--mono);font-size:.78rem;color:var(--a)}
+.gl-head .gl-all{margin-left:auto}
+.gl-hint{font-size:.88rem;color:var(--muted);margin:6px 0 12px}
+.gl-letters{display:flex;flex-wrap:wrap;gap:5px}
+#glossary .gl-letters{margin-top:12px}
+.gl-l{width:33px;height:33px;border-radius:50%;border:1.5px solid var(--a);background:var(--surface);color:var(--a);font-family:var(--mono);font-weight:500;font-size:.9rem;line-height:1;cursor:pointer;display:inline-grid;place-items:center;padding:0;transition:background .15s,color .15s,transform .15s}
+.gl-l:hover{background:var(--a-soft)}
+.gl-l[aria-expanded="true"]{background:var(--a);color:var(--on-a);transform:scale(1.1)}
+.gl-l:disabled{border:1.5px dashed var(--line);background:transparent;color:var(--muted);opacity:.55;cursor:default}
+.gl-l:disabled:hover{background:transparent}
+.gl-panel{margin-top:14px;border:1px solid var(--line);border-left:4px solid var(--a);border-radius:10px;background:var(--surface);padding:12px 18px 6px}
+.gl-panelhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gl-panelhead b{font-family:var(--mono);font-size:.82rem;letter-spacing:.04em;color:var(--a);font-weight:500;text-transform:uppercase}
+.gl-group{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding-top:6px}
+.gl-group + .gl-group{border-top:1px solid var(--line)}
+.gl-big{width:34px;height:34px;border-radius:50%;background:var(--a);color:var(--on-a);display:grid;place-items:center;font-family:var(--mono);font-weight:500;margin-top:10px}
+.gl-group dl{margin:0}
+.gl-item{padding:10px 0;border-bottom:1px solid var(--line)}
+.gl-group dl .gl-item:last-child{border-bottom:0}
+.gl-item dt{font-weight:700}
+.gl-item dd{margin:3px 0 0}
+.gl-item dd p{font-size:.95rem;max-width:72ch}
+.gl-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:6px;font-size:.84rem}
+.gl-links{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.gl-rm{color:var(--muted)}
+.gl-go{color:var(--a);text-decoration:none;font-weight:700}
+.gl-go:hover{text-decoration:underline}
+.gloss.empty-gl p{font-size:.9rem;margin-top:4px}
+@media (max-width:560px){.gl-group{grid-template-columns:1fr}.gl-big{display:none}.gl-l{width:31px;height:31px;font-size:.85rem}.gl-panel{padding:10px 14px 4px}}
+@media (prefers-reduced-motion:reduce){.gl-l{transition:none}}
+/* a stop reached from a glossary link */
+.route .stop{scroll-margin-top:calc(var(--tbh,50px) + 16px)}
+.route .stop .card{transition:box-shadow .3s}
+.route .stop.flash .card{box-shadow:0 0 0 3px var(--a)}
+
 [hidden]{display:none!important}
 img{max-width:100%}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -429,6 +470,263 @@ window.CATALOG = {
    {s:"S40",title:"AI and blockchain for privacy; emerging security trends"}]}
  ]
 };
+
+</script>
+<script>
+window.STOPNAMES={"m1-strategies": {"1": "Strategy basics", "2": "Listening and situation analysis", "3": "Objectives and budget", "4": "Audience and channels", "5": "Experience, message and action", "6": "Run, measure and govern"}, "m2-basics": {"1": "What content is", "2": "Who makes content", "3": "Why people share", "4": "What makes content valuable", "5": "The story and the hook", "6": "Asking for action"}, "m2-creation": {"1": "Choose the format", "2": "Images and visual posts", "3": "Video", "4": "Long-form and audio", "5": "Co-creating with users", "6": "Make it honest"}, "m2-distribution": {"1": "Paid, owned, earned, shared", "2": "Where to publish", "3": "Spreading through people", "4": "Scheduling and timing", "5": "Organic or boosted", "6": "Cross-posting and repurposing"}, "m2-measurement": {"1": "Measurement, metric, KPI", "2": "The DATA process", "3": "Choosing the right metrics", "4": "Reach, views and engagement rate", "5": "Return and value", "6": "Tracking and listening"}, "m2-optimization": {"1": "SEO and SMO", "2": "Being found in search", "3": "Earning links honestly", "4": "Getting shared", "5": "Fit the platform", "6": "Make it accessible"}, "m2-planning": {"1": "Start from the strategy", "2": "Who does the work", "3": "Pillars and content levels", "4": "The editorial calendar", "5": "Pace and timing", "6": "Plan the measure first"}};
+/* Module glossaries. Each term: t = term, d = short meaning in plain words, src = where the meaning comes from,
+   at = where it is taught: [topic page file without .html, stop number]. Terms are sorted A–Z on screen. */
+window.GLOSSARY = {
+m1: [
+ {t:"Advocates", d:"Fans who recommend the brand of their own accord. Zahay advises building an army of advocates rather than only promoting yourself.", src:"Zahay pp. 40–41", at:[["m1-strategies",5]]},
+ {t:"Always-on", d:"Being active on social media all the time, as Dell and Zappos are. The opposite is a time-bound campaign, often tied to a launch.", src:"Tuten p. 49", at:[["m1-strategies",6],["m2-planning",5]]},
+ {t:"Baseline", d:"The starting level you measure change from. A usable objective says how far you want to move from the baseline.", src:"Tuten p. 41", at:[["m1-strategies",3],["m2-measurement",6]]},
+ {t:"Call to action", d:"A direct request for one specific action, such as follow, sign up or buy. Zahay shows calls to action as a chain of small steps towards the sale (Table 2.1).", src:"Zahay pp. 38–39 · Tuten p. 131", at:[["m1-strategies",5],["m2-basics",6]]},
+ {t:"Centralised structure", d:"One senior social media team, reporting to the CMO or CEO, runs all of the brand's social media.", src:"Tuten p. 54", at:[["m1-strategies",6]]},
+ {t:"Centre of excellence", d:"A model that brings together people with different skills from across the organisation to run social media (Intel, American Express).", src:"Tuten p. 54", at:[["m1-strategies",6]]},
+ {t:"Channel", d:"A route to the audience, such as mobile, that is made up of many platforms. Compare platform.", src:"Zahay p. 26", at:[["m1-strategies",4]]},
+ {t:"Combination structure", d:"Central leaders set the voice and best practice; each division then runs its own social media within those rules (Kodak, IBM).", src:"Tuten p. 54", at:[["m1-strategies",6]]},
+ {t:"Competitive parity method", d:"Setting the social media budget by benchmarking what competitors spend.", src:"Tuten p. 43", at:[["m1-strategies",3]]},
+ {t:"Competitor audit", d:"Checking three things about rivals: where they are active, how they present themselves, and who follows them.", src:"Tuten p. 39", at:[["m1-strategies",2]]},
+ {t:"Distributed structure", d:"No one person owns social media. Trained employees all represent the brand, guided by a policy (Best Buy's Twelpforce).", src:"Tuten p. 54", at:[["m1-strategies",6]]},
+ {t:"Earned media", d:"Messages spread at no direct cost and beyond the brand's control, such as word of mouth, shares and publicity.", src:"Tuten p. 17", at:[["m1-strategies",4],["m2-distribution",1]]},
+ {t:"Eight C's", d:"Zahay's eight steps of a social media strategy: categorise, comprehend, converse, collaborate, contribute, connect, community, convert.", src:"Zahay p. 38", at:[["m1-strategies",5]]},
+ {t:"Experience brief", d:"The planning document for a social campaign. It plans the experience people will have and pass on, not just the message.", src:"Tuten p. 47", at:[["m1-strategies",5]]},
+ {t:"Listening centre", d:"A team set up to follow social conversation as it happens. Zahay's examples are the NFL at the Super Bowl, and Cisco.", src:"Zahay pp. 30–33", at:[["m1-strategies",2]]},
+ {t:"Objective", d:"A specific statement of what a planned social media activity is meant to achieve. A good one is specific and measurable, states the change from a baseline, has a time line and is realistic.", src:"Tuten p. 41", at:[["m1-strategies",3]]},
+ {t:"Objective-and-task method", d:"Setting the budget from the campaign's objectives: work out what has to be done to reach them, and what that costs.", src:"Tuten pp. 43–44", at:[["m1-strategies",3]]},
+ {t:"Objectives cascade", d:"Goals flow downwards: business goals, then marketing objectives, then social media objectives, then an objective for each platform.", src:"Zahay p. 36", at:[["m1-strategies",3]]},
+ {t:"Owned media", d:"Channels the brand controls, such as its website, blog and brand profiles.", src:"Tuten p. 17", at:[["m1-strategies",4],["m2-distribution",1]]},
+ {t:"Paid media", d:"Space or endorsements the brand pays for, such as ads, sponsorships and search ads.", src:"Tuten p. 17", at:[["m1-strategies",4],["m2-distribution",1]]},
+ {t:"Percentage-of-ad-spend method", d:"Setting the social media budget as a fixed share of the total advertising budget, or of the online marketing budget.", src:"Tuten p. 43", at:[["m1-strategies",3]]},
+ {t:"Platform", d:"One social site or app, such as Instagram or LinkedIn. Many platforms together make up a channel.", src:"Zahay p. 26", at:[["m1-strategies",4]]},
+ {t:"Positioning statement", d:"One written statement of the place the brand wants to hold in its audience's minds. All social media activity should support it.", src:"Tuten p. 45", at:[["m1-strategies",5]]},
+ {t:"Propagation brief", d:"Another name for the experience brief (Griffin Farley, BBH): plan not only for the people you reach, but for the people they will reach.", src:"Tuten p. 47", at:[["m1-strategies",5]]},
+ {t:"Situation analysis", d:"Studying the brand's internal strengths and weaknesses and the outside opportunities and threats before planning.", src:"Tuten pp. 38–40", at:[["m1-strategies",2]]},
+ {t:"SMART objectives", d:"Objectives that are Specific, Measurable, Appropriate, Realistic and Time-oriented. Zahay reads the A as Achievable.", src:"Tuten p. 219 · Zahay p. 37", at:[["m1-strategies",3],["m2-planning",6],["m2-measurement",2]]},
+ {t:"Social listening", d:"Finding out what people already say before you post. Zahay's five stages: the brand, competitors, the industry, the community's tone, and each platform.", src:"Zahay pp. 27–28", at:[["m1-strategies",2],["m2-measurement",6]]},
+ {t:"Social media maturity", d:"How far an organisation has come with social media, in three phases: trial, transition, then strategic.", src:"Tuten pp. 35–37", at:[["m1-strategies",1]]},
+ {t:"Social media marketing plan", d:"The written plan for a brand's social media. It sits inside the marketing plan, which sits under the business-unit and company plans.", src:"Tuten pp. 31–34", at:[["m1-strategies",1]]},
+ {t:"Social media mix", d:"The set of social media vehicles a strategy uses, chosen across the four zones to fit the objectives and the audience.", src:"Tuten p. 45", at:[["m1-strategies",4],["m2-distribution",2]]},
+ {t:"Social media policy", d:"The organisation's rules for social media: how staff behave, what they must disclose (for example #spon, #paid, #samp), and what stays confidential.", src:"Tuten pp. 51–53", at:[["m1-strategies",6],["m2-creation",6]]},
+ {t:"Social media strategy", d:"A broad statement of what the brand wants to achieve on social media. Tactics are the individual actions that carry it out.", src:"Zahay p. 38 · Tuten p. 35", at:[["m1-strategies",1]]},
+ {t:"Social persona", d:"How the brand behaves and speaks online: one corporate voice, many employee voices, one named person, or a mascot.", src:"Tuten p. 48", at:[["m1-strategies",5]]},
+ {t:"Social profile", d:"What the target audience does socially: how much they take part, which channels and communities they use, and how they behave there.", src:"Tuten p. 44", at:[["m1-strategies",4]]},
+ {t:"SWOT", d:"Strengths, weaknesses, opportunities and threats: the four parts of a situation analysis. Table 1 is Benjamin Moore's SWOT.", src:"Tuten pp. 38–40", at:[["m1-strategies",2]]},
+ {t:"Tactics", d:"The individual actions that carry out a strategy: posts, ads, contests, stunts. A one-off stunt on its own is not a strategy.", src:"Tuten p. 35", at:[["m1-strategies",1]]},
+ {t:"Valid Metrics Framework", d:"AMEC's five stages of social media results: exposure, engagement, influence, impact, advocacy.", src:"Zahay p. 35", at:[["m1-strategies",3],["m2-measurement",1]]},
+ {t:"Zones of social media", d:"Tuten's four zones: social community, social publishing, social entertainment and social commerce.", src:"Tuten p. 45", at:[["m1-strategies",4]]}
+],
+m2: [
+ {t:"Activity metrics", d:"Counts of what the brand itself does: posts, videos, replies, white papers.", src:"Tuten p. 220", at:[["m2-measurement",3]]},
+ {t:"AEV (advertising equivalency value)", d:"Pricing earned exposure at what the same space would cost as an ad. Tuten calls it a measure of resource use, not true ROI; the Barcelona Principles rule it out (they write AVE).", src:"Tuten p. 223", at:[["m2-measurement",5]]},
+ {t:"AI label", d:"A label saying an image, video or post was made with AI. India's IT Rules amendments require it from 20 Feb 2026.", src:"Business Today, Feb 2026", at:[["m2-creation",6]]},
+ {t:"Alt text", d:"A short written description of an image, read aloud by screen readers. Instagram allows up to 100 characters.", src:"Hootsuite, Oct 2026", at:[["m2-optimization",6]]},
+ {t:"Always-on content", d:"Content that runs all the time rather than for one campaign (Dell, Zappos). Compare campaign content.", src:"Tuten p. 49", at:[["m2-planning",5]]},
+ {t:"Anchor text", d:"The clickable words of a link. Search engines read them to judge what the linked page is about.", src:"Tuten p. 140", at:[["m2-optimization",3]]},
+ {t:"ASCI", d:"The Advertising Standards Council of India. Its influencer guidelines say how paid and sponsored posts must be labelled.", src:"ASCI guidelines", at:[["m2-basics",2],["m2-creation",6]]},
+ {t:"Aspect ratio", d:"The shape of an image or video, written as width to height, such as 1:1 (square) or 9:16 (tall). Each platform and placement expects certain shapes.", src:"Course plan, S12", at:[["m2-optimization",5]]},
+ {t:"Backlink", d:"A link to your content from another site, also called a trackback. More good backlinks usually mean better search rankings.", src:"Tuten p. 140", at:[["m2-optimization",3]]},
+ {t:"Barcelona Principles 4.0", d:"The industry's seven principles for measuring communication (2025). They ask for clear objectives and rule out AVEs.", src:"PR Academy, Jun 2025", at:[["m2-measurement",5]]},
+ {t:"Baseline", d:"A point of comparison: your own past results or your competitors'. A result only means something against a baseline (Fig. 3).", src:"Tuten p. 227", at:[["m2-measurement",6]]},
+ {t:"Black hat", d:"SEO that cheats: keyword stuffing, hidden text, gateway pages, cloaking, link farms. Google devalues such links.", src:"Tuten p. 141", at:[["m2-optimization",3]]},
+ {t:"Blog", d:"An online log of posts, newest first. For an organisation it builds thought leadership, traffic, links and awareness.", src:"Tuten pp. 129–130", at:[["m2-creation",4]]},
+ {t:"Blog Value Index (BVI)", d:"A simple formula to see whether a blog earns more than it costs: above 1 it pays its way, below 1 it costs money.", src:"Tuten p. 225", at:[["m2-measurement",5]]},
+ {t:"Boosted post", d:"A post you pay to show to more people, or to a chosen audience. Your course plan compares organic and boosted distribution.", src:"Course plan, S13", at:[["m2-distribution",5]]},
+ {t:"Call to action", d:"“A direct request in a marketing message for a specific behavior”: follow, save, comment, click or buy.", src:"Tuten p. 131", at:[["m2-basics",6]]},
+ {t:"Campaign content", d:"Content tied to a fixed period or event, such as a launch (Eat Pray Love). Compare always-on content.", src:"Tuten p. 49", at:[["m2-planning",5]]},
+ {t:"Clickthrough", d:"When someone who sees an online ad or link clicks on it.", src:"Tuten pp. 117, 215", at:[["m2-measurement",4],["m2-distribution",5]]},
+ {t:"Cloaking", d:"Showing search engines different content from what visitors see. A black-hat tactic.", src:"Tuten p. 141", at:[["m2-optimization",3]]},
+ {t:"Coincident tracking", d:"Tracking that starts during the campaign, using the traces people leave, such as posts and hashtags.", src:"Tuten p. 226", at:[["m2-measurement",6]]},
+ {t:"Commercial message", d:"A paid message meant to persuade, such as an ad. Compare editorial message.", src:"Tuten p. 130", at:[["m2-basics",2],["m2-creation",6]]},
+ {t:"Consumer-solicited content (CSC)", d:"Content a brand invites customers to make, usually unpaid, such as homemade ads. Also called participatory advertising.", src:"Tuten p. 131", at:[["m2-creation",5]]},
+ {t:"Content", d:"Anything published for others to see, share or answer. Tuten calls it “the unit of value in a social community”.", src:"Tuten p. 128", at:[["m2-basics",1]]},
+ {t:"Content pillars", d:"A few recurring themes a brand keeps posting about, each tied to an objective. Tuten's related idea is pillar content.", src:"Course plan, S10 · Tuten p. 134", at:[["m2-planning",3]]},
+ {t:"Content value ladder", d:"Tuten's five levels of content, from least to most valuable: filler, original, authority-building, pillar, flagship (Fig. 3).", src:"Tuten pp. 133–134", at:[["m2-basics",4],["m2-planning",3]]},
+ {t:"Contrast ratio", d:"How much text stands out from its background. WCAG AA asks for at least 4.5:1 for normal text and 3:1 for large text.", src:"WebAIM", at:[["m2-optimization",6],["m2-creation",2]]},
+ {t:"Cost-benefit analysis", d:"Listing the costs and estimated benefits of an activity side by side. Tuten's corporate blog example: $283,000 of costs, $393,000 of benefits.", src:"Tuten p. 224", at:[["m2-measurement",5]]},
+ {t:"Counterfeit conversation", d:"Content an organisation plants while pretending it came from a real consumer, as in the Lonelygirl15 hoax.", src:"Tuten p. 132", at:[["m2-basics",2],["m2-creation",6]]},
+ {t:"Cross-posting", d:"Pasting the same post onto several platforms unchanged. Compare repurposing.", src:"Course plan, S13 · Tuten p. 141", at:[["m2-distribution",6]]},
+ {t:"Cultural co-creation", d:"When customers' ideas shape what the brand makes, as with Jones Soda's flavours.", src:"Tuten p. 131", at:[["m2-basics",2],["m2-creation",5]]},
+ {t:"DATA process", d:"Tuten's four steps for measurement: Define the results, Assess costs and value, Track the results, Adjust the programme.", src:"Tuten p. 218", at:[["m2-measurement",2],["m2-planning",6]]},
+ {t:"Disclosure", d:"Saying openly that you are paid, gifted or employed by the brand you post about. WOMMA's tags include #spon, #paid, #samp and #emp.", src:"Tuten pp. 52–53", at:[["m2-creation",6]]},
+ {t:"Display ad", d:"An online ad with text, images or video that people can click through to a landing page.", src:"Tuten p. 117", at:[["m2-distribution",5]]},
+ {t:"Duplicate content", d:"The same content placed on many sites. Tuten lists it as a gray-hat tactic; reshape it for each place instead.", src:"Tuten p. 141", at:[["m2-distribution",6],["m2-optimization",3]]},
+ {t:"Earned media", d:"Messages spread at no direct cost and beyond the brand's control: shares, comments, mentions, reviews, search rankings.", src:"Tuten p. 17", at:[["m2-distribution",1]]},
+ {t:"Earned reach", d:"How widely, and how well, a brand reaches people when they share their opinions and its content.", src:"Tuten p. 118", at:[["m2-distribution",3]]},
+ {t:"Editorial calendar", d:"A plan of topics, content types, places and dates for publishing. It shows how long each piece needs.", src:"Tuten p. 132", at:[["m2-planning",4]]},
+ {t:"Editorial message", d:"An objective, unpaid message that gives information or an opinion, like a newspaper editorial. Compare commercial message.", src:"Tuten p. 130", at:[["m2-basics",2]]},
+ {t:"Engagement", d:"How people interact with content. Zahay warns that its definition varies, so always check how an engagement figure was worked out.", src:"Zahay p. 35", at:[["m2-measurement",4]]},
+ {t:"Engagement food chain", d:"Rising levels of engagement: saw, saved, rated, repeated, commented, clicked, interacted, purchased, recommended (Fig. 1).", src:"Tuten p. 216", at:[["m2-measurement",1]]},
+ {t:"Engagement rate", d:"Engagements divided by another number, as a percentage. That number can be reach, followers, impressions or views, so always say which one.", src:"Hootsuite, Oct 2026", at:[["m2-measurement",4]]},
+ {t:"Filler content", d:"Content taken from elsewhere with little added: the bottom rung of the value ladder.", src:"Tuten pp. 133–134, 148", at:[["m2-basics",4]]},
+ {t:"First-three-seconds rule", d:"Your course plan's rule for video: hook the viewer in the opening three seconds.", src:"Course plan, S12", at:[["m2-optimization",5]]},
+ {t:"Flagship content", d:"The top rung of the value ladder: original, substantial pieces that show the brand's expertise.", src:"Tuten pp. 133–134", at:[["m2-basics",4],["m2-planning",3]]},
+ {t:"Forward tracking", d:"Setting up the tracking before the campaign starts. Tuten calls it the most accurate kind.", src:"Tuten p. 225", at:[["m2-measurement",6],["m2-planning",6]]},
+ {t:"Frequency", d:"The average number of times a person sees a message.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Golden triangle", d:"The top of a search results page that nearly everyone looks at: in practice, the first three results.", src:"Tuten p. 138", at:[["m2-optimization",2]]},
+ {t:"Gray hat", d:"SEO that bends the rules: very high keyword density, duplicate content, link exchanges, paid links.", src:"Tuten pp. 140–141", at:[["m2-optimization",3]]},
+ {t:"Heading tag", d:"HTML code (H1, H2, H3) that marks a page's headings. The headings should include keywords.", src:"Tuten p. 139", at:[["m2-optimization",2]]},
+ {t:"Hero, Hub, Help", d:"A content plan long promoted by YouTube: hero (big moments), hub (a regular series), help (answers to what people search for).", src:"Practical Ecommerce, 2020", at:[["m2-planning",3],["m2-basics",4]]},
+ {t:"Hero's journey", d:"A classic story shape: a hero sets out, meets trials and comes back changed. Zahay uses it for brand storytelling.", src:"Zahay pp. 162–164", at:[["m2-basics",5]]},
+ {t:"Hook", d:"The part of a title or opening that makes people stop. Tuten's five hooks: resource, contrary, humour, giveaway, research.", src:"Tuten p. 143", at:[["m2-basics",5],["m2-optimization",4]]},
+ {t:"Impression", d:"One “opportunity to see” a message. For many posts, Meta now reports views instead of impressions.", src:"Tuten p. 222 · Meta, Nov 2024", at:[["m2-measurement",4]]},
+ {t:"Incentivised content", d:"Content people make because they are offered something: a prize, free products or cash.", src:"Tuten p. 131", at:[["m2-basics",2],["m2-creation",5]]},
+ {t:"Influence impressions", d:"Brand mentions passed person to person in everyday social activity. Under 10% of online adults create 80% of them.", src:"Tuten pp. 118–120", at:[["m2-distribution",3]]},
+ {t:"Influence posts", d:"Brand-related content published by opinion leaders, such as a blogger's review of a new restaurant.", src:"Tuten pp. 118–119", at:[["m2-distribution",3]]},
+ {t:"Interaction metrics", d:"Counts of how the audience engages: followers, comments, likes, shares, reviews.", src:"Tuten p. 220", at:[["m2-measurement",3]]},
+ {t:"Key performance indicator (KPI)", d:"A metric tied to an objective. The objective has to be defined first.", src:"Tuten p. 217", at:[["m2-measurement",1]]},
+ {t:"Keyword research", d:"Finding the words people really search for: your topic words, competitors' keywords, keyword tools, variations, and search volume (Google Trends).", src:"Tuten p. 139", at:[["m2-optimization",2]]},
+ {t:"Keyword stuffing", d:"Cramming a page with keywords to fool search engines. A black-hat tactic.", src:"Tuten p. 141", at:[["m2-optimization",3]]},
+ {t:"Keywords", d:"The words that tell search engines what a page is about. They go in the page's tags, title, URL and text.", src:"Tuten p. 138", at:[["m2-optimization",2]]},
+ {t:"Landing page", d:"The first page a person reaches after clicking an ad. It decides whether they stay.", src:"Tuten p. 117", at:[["m2-distribution",5]]},
+ {t:"Link farm", d:"A group of sites that link to each other only to push up rankings. A black-hat tactic.", src:"Tuten p. 141", at:[["m2-optimization",3]]},
+ {t:"Link juice", d:"The ranking benefit a page gets from the links pointing to it.", src:"Tuten p. 140", at:[["m2-optimization",3]]},
+ {t:"Linkbaiting", d:"Crafting a title that markets the content and makes people want to click.", src:"Tuten p. 143", at:[["m2-optimization",4],["m2-basics",5]]},
+ {t:"Linkwheel", d:"A hub-and-spoke set of linked pages that all point back to one main page (Fig. 4).", src:"Tuten pp. 140–141", at:[["m2-optimization",3]]},
+ {t:"Long-tail keywords", d:"Longer, multi-word searches that say exactly what the person wants, such as “identifying a fake Birkin”.", src:"Tuten p. 140", at:[["m2-optimization",2]]},
+ {t:"Master calendar", d:"The overview calendar: all planned content by day and week, with key dates and planned distribution across channels (Fig. 2).", src:"Tuten pp. 132–133", at:[["m2-planning",4]]},
+ {t:"Measurement", d:"A number on its own, such as 4,231. Compared with something, it becomes a metric.", src:"Tuten p. 216", at:[["m2-measurement",1]]},
+ {t:"Measurement map", d:"A map of where branded content and brand talk appear online, and how the touchpoints link up (Fig. 4).", src:"Tuten pp. 227–228", at:[["m2-measurement",6]]},
+ {t:"Media optimisation matrix", d:"Tuten's Table 2: the on-site and off-site tactics for SEO and for SMO.", src:"Tuten p. 135", at:[["m2-optimization",1]]},
+ {t:"Media-sharing site", d:"A site for sharing videos, photos or audio, such as YouTube. Tuten counts it as earned media, because the brand doesn't control it.", src:"Tuten p. 130", at:[["m2-creation",2],["m2-distribution",2]]},
+ {t:"Meme", d:"A piece of culture, such as a phrase, image or joke, that spreads from person to person like a virus.", src:"Tuten p. 92", at:[["m2-basics",3]]},
+ {t:"Message control", d:"The control a brand gives up when others share and reshape its message. A cost to weigh in the Assess step.", src:"Tuten p. 224", at:[["m2-measurement",2]]},
+ {t:"Meta tag", d:"Code inside a web page that describes it to search engines. The meta description is shown under the search result.", src:"Tuten p. 138", at:[["m2-optimization",2]]},
+ {t:"Metric", d:"A measurement in context: compared with your past, your targets or your competitors.", src:"Tuten pp. 216–217", at:[["m2-measurement",1]]},
+ {t:"Microblog", d:"A short-post platform, such as X (Twitter). Blogs share a story; microblogs share headlines.", src:"Tuten p. 144", at:[["m2-optimization",4],["m2-distribution",6]]},
+ {t:"Network effect", d:"When people share, some of their friends see it and share again, so content keeps spreading further.", src:"Tuten p. 142", at:[["m2-basics",3],["m2-optimization",4]]},
+ {t:"Off-site optimisation", d:"Work done outside your own page to improve ranking or sharing, mainly earning links and mentions from other sites.", src:"Tuten pp. 140, 144", at:[["m2-optimization",3]]},
+ {t:"On-site optimisation", d:"Work done on your own page: keywords in the tags, title, URL and text for search, and share tools for people.", src:"Tuten pp. 138, 142", at:[["m2-optimization",2]]},
+ {t:"Opportunities to see (OTS)", d:"The chances your audience has to come across a message. Publishing in more places creates more of them.", src:"Tuten p. 136", at:[["m2-optimization",2],["m2-distribution",6]]},
+ {t:"Opportunity cost", d:"What staff could have done with the time they spend on social media: a hidden cost.", src:"Tuten p. 223", at:[["m2-measurement",2]]},
+ {t:"Organic content", d:"Content a person makes for their own reasons, without being asked or paid.", src:"Tuten p. 131", at:[["m2-basics",2],["m2-creation",5]]},
+ {t:"Organic results", d:"Search results ranked by relevance, not paid for. They tend to get more traffic and more trust than paid links.", src:"Tuten p. 137", at:[["m2-optimization",2]]},
+ {t:"Organic social ad", d:"A story in someone's feed after they interact with a brand, for example by liking it. Seen as more credible.", src:"Tuten p. 117", at:[["m2-distribution",5]]},
+ {t:"Owned media", d:"Channels the brand controls, such as its website, blog and brand profiles.", src:"Tuten p. 17", at:[["m2-distribution",1]]},
+ {t:"Paid media", d:"Space or endorsements the brand pays for: social ads, boosted posts, paid creator posts.", src:"Tuten pp. 17, 117", at:[["m2-distribution",1]]},
+ {t:"Participatory advertising", d:"A brand invites people to make ads or content, sets the rules, may supply brand assets, and shows the entries in a gallery.", src:"Tuten pp. 120, 131", at:[["m2-creation",5]]},
+ {t:"PESO model", d:"Gini Dietrich's model of four media types: paid, earned, shared and owned. Shared means social posts, comments and communities.", src:"Spin Sucks", at:[["m2-distribution",1]]},
+ {t:"Pillar content", d:"Educational content people save and share for a long time: how-to, definition, glossary, theory and list pieces (Table 1).", src:"Tuten p. 134", at:[["m2-basics",4],["m2-planning",3]]},
+ {t:"Podcast", d:"An audio show people can subscribe to and listen to whenever they like.", src:"Zahay pp. 139–140", at:[["m2-creation",4]]},
+ {t:"Power site", d:"A site with a huge readership, such as CNN.com. One link from it is worth a great deal.", src:"Tuten pp. 142–143", at:[["m2-optimization",4]]},
+ {t:"Reach", d:"The number of people exposed to a message.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Relative pull", d:"A comparison of how well different versions of an ad bring a response.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Repurposing", d:"Reshaping one idea for each platform and format, instead of copying it unchanged (the SOS example).", src:"Course plan, S13 · Tuten p. 136", at:[["m2-distribution",6]]},
+ {t:"Return metrics", d:"Measures of outcomes, financial or otherwise, such as ROI and cost savings.", src:"Tuten p. 222", at:[["m2-measurement",3],["m2-measurement",5]]},
+ {t:"Return on impressions", d:"(Estimated revenue − cost) ÷ cost. Tuten's Dunkin' Donuts example: $500,000 of revenue on $100,000 of cost = 400%.", src:"Tuten p. 222", at:[["m2-measurement",5]]},
+ {t:"Return on investment (ROI)", d:"Profit compared with what was spent. For social media it is called SMROI: how much income did the social media investment bring?", src:"Tuten p. 222", at:[["m2-measurement",5]]},
+ {t:"Reverse tracking", d:"Tracking after the campaign has ended, using leftover data and often surveys.", src:"Tuten p. 226", at:[["m2-measurement",6]]},
+ {t:"RSS feed", d:"A feed that sends new content straight to subscribers' feed readers or email.", src:"Tuten p. 144", at:[["m2-optimization",4]]},
+ {t:"Sales conversion", d:"When someone who clicked through goes on to buy.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Search engine marketing (SEM)", d:"Promoting a site in search results, through both organic and paid listings. SEO is its main tool.", src:"Tuten p. 136", at:[["m2-optimization",2]]},
+ {t:"Search engine optimisation (SEO)", d:"Changing content, site features and links so a site ranks higher in search results. “SEO efforts target machines.”", src:"Tuten pp. 135, 142", at:[["m2-optimization",1]]},
+ {t:"Seeding", d:"Giving people a reason or a tool to start spreading a brand's message, such as Gossip Girl's video app.", src:"Tuten pp. 118, 120", at:[["m2-distribution",3]]},
+ {t:"Sentiment", d:"Whether what people say about a brand is positive, negative or neutral. One of the metrics in Table 1.", src:"Tuten p. 220", at:[["m2-measurement",3],["m2-measurement",6]]},
+ {t:"Share of voice", d:"A brand's share of the advertising, or of the conversation, in its category compared with competitors.", src:"Tuten pp. 41, 220", at:[["m2-measurement",3]]},
+ {t:"Share tools", d:"One-click buttons that let people share or bookmark content on other sites.", src:"Tuten p. 143", at:[["m2-optimization",4],["m2-basics",6]]},
+ {t:"Shared media", d:"In the PESO model: social posts, comments and communities where content spreads and people respond. Tuten would count most of this as owned or earned media.", src:"Spin Sucks", at:[["m2-distribution",1]]},
+ {t:"SMART objectives", d:"Objectives that are Specific, Measurable, Appropriate, Realistic and Time-oriented.", src:"Tuten p. 219", at:[["m2-planning",6],["m2-measurement",2]]},
+ {t:"Social ads", d:"Online ads that use profile data to target or personalise, and invite interaction. Three types: social engagement, social context, organic social ads.", src:"Tuten p. 117", at:[["m2-distribution",5]]},
+ {t:"Social bookmarking site", d:"A site where people save, tag and share links, mainly to organise them.", src:"Tuten pp. 144–146", at:[["m2-optimization",4]]},
+ {t:"Social media mix", d:"The set of channels and vehicles a strategy uses, chosen by objective and by the audience's habits.", src:"Tuten p. 45", at:[["m2-distribution",2]]},
+ {t:"Social media optimisation (SMO)", d:"Making content easy and attractive to share and link to in online communities. “SMO targets people.”", src:"Tuten pp. 135, 142", at:[["m2-optimization",1]]},
+ {t:"Social media press release", d:"A press release built for sharing: optimised title, keywords, links, share buttons and media people can embed (Fig. 5).", src:"Tuten pp. 144–145", at:[["m2-optimization",4],["m2-distribution",2]]},
+ {t:"Social news site", d:"A community where users submit and vote on stories, so the most popular rise to the top. Reddit is one that remains.", src:"Tuten pp. 145–146", at:[["m2-optimization",4],["m2-distribution",3]]},
+ {t:"Social publishing", d:"Publishing content through blogs, media-sharing sites and other channels: Tuten's second zone. Its twofold goal is more exposure and more traffic to owned media.", src:"Tuten pp. 128, 135", at:[["m2-planning",1],["m2-basics",1]]},
+ {t:"Sockpuppeting", d:"Promoting content under a made-up identity. Tuten says it crosses an ethical line.", src:"Tuten p. 147", at:[["m2-creation",6]]},
+ {t:"Speed of response", d:"How fast a brand can spot and answer a problem on social media. Valuable, but hard to put a number on.", src:"Tuten p. 223", at:[["m2-measurement",2]]},
+ {t:"Spokesblogger", d:"A blogger who posts sponsored content as their only reason for joining a conversation.", src:"Tuten p. 132", at:[["m2-creation",6]]},
+ {t:"Sponsored conversation", d:"Consumer content the brand pays for, such as paid blog reviews.", src:"Tuten p. 132", at:[["m2-basics",2],["m2-creation",6]]},
+ {t:"Sponsored results", d:"Paid advertising links in search results.", src:"Tuten p. 137", at:[["m2-optimization",2]]},
+ {t:"Stickiness", d:"How well a site draws repeat visits and keeps people on it.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Title tag", d:"HTML code that sets a page's title, shown in the browser tab and in search results. Tuten: no more than 12 words, with at least two keywords.", src:"Tuten pp. 138–139", at:[["m2-optimization",2]]},
+ {t:"Trackback", d:"A link you post back to a site that linked to you, to credit it. Tuten also uses the word for a backlink.", src:"Tuten pp. 140, 143–144", at:[["m2-optimization",4]]},
+ {t:"UGC campaign", d:"A brand invites people to create content, often as a contest with rules and prizes, and then shares the entries.", src:"Tuten p. 120", at:[["m2-creation",5]]},
+ {t:"URL (static vs dynamic)", d:"A static URL stays the same and can include keywords; a dynamic one is made by a script and changes. Tuten advises static URLs.", src:"Tuten p. 139", at:[["m2-optimization",2]]},
+ {t:"User-generated content (UGC)", d:"Content made by everyday users rather than the brand, often for personal reasons. It grabs attention and can shape how people see the brand.", src:"Tuten p. 131", at:[["m2-basics",2],["m2-creation",5]]},
+ {t:"Valid Metrics Framework", d:"AMEC's five stages of results, used by Zahay: exposure, engagement, influence, impact, advocacy.", src:"Zahay p. 35", at:[["m2-measurement",1]]},
+ {t:"Views", d:"Meta's main reach number since Nov 2024. For photo, text and story posts, every time the post appears on someone's screen counts, repeats included.", src:"Meta, Nov 2024", at:[["m2-measurement",4]]},
+ {t:"Viewthrough", d:"When someone sees an online ad, doesn't click, but visits the brand's site later.", src:"Tuten p. 215", at:[["m2-measurement",4]]},
+ {t:"Visual storytelling", d:"Telling a brand's story mainly through images and video.", src:"Zahay pp. 157–159", at:[["m2-basics",5],["m2-creation",2]]},
+ {t:"Web crawler", d:"A program, also called a spider or bot, that follows links, collects page data and feeds the search engine's index.", src:"Tuten p. 138", at:[["m2-optimization",2]]},
+ {t:"Webinar", d:"A live online talk or class that people join from anywhere, often with questions at the end.", src:"Zahay pp. 143–145", at:[["m2-creation",4]]},
+ {t:"White hat", d:"SEO that follows the rules: good content, sensible keywords, earned links, site maps.", src:"Tuten p. 140", at:[["m2-optimization",3]]},
+ {t:"White paper", d:"A detailed report that shows expertise on a problem, often downloaded and kept by business readers.", src:"Zahay pp. 185–187", at:[["m2-creation",1],["m2-creation",4]]},
+ {t:"Why we log in", d:"Tuten's four reasons people use social networks: affinity, curiosity (the prurient impulse), contact comfort and immediacy, and altruism.", src:"Tuten p. 71", at:[["m2-basics",3]]}
+]
+};
+
+/* Module glossary widget: a row of letter circles in the module colour.
+   Tapping a letter opens that letter's terms, each with a short meaning, its source,
+   and links to the topic page and stop where it is taught.
+   Needs window.CATALOG, window.GLOSSARY and window.STOPNAMES (added by build.py). */
+window.SMMGlossary = (function(){
+"use strict";
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function letterOf(t){ var c=t.replace(/^[^A-Za-z0-9]+/,"").charAt(0).toUpperCase(); return /[A-Z]/.test(c)?c:"#"; }
+var LETTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+function sessionOf(file){
+  var C=window.CATALOG, s="";
+  C.modules.forEach(function(m){ m.topics.forEach(function(t){ if(t.file===file+".html") s=t.s; }); });
+  return s;
+}
+function linkFor(at,current){
+  var file=at[0], stop=at[1], names=(window.STOPNAMES||{})[file]||{};
+  var href=(current===file?"":file+".html")+"#stop-"+stop;
+  var label=sessionOf(file)+" · "+(names[stop]||("Stop "+stop));
+  return '<a class="gl-go" href="'+href+'">'+esc(label)+' <span aria-hidden="true">→</span></a>';
+}
+function render(box,mod,current,opts){
+  opts=opts||{};
+  var terms=((window.GLOSSARY||{})[mod.id]||[]).slice().sort(function(a,b){ return a.t.toLowerCase().localeCompare(b.t.toLowerCase()); });
+  var uid="gl-"+mod.id+"-"+Math.random().toString(36).slice(2,7);
+  if(!terms.length){
+    box.innerHTML='<div class="gloss empty-gl"><div class="gl-head"><h3>Module '+mod.n+' glossary</h3></div><p class="muted">Terms will be added here as this module\'s topic pages are written.</p></div>';
+    return;
+  }
+  var by={}; terms.forEach(function(t){ var L=letterOf(t.t); (by[L]=by[L]||[]).push(t); });
+  var letters=LETTERS.map(function(L){
+    var n=(by[L]||[]).length;
+    return '<button type="button" class="gl-l" data-l="'+L+'"'+(n?' aria-expanded="false" aria-controls="'+uid+'-panel" title="'+n+' term'+(n>1?'s':'')+'"':' disabled title="No terms"')+'>'+L+'</button>';
+  }).join("");
+  box.innerHTML='<div class="gloss">'+
+    '<div class="gl-head">'+(opts.noTitle?'':'<h3>Module '+mod.n+' glossary</h3>')+'<span class="gl-count">'+terms.length+' terms</span>'+
+    '<button type="button" class="linkish gl-all" aria-expanded="false" aria-controls="'+uid+'-panel">Show all terms</button></div>'+
+    (opts.noTitle?'':'<p class="gl-hint">Tap a letter to see its terms. Each term links to the topic and stop where it is taught.</p>')+
+    '<div class="gl-letters" role="group" aria-label="Glossary letters">'+letters+'</div>'+
+    '<div class="gl-panel" id="'+uid+'-panel" role="region" aria-live="polite" hidden></div></div>';
+  var panel=box.querySelector(".gl-panel"), open=null;
+  function itemHTML(t){
+    var links=[], seen={};
+    t.at.forEach(function(a){ var k=a[0]+"#"+a[1]; if(!seen[k]){ seen[k]=1; links.push(linkFor(a,current)); } });
+    return '<div class="gl-item"><dt>'+esc(t.t)+'</dt><dd><p>'+esc(t.d)+'</p><div class="gl-meta"><span class="ref">'+esc(t.src)+'</span>'+
+      '<span class="gl-links"><span class="gl-rm">Read more:</span> '+links.join(" ")+'</span></div></dd></div>';
+  }
+  function show(L){
+    open=L;
+    Array.prototype.forEach.call(box.querySelectorAll(".gl-l"),function(b){ if(!b.disabled) b.setAttribute("aria-expanded",String(b.getAttribute("data-l")===L)); });
+    box.querySelector(".gl-all").setAttribute("aria-expanded",String(L==="*"));
+    box.querySelector(".gl-all").textContent=L==="*"?"Hide all terms":"Show all terms";
+    if(!L){ panel.hidden=true; panel.innerHTML=""; return; }
+    var html="";
+    if(L==="*"){
+      LETTERS.forEach(function(x){ if(by[x]) html+='<div class="gl-group"><div class="gl-big" aria-hidden="true">'+x+'</div><dl>'+by[x].map(itemHTML).join("")+'</dl></div>'; });
+    } else {
+      html='<div class="gl-group"><div class="gl-big" aria-hidden="true">'+L+'</div><dl>'+by[L].map(itemHTML).join("")+'</dl></div>';
+    }
+    panel.innerHTML='<div class="gl-panelhead"><b>'+(L==="*"?"All "+terms.length+" terms":L+" · "+by[L].length+" term"+(by[L].length>1?"s":""))+'</b><button type="button" class="linkish gl-close">Close</button></div>'+html;
+    panel.hidden=false;
+  }
+  box.addEventListener("click",function(e){
+    var b=e.target.closest(".gl-l,.gl-all,.gl-close"); if(!b || b.disabled) return;
+    if(b.classList.contains("gl-close")){ var was=open; show(null); var f=box.querySelector(was==="*"?".gl-all":'.gl-l[data-l="'+was+'"]'); if(f) f.focus(); return; }
+    var L=b.classList.contains("gl-all")?"*":b.getAttribute("data-l");
+    show(open===L?null:L);
+  });
+}
+return {render:render};
+})();
 
 </script>
 <script>
@@ -634,9 +932,10 @@ var idx=MOD.topics.map(function(t){return t.file;}).indexOf(T.file);
 var topicNo=idx+1;
 var jumps=[["route","Road map"],["skim","Skim guide"],["map","Tier map"],["tier1","Tier 1"],["tier2","Tier 2"],["tier3","Tier 3"]];
 (T.extras||[]).forEach(function(x){jumps.push([x.id,x.nav||x.title]);});
-jumps.push(["notes","Notes"]);
+if(window.GLOSSARY && (window.GLOSSARY[T.module]||[]).length) jumps.push(["glossary","Glossary"]);
+else jumps.push(["notes","Notes"]);
 var top=el("nav",{class:"topbar","aria-label":"Page"});
-top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
+top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb" title="Topic '+topicNo+' of '+MOD.topics.length+' in Module '+MOD.n+'">Module '+MOD.n+' · '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
   jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
 app.appendChild(top);
 
@@ -1072,6 +1371,11 @@ function setFilter(id){
 
 /* ---------- Extras and notes ---------- */
 (T.extras||[]).forEach(function(x){ var w=section(x.id,x.eyebrow,x.title,x.intro); w.appendChild(el("div",{},x.html)); });
+if(window.SMMGlossary){
+  var gsec=section("glossary","Glossary · Module "+MOD.n,"Module "+MOD.n+" glossary","Key terms from this module's topic pages, A to Z. Tap a letter to open its terms; each one links to the topic and stop where it is taught.");
+  var gbox=el("div",{}); gsec.appendChild(gbox);
+  SMMGlossary.render(gbox,MOD,T.file.replace(/\.html$/,""),{noTitle:true});
+}
 var nw=section("notes","Notes on editions and page numbers","What was checked, and what was not");
 nw.appendChild(el("div",{class:"notes"},T.notes.map(function(p){return "<p>"+p+"</p>";}).join("")));
 app.appendChild(el("footer",{},'<div class="wrap">'+T.footer+'</div>'));
@@ -1097,6 +1401,15 @@ renderSkim();
 select(1);
 renderLists();
 updateReadbar();
+/* links such as m2-planning.html#stop-4 (from a glossary) land on that stop and highlight it */
+function goHash(){
+  var h=(location.hash||"").slice(1), m=/^stop-(\d+)$/.exec(h); if(!m) return;
+  var target=document.getElementById(h); if(!target) return;
+  select(Number(m[1]));
+  setTimeout(function(){ target.scrollIntoView({block:"start"}); target.classList.add("flash"); setTimeout(function(){ target.classList.remove("flash"); },2400); },60);
+}
+goHash();
+window.addEventListener("hashchange",goHash);
 })();
 
 </script>

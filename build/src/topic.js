@@ -29,9 +29,10 @@ var idx=MOD.topics.map(function(t){return t.file;}).indexOf(T.file);
 var topicNo=idx+1;
 var jumps=[["route","Road map"],["skim","Skim guide"],["map","Tier map"],["tier1","Tier 1"],["tier2","Tier 2"],["tier3","Tier 3"]];
 (T.extras||[]).forEach(function(x){jumps.push([x.id,x.nav||x.title]);});
-jumps.push(["notes","Notes"]);
+if(window.GLOSSARY && (window.GLOSSARY[T.module]||[]).length) jumps.push(["glossary","Glossary"]);
+else jumps.push(["notes","Notes"]);
 var top=el("nav",{class:"topbar","aria-label":"Page"});
-top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb">Module '+MOD.n+' · topic '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
+top.innerHTML='<div class="wrap"><a class="home" href="index.html#'+MOD.id+'">SMM Reading Map</a><span class="crumb" title="Topic '+topicNo+' of '+MOD.topics.length+' in Module '+MOD.n+'">Module '+MOD.n+' · '+topicNo+' of '+MOD.topics.length+'</span><div class="jump">'+
   jumps.map(function(j){return '<a href="#'+j[0]+'">'+esc(j[1])+'</a>';}).join("")+'</div></div>';
 app.appendChild(top);
 
@@ -467,6 +468,11 @@ function setFilter(id){
 
 /* ---------- Extras and notes ---------- */
 (T.extras||[]).forEach(function(x){ var w=section(x.id,x.eyebrow,x.title,x.intro); w.appendChild(el("div",{},x.html)); });
+if(window.SMMGlossary){
+  var gsec=section("glossary","Glossary · Module "+MOD.n,"Module "+MOD.n+" glossary","Key terms from this module's topic pages, A to Z. Tap a letter to open its terms; each one links to the topic and stop where it is taught.");
+  var gbox=el("div",{}); gsec.appendChild(gbox);
+  SMMGlossary.render(gbox,MOD,T.file.replace(/\.html$/,""),{noTitle:true});
+}
 var nw=section("notes","Notes on editions and page numbers","What was checked, and what was not");
 nw.appendChild(el("div",{class:"notes"},T.notes.map(function(p){return "<p>"+p+"</p>";}).join("")));
 app.appendChild(el("footer",{},'<div class="wrap">'+T.footer+'</div>'));
@@ -492,4 +498,13 @@ renderSkim();
 select(1);
 renderLists();
 updateReadbar();
+/* links such as m2-planning.html#stop-4 (from a glossary) land on that stop and highlight it */
+function goHash(){
+  var h=(location.hash||"").slice(1), m=/^stop-(\d+)$/.exec(h); if(!m) return;
+  var target=document.getElementById(h); if(!target) return;
+  select(Number(m[1]));
+  setTimeout(function(){ target.scrollIntoView({block:"start"}); target.classList.add("flash"); setTimeout(function(){ target.classList.remove("flash"); },2400); },60);
+}
+goHash();
+window.addEventListener("hashchange",goHash);
 })();

@@ -16,6 +16,19 @@ css = (SRC / "site.css").read_text()
 catalog = (SRC / "catalog.js").read_text()
 topic_js = (SRC / "topic.js").read_text()
 hub_js = (SRC / "hub.js").read_text()
+
+# Glossary: term data, the widget, and the stop names it links to (read from each topic file).
+STOPNAMES = {}
+for tf in sorted((SRC / "topics").glob("*.js")):
+    fa = re.search(r'file:"([^"]+)\.html"', tf.read_text())
+    if fa:
+        STOPNAMES[fa.group(1)] = {int(i): n for i, n in re.findall(r'\{id:(\d+),name:"([^"]+)"', tf.read_text())}
+gdata = (SRC / "glossary-data.js").read_text()
+bad = [f"{f} stop {n}" for f, n in re.findall(r'\["(m\d-[a-z-]+)",(\d+)\]', gdata)
+       if f not in STOPNAMES or int(n) not in STOPNAMES[f]]
+if bad:
+    sys.exit("glossary links to missing pages or stops: " + ", ".join(sorted(set(bad))))
+glossary = "window.STOPNAMES=" + json.dumps(STOPNAMES, ensure_ascii=False) + ";\n" + gdata + "\n" + (SRC / "glossary.js").read_text()
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700'
@@ -70,6 +83,9 @@ hub = f"""<header class="hubhero">
 {safe_script(catalog)}
 </script>
 <script>
+{safe_script(glossary)}
+</script>
+<script>
 {safe_script(hub_js)}
 </script>
 """
@@ -108,6 +124,9 @@ img{{max-width:100%}}
 <div id="app"></div>
 <script>
 {safe_script(catalog)}
+</script>
+<script>
+{safe_script(glossary)}
 </script>
 <script>
 {safe_script(data)}

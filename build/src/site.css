@@ -359,3 +359,44 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
 .howto > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
 .howto > div p{font-size:.95rem;color:var(--muted);margin-top:4px}
 @media (max-width:760px){.howto{grid-template-columns:1fr}}
+
+/* ---------- module glossary ---------- */
+.mgloss{padding:0 20px 20px 80px}
+@media (max-width:600px){.mgloss{padding:0 14px 16px 14px}}
+.mgloss .gloss{border-top:1px dashed var(--line);padding-top:16px}
+.gl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.gl-head h3{font-size:1.1rem}
+.gl-count{font-family:var(--mono);font-size:.78rem;color:var(--a)}
+.gl-head .gl-all{margin-left:auto}
+.gl-hint{font-size:.88rem;color:var(--muted);margin:6px 0 12px}
+.gl-letters{display:flex;flex-wrap:wrap;gap:5px}
+#glossary .gl-letters{margin-top:12px}
+.gl-l{width:33px;height:33px;border-radius:50%;border:1.5px solid var(--a);background:var(--surface);color:var(--a);font-family:var(--mono);font-weight:500;font-size:.9rem;line-height:1;cursor:pointer;display:inline-grid;place-items:center;padding:0;transition:background .15s,color .15s,transform .15s}
+.gl-l:hover{background:var(--a-soft)}
+.gl-l[aria-expanded="true"]{background:var(--a);color:var(--on-a);transform:scale(1.1)}
+.gl-l:disabled{border:1.5px dashed var(--line);background:transparent;color:var(--muted);opacity:.55;cursor:default}
+.gl-l:disabled:hover{background:transparent}
+.gl-panel{margin-top:14px;border:1px solid var(--line);border-left:4px solid var(--a);border-radius:10px;background:var(--surface);padding:12px 18px 6px}
+.gl-panelhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gl-panelhead b{font-family:var(--mono);font-size:.82rem;letter-spacing:.04em;color:var(--a);font-weight:500;text-transform:uppercase}
+.gl-group{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding-top:6px}
+.gl-group + .gl-group{border-top:1px solid var(--line)}
+.gl-big{width:34px;height:34px;border-radius:50%;background:var(--a);color:var(--on-a);display:grid;place-items:center;font-family:var(--mono);font-weight:500;margin-top:10px}
+.gl-group dl{margin:0}
+.gl-item{padding:10px 0;border-bottom:1px solid var(--line)}
+.gl-group dl .gl-item:last-child{border-bottom:0}
+.gl-item dt{font-weight:700}
+.gl-item dd{margin:3px 0 0}
+.gl-item dd p{font-size:.95rem;max-width:72ch}
+.gl-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:6px;font-size:.84rem}
+.gl-links{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.gl-rm{color:var(--muted)}
+.gl-go{color:var(--a);text-decoration:none;font-weight:700}
+.gl-go:hover{text-decoration:underline}
+.gloss.empty-gl p{font-size:.9rem;margin-top:4px}
+@media (max-width:560px){.gl-group{grid-template-columns:1fr}.gl-big{display:none}.gl-l{width:31px;height:31px;font-size:.85rem}.gl-panel{padding:10px 14px 4px}}
+@media (prefers-reduced-motion:reduce){.gl-l{transition:none}}
+/* a stop reached from a glossary link */
+.route .stop{scroll-margin-top:calc(var(--tbh,50px) + 16px)}
+.route .stop .card{transition:box-shadow .3s}
+.route .stop.flash .card{box-shadow:0 0 0 3px var(--a)}

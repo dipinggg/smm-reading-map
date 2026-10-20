@@ -40,11 +40,13 @@ C.modules.forEach(function(m){
   }).join("");
   li.innerHTML='<button type="button" aria-expanded="'+(open[m.id]?"true":"false")+'" aria-controls="'+tid+'">'+
     '<span class="mnum">'+m.n+'</span><span><span class="mtitle">'+esc(m.title)+'</span><span class="mmeta"><span>'+m.hours+' hours · '+m.topics.length+' topics · '+esc(m.topics[0].s)+'–'+esc(m.topics[m.topics.length-1].s)+'</span>'+(r?'<span class="ready">'+r+' ready</span>':'<span>none ready yet</span>')+'</span></span>'+
-    '<span class="chev" aria-hidden="true"></span></button><ul class="topics" id="'+tid+'">'+rows+'</ul>';
+    '<span class="chev" aria-hidden="true"></span></button><ul class="topics" id="'+tid+'">'+rows+'</ul><div class="mgloss"></div>';
   var ul=li.querySelector(".topics"); ul.hidden=!open[m.id];
+  var gw=li.querySelector(".mgloss"); gw.hidden=!open[m.id];
+  if(window.SMMGlossary) SMMGlossary.render(gw,m,null);
   li.querySelector("button").addEventListener("click",function(){
     var on=!li.classList.contains("open");
-    li.classList.toggle("open",on); ul.hidden=!on;
+    li.classList.toggle("open",on); ul.hidden=!on; gw.hidden=!on;
     this.setAttribute("aria-expanded",String(on));
     if(on) open[m.id]=1; else delete open[m.id];
     save();
