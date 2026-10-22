@@ -5,7 +5,7 @@ Lecture-prep reading map for **22MDM32 Social Media Marketing** (BGS College of 
 Open the site: the hub page lists the five modules. Tap a module to see its topics; topics marked **Ready** have their own page with:
 
 - a road map of six essential stops, with book and page numbers;
-- a page-by-page Tier 1 skim guide (read, skim, glance, skip);
+- a page-by-page Tier 1 skim guide (read, skim, glance, skip), with a tick for every part and an "All done" tick per page;
 - a clickable tier map (Tier 1 box → skim guide for that stop; Tier 2 / Tier 3 box → that reading list);
 - reading lists in three tiers, plus lab tables;
 - a glossary for each module (A–Z letter circles, each term linked to the stop where it is taught), on the home page and at the end of every topic page;

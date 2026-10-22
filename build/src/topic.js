@@ -52,13 +52,13 @@ rb.innerHTML='<div class="wrap">'+
  '</div>';
 top.appendChild(rb);
 function fmtPct(v){ return (v>0 && v<1) ? "<1%" : Math.floor(v+1e-9)+"%"; }
-function credit(r){ var c=COVER[r.id]; return c ? pagesTicked(r)/c.length : (done[r.id]?1:0); }
+function credit(r){ var c=COVER[r.id]; if(!c) return done[r.id]?1:0; var t=partsTotal(r); return t?partsTicked(r)/t:(isRead(r)?1:0); }
 function updateReadbar(){
   if(!rb) return;
   /* a reading linked to skim pages earns part credit as its pages are ticked, so every skim tick moves the bar */
   var tot=0, dn=0, cr=0, pt=0, tiers=rb.querySelectorAll(".rb-t");
   [1,2,3].forEach(function(n){
-    var all=byTier(n), d=all.filter(isRead).length, part=all.filter(function(r){return !isRead(r) && pagesTicked(r)>0;}).length;
+    var all=byTier(n), d=all.filter(isRead).length, part=all.filter(function(r){return !isRead(r) && partsTicked(r)>0;}).length;
     var c=all.reduce(function(s,r){return s+credit(r);},0);
     tot+=all.length; dn+=d; cr+=c; pt+=part;
     var pv=all.length?c*100/all.length:0, p=fmtPct(pv);
@@ -73,8 +73,8 @@ function updateReadbar(){
   rb.querySelector(".rb-pct").textContent=fmtPct(pv);
   rb.querySelector(".rb-lab").textContent=complete?"All "+tot+" readings done":dn+" of "+tot+" readings done"+(pt?" · "+pt+" part-read":"");
   rb.classList.toggle("complete",complete);
-  var sp=0, st=0; (T.skim||[]).forEach(function(B){ st+=B.pages.length; sp+=skimDoneCount(B); });
-  rb.querySelector(".rb-skim").textContent=st?"Skim guide: "+sp+" of "+st+" pages":"";
+  var a=0, at=0, f=0, ft=0; (T.skim||[]).forEach(function(B){ var c=bookCounts(B); a+=c.p; at+=c.pt; f+=c.f; ft+=c.ft; });
+  rb.querySelector(".rb-skim").textContent=at?"Skim guide: "+a+" of "+at+" parts"+(ft?" · fast route "+f+" of "+ft:""):"";
   try{ localStorage.setItem("smm-rm-sum-"+T.file,JSON.stringify({d:dn,t:tot,p:Math.round(pv*10)/10})); }catch(e){}
 }
 /* keep jump targets clear of the sticky bar, whatever its height */
@@ -125,23 +125,52 @@ R.forEach(function(r){
   });
   if(keys.length) COVER[r.id]=keys;
 });
-/* a tick made earlier straight on a linked reading becomes ticks on its skim pages */
+/* ---------- skim parts: one tick for every Read, Skim or Glance part ----------
+   Skip parts have no tick. A page is done when all of its parts are ticked.
+   A page with only Skip parts has nothing to tick and counts as done. */
+var PAGE={};
+SK.forEach(function(B){ B.pages.forEach(function(pg){
+  var parts=[], fast=[];
+  pg.b.forEach(function(b,i){ if(b.a!=="skip"){ var k="skimb-"+B.key+"-"+pg.p+"-"+i; parts.push(k); if(b.f) fast.push(k); } });
+  PAGE["skim-"+B.key+"-"+pg.p]={parts:parts,fast:fast};
+}); });
+function pageTicked(k){ var P=PAGE[k]; return P ? P.parts.filter(function(x){return done[x];}).length : 0; }
+function pageTotal(k){ var P=PAGE[k]; return P ? P.parts.length : 0; }
+function pageDone(k){ return pageTicked(k)===pageTotal(k); }
+function setParts(list,on){ list.forEach(function(x){ if(on) done[x]=1; else delete done[x]; }); }
+function bookCounts(B){
+  var c={p:0,pt:0,f:0,ft:0,pg:0,pgt:0};
+  B.pages.forEach(function(pg){ var P=PAGE["skim-"+B.key+"-"+pg.p];
+    c.pt+=P.parts.length; c.p+=P.parts.filter(function(x){return done[x];}).length;
+    c.ft+=P.fast.length; c.f+=P.fast.filter(function(x){return done[x];}).length;
+    if(P.parts.length){ c.pgt++; if(pageDone("skim-"+B.key+"-"+pg.p)) c.pg++; } });
+  return c;
+}
+/* older ticks carry over: a tick on a linked reading becomes ticks on its pages, and a page tick becomes ticks on all its parts */
 (function(){ var moved=false;
   Object.keys(COVER).forEach(function(id){ if(done[id]){ COVER[id].forEach(function(k){ done[k]=1; }); delete done[id]; moved=true; } });
+  Object.keys(PAGE).forEach(function(k){ if(done[k]){ setParts(PAGE[k].parts,true); delete done[k]; moved=true; } });
   if(moved){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
 })();
-function isRead(r){ var c=COVER[r.id]; return c ? c.every(function(k){return done[k];}) : !!done[r.id]; }
-function pagesTicked(r){ var c=COVER[r.id]; return c ? c.filter(function(k){return done[k];}).length : 0; }
+function isRead(r){ var c=COVER[r.id]; return c ? c.every(pageDone) : !!done[r.id]; }
+function partsTicked(r){ var c=COVER[r.id]; return c ? c.reduce(function(s,k){return s+pageTicked(k);},0) : 0; }
+function partsTotal(r){ var c=COVER[r.id]; return c ? c.reduce(function(s,k){return s+pageTotal(k);},0) : 0; }
 function coverText(r){
-  var c=COVER[r.id], d=pagesTicked(r);
-  if(c.length===1) return "Linked to skim page "+LABEL[c[0]]+(d?" · ticked":" · not ticked yet");
-  return "Linked to the skim guide · "+d+" of "+c.length+" pages ticked";
+  var c=COVER[r.id], d=partsTicked(r), t=partsTotal(r), pd=c.filter(pageDone).length;
+  var parts=d+" of "+t+" part"+(t===1?"":"s")+" ticked";
+  if(c.length===1) return "Linked to skim page "+LABEL[c[0]]+" · "+parts;
+  return "Linked to the skim guide · "+parts+", "+pd+" of "+c.length+" pages done";
 }
 var skimEls={}, listEls={};
 function syncAll(){
-  Object.keys(skimEls).forEach(function(k){ var e=skimEls[k]; e.input.checked=!!done[k]; e.row.classList.toggle("donepage",!!done[k]); });
+  Object.keys(skimEls).forEach(function(k){
+    var e=skimEls[k], vis=e.visible, n=vis.filter(function(x){return done[x];}).length;
+    if(e.input){ e.input.checked=vis.length>0 && n===vis.length; e.input.indeterminate=n>0 && n<vis.length; }
+    e.row.classList.toggle("donepage",pageDone(k));
+    Object.keys(e.parts).forEach(function(x){ var pi=e.parts[x]; pi.checked=!!done[x]; pi.closest("li").classList.toggle("pdone",!!done[x]); });
+  });
   Object.keys(listEls).forEach(function(id){
-    var e=listEls[id], r=e.r, d=isRead(r), part=!d && pagesTicked(r)>0;
+    var e=listEls[id], r=e.r, d=isRead(r), part=!d && partsTicked(r)>0;
     e.input.checked=d; e.input.indeterminate=part; e.li.classList.toggle("done",d); e.li.classList.toggle("part",part);
     if(e.cov) e.cov.textContent=coverText(r);
   });
@@ -184,7 +213,8 @@ sw.appendChild(el("div",{class:"skimkey","aria-label":"How to read the marks"},
   '<span><b class="act skim">Skim</b> Examples and stories. First and last line of each paragraph.</span>'+
   '<span><b class="act glance">Glance</b> Figures and tables. Look for the shape.</span>'+
   '<span><b class="act skip">Skip</b> Old data, notes, side topics.</span>'+
-  '<span><b class="fast">Fast route</b> The minimum to teach the hour.</span>'));
+  '<span><b class="fast">Fast route</b> The minimum to teach the hour.</span>'+
+  '<span class="tickhint"><span class="tickbox" aria-hidden="true">\u2713</span> Tick each part when you finish it. “All done” ticks every part shown on that page; with the fast route on, only the fast-route parts.</span>'));
 var skimBar=el("div",{class:"skimbar"});
 var seg=el("div",{class:"seg",role:"group","aria-label":"Choose a book"});
 SK.forEach(function(b,i){ seg.appendChild(el("button",{type:"button","data-book":b.key,"aria-pressed":String(i===0)},esc(b.tab))); });
@@ -198,7 +228,7 @@ if(T.skimNote) sw.appendChild(el("p",{class:"skimnote"},T.skimNote));
 var skimBook=SK.length?SK[0].key:null, fastOnly=false, skimStop=0;
 function bookByKey(k){return SK.filter(function(b){return b.key===k;})[0];}
 function blockStops(pg,b){ return b.s||pg.s||[]; }
-function skimDoneCount(B){ return B.pages.filter(function(pg){return done["skim-"+B.key+"-"+pg.p];}).length; }
+function skimDoneCount(B){ return bookCounts(B).pg; }
 function renderSkim(){
   var B=bookByKey(skimBook); skimList.innerHTML=""; skimEls={}; if(!B) return;
   skimList.appendChild(el("div",{class:"booklabel"},esc(B.label)+' <small>'+esc(B.note)+'</small>'));
@@ -209,21 +239,32 @@ function renderSkim(){
     shown++;
     var key="skim-"+B.key+"-"+pg.p;
     var row=el("div",{class:"skimrow",id:"skim-"+B.key+"-"+String(pg.p).replace(/[^0-9a-z]/gi,"-")});
-    if(done[key]) row.classList.add("donepage");
+    if(pageDone(key) && pageTotal(key)) row.classList.add("donepage");
+    var visible=[];
     var items=blocks.map(function(b){
+      var bi=pg.b.indexOf(b), pk=(b.a!=="skip")?"skimb-"+B.key+"-"+pg.p+"-"+bi:null;
+      if(pk) visible.push(pk);
+      var tick=pk?'<input type="checkbox" class="pt" data-k="'+pk+'"'+(done[pk]?' checked':'')+' aria-label="Done: '+esc(b.w)+'">':'<span class="pt-none" title="Skip: nothing to tick" aria-hidden="true">–</span>';
       var tags="";
       if(b.f) tags+='<span class="fast">Fast route</span>';
       var st=blockStops(pg,b); if(st.length && st.length<N && !skimStop) tags+='<span class="tag-stop">Stop '+st.join(", ")+'</span>';
       if(b.d) tags+='<span class="tag-deck">In your deck: '+esc(b.d)+'</span>';
       if(b.o) tags+='<span class="tag-old">Dated: '+esc(b.o)+'</span>';
-      return '<li><span class="act '+b.a+'">'+ACT[b.a]+'</span><div><div class="what">'+esc(b.w)+'</div>'+(b.t?'<p class="take">'+esc(b.t)+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+'</div></li>';
+      return '<li'+(pk&&done[pk]?' class="pdone"':'')+'>'+tick+'<span class="act '+b.a+'">'+ACT[b.a]+'</span><div><div class="what">'+esc(b.w)+'</div>'+(b.t?'<p class="take">'+esc(b.t)+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+'</div></li>';
     }).join("");
-    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b><label><input type="checkbox"'+(done[key]?' checked':'')+'> Done</label></div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
-    var inp=row.querySelector("input"); skimEls[key]={row:row,input:inp};
-    inp.addEventListener("change",function(e){
-      if(e.target.checked) done[key]=1; else delete done[key];
-      saveDone();
+    var allTicked=visible.length>0 && visible.every(function(x){return done[x];});
+    var pageTick=visible.length?'<label title="Ticks every part shown on this page"><input type="checkbox" class="pg-all"'+(allTicked?' checked':'')+'> '+(fastOnly?'Fast route done':'All done')+'</label>':'<span class="pg-skip">Nothing to tick</span>';
+    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b>'+pageTick+'</div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
+    var inp=row.querySelector("input.pg-all"), partEls={};
+    Array.prototype.forEach.call(row.querySelectorAll("input.pt"),function(pi){
+      partEls[pi.getAttribute("data-k")]=pi;
+      pi.addEventListener("change",function(e){ if(e.target.checked) done[pi.getAttribute("data-k")]=1; else delete done[pi.getAttribute("data-k")]; saveDone(); });
     });
+    skimEls[key]={row:row,input:inp,visible:visible,parts:partEls};
+    if(inp){
+      var some=visible.some(function(x){return done[x];}); inp.indeterminate=some && !allTicked;
+      inp.addEventListener("change",function(e){ setParts(visible,e.target.checked); saveDone(); });
+    }
     wrap.appendChild(row);
   });
   if(!shown){
@@ -237,7 +278,8 @@ function renderSkim(){
 }
 function updateSkimSum(){
   var B=bookByKey(skimBook); if(!B){skimSum.textContent="";return;}
-  skimSum.textContent="Full skim about "+TOT[B.key]+" min · fast route about "+TOT[B.key+"-fast"]+" min · pages done: "+skimDoneCount(B)+" of "+B.pages.length+".";
+  var c=bookCounts(B);
+  skimSum.textContent="Full skim about "+TOT[B.key]+" min · fast route about "+TOT[B.key+"-fast"]+" min · parts ticked: "+c.p+" of "+c.pt+(c.ft?" (fast route: "+c.f+" of "+c.ft+")":"")+" · pages done: "+c.pg+" of "+c.pgt+".";
 }
 function setSkimBook(k){ skimBook=k; Array.prototype.forEach.call(seg.querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-book")===k));}); renderSkim(); }
 function setSkimStop(id){
@@ -445,7 +487,7 @@ function renderLists(){
         listEls[r.id]={r:r,li:li,input:inp,cov:li.querySelector(".cov")};
         inp.addEventListener("change",function(e){
           var c=COVER[r.id];
-          if(c) c.forEach(function(k){ if(e.target.checked) done[k]=1; else delete done[k]; });
+          if(c) c.forEach(function(k){ setParts(PAGE[k].parts,e.target.checked); });
           else { if(e.target.checked) done[r.id]=1; else delete done[r.id]; }
           saveDone();
         });
