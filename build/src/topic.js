@@ -195,7 +195,7 @@ STOPS.forEach(function(t){
     '<p class="plain">'+esc(t.plain)+'</p><div class="cols"><ul class="learn">'+learn+'</ul><div class="side">'+
     '<div class="box"><div class="eyebrow">Be ready to answer</div><p>'+esc(t.ask)+'</p></div>'+
     '<div class="box"><div class="eyebrow">Readings for this stop</div><div class="tiercount"><span class="tierchip t1">Tier 1 · '+counts[0]+'</span><span class="tierchip t2">Tier 2 · '+counts[1]+'</span><span class="tierchip t3">Tier 3 · '+counts[2]+'</span></div>'+
-    '<div class="linkrow"><button class="linkish" type="button" data-act="skim" data-stop="'+t.id+'">Skim guide</button><button class="linkish" type="button" data-act="map" data-stop="'+t.id+'">Tier map</button><button class="linkish" type="button" data-act="list" data-stop="'+t.id+'">Reading lists</button></div></div></div></div></div>';
+    '<div class="linkrow"><button class="linkish" type="button" data-act="skim" data-stop="'+t.id+'">Skim guide</button><button class="linkish" type="button" data-act="map" data-stop="'+t.id+'">Tier map</button><button class="linkish" type="button" data-act="list" data-stop="'+t.id+'">Reading lists</button><button class="ask-mini" type="button" data-ask="stop" data-id="'+t.id+'">Ask a doubt</button></div></div></div></div></div>';
   ol.appendChild(li);
 });
 rw.appendChild(ol);
@@ -238,7 +238,7 @@ function renderSkim(){
     if(!blocks.length) return;
     shown++;
     var key="skim-"+B.key+"-"+pg.p;
-    var row=el("div",{class:"skimrow",id:"skim-"+B.key+"-"+String(pg.p).replace(/[^0-9a-z]/gi,"-")});
+    var row=el("div",{class:"skimrow",id:"skim-"+B.key+"-"+String(pg.p).replace(/[^0-9a-z]/gi,"-"),"data-key":key});
     if(pageDone(key) && pageTotal(key)) row.classList.add("donepage");
     var visible=[];
     var items=blocks.map(function(b){
@@ -254,7 +254,7 @@ function renderSkim(){
     }).join("");
     var allTicked=visible.length>0 && visible.every(function(x){return done[x];});
     var pageTick=visible.length?'<label title="Ticks every part shown on this page"><input type="checkbox" class="pg-all"'+(allTicked?' checked':'')+'> '+(fastOnly?'Fast route done':'All done')+'</label>':'<span class="pg-skip">Nothing to tick</span>';
-    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b>'+pageTick+'</div><div><h4>'+esc(pg.h)+'</h4><ul>'+items+'</ul></div>';
+    row.innerHTML='<div class="pn"><b>'+esc(pg.pl||("p. "+pg.p))+'</b>'+pageTick+'</div><div><div class="skimhead"><h4>'+esc(pg.h)+'</h4><button class="ask-mini" type="button" data-ask="skim" data-id="'+key+'">Ask</button></div><ul>'+items+'</ul></div>';
     var inp=row.querySelector("input.pg-all"), partEls={};
     Array.prototype.forEach.call(row.querySelectorAll("input.pt"),function(pi){
       partEls[pi.getAttribute("data-k")]=pi;
@@ -456,7 +456,7 @@ var filter=0;
 });
 function itemHTML(r){
   var chk='<input type="checkbox" aria-label="Mark as read"'+(isRead(r)?' checked':'')+'>';
-  var tags='<div class="meta">'+r.st.map(function(id){return '<span>'+id+' · '+esc(stop(id).short.join(" "))+'</span>';}).join("")+'</div>';
+  var tags='<div class="meta">'+r.st.map(function(id){return '<span>'+id+' · '+esc(stop(id).short.join(" "))+'</span>';}).join("")+'<button class="ask-mini" type="button" data-ask="reading" data-id="'+esc(r.id)+'">Ask</button></div>';
   if(r.tier===3){
     var title=r.url?'<a class="out" href="'+esc(r.url)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>':esc(r.title);
     return chk+'<div class="main"><div class="where">'+esc(r.src)+'</div><div class="title">'+title+'</div><p class="why">'+esc(r.why)+'</p>'+tags+'</div><span class="pg">'+esc(r.date)+'</span>';
@@ -483,7 +483,7 @@ function renderLists(){
       box.appendChild(lab);
       var ul=el("ul",{class:"items"});
       g.items.forEach(function(r){
-        var li=el("li",{},itemHTML(r)), inp=li.querySelector("input");
+        var li=el("li",{"data-rid":r.id},itemHTML(r)), inp=li.querySelector("input");
         listEls[r.id]={r:r,li:li,input:inp,cov:li.querySelector(".cov")};
         inp.addEventListener("change",function(e){
           var c=COVER[r.id];
@@ -513,7 +513,7 @@ function setFilter(id){
 if(window.SMMGlossary){
   var gsec=section("glossary","Glossary · Module "+MOD.n,"Module "+MOD.n+" glossary","Key terms from this module's topic pages, A to Z. Tap a letter to open its terms; each one links to the topic and stop where it is taught.");
   var gbox=el("div",{}); gsec.appendChild(gbox);
-  SMMGlossary.render(gbox,MOD,T.file.replace(/\.html$/,""),{noTitle:true});
+  SMMGlossary.render(gbox,MOD,T.file.replace(/\.html$/,""),{noTitle:true,ask:true});
 }
 var nw=section("notes","Notes on editions and page numbers","What was checked, and what was not");
 nw.appendChild(el("div",{class:"notes"},T.notes.map(function(p){return "<p>"+p+"</p>";}).join("")));

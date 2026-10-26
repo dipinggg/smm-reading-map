@@ -8,6 +8,7 @@ Open the site: the hub page lists the five modules. Tap a module to see its topi
 - a page-by-page Tier 1 skim guide (read, skim, glance, skip), with a tick for every part and an "All done" tick per page;
 - a clickable tier map (Tier 1 box → skim guide for that stop; Tier 2 / Tier 3 box → that reading list);
 - reading lists in three tiers, plus lab tables;
+- an "Ask a doubt" button on every topic page: point at a stop, skim page, reading, glossary term or any selected text, type the doubt, and open it in Claude with that part of the guide attached (or answer it inside the page in the Claude-hosted version);
 - a glossary for each module (A–Z letter circles, each term linked to the stop where it is taught), on the home page and at the end of every topic page;
 - a reading-progress strip under the top menu: overall % of the reading list, % per tier, and skim-guide pages done. The home page shows each topic's progress too.
 

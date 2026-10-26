@@ -421,6 +421,77 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:.9rem}
 .skimkey .tickhint{display:inline-flex;align-items:center;gap:8px;flex-basis:100%}
 .skimkey .tickbox{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:3px;background:var(--a);color:var(--on-a);font-size:.7rem;font-weight:700;flex:none}
 
+/* ---------- Ask a doubt ---------- */
+.ask-mini{font:inherit;font-size:.74rem;font-family:var(--mono);letter-spacing:.02em;color:var(--a);background:transparent;border:1px solid var(--a-mid);border-radius:999px;padding:.08em .65em;cursor:pointer;line-height:1.6;white-space:nowrap}
+.ask-mini:hover{background:var(--a-soft)}
+.ask-mini::before{content:"? ";font-weight:700}
+.linkrow .ask-mini{margin-left:auto}
+ul.items li .meta .ask-mini{margin-left:auto}
+.gl-meta .ask-mini{margin-left:auto}
+.skimhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.ask-fab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:20;display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:.92rem;color:var(--on-a);background:var(--a);border:0;border-radius:999px;padding:.65em 1.1em .65em .7em;box-shadow:0 6px 20px rgba(0,0,0,.18);cursor:pointer}
+.ask-fab .q{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--on-a);color:var(--a);font-family:var(--mono);font-size:.9rem}
+.ask-fab.sel{animation:askpulse 1.2s ease 1}
+@keyframes askpulse{0%{transform:scale(1)}40%{transform:scale(1.07)}100%{transform:scale(1)}}
+body.asking .ask-fab{display:none}
+.ask-panel{position:fixed;z-index:30;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(0,0,0,.14);display:flex;flex-direction:column}
+.ask-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);border-top:4px solid var(--a)}
+.ask-top h2{font-size:1.15rem}
+.ask-x{font:inherit;font-size:1.5rem;line-height:1;background:none;border:0;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:6px}
+.ask-x:hover{color:var(--ink);background:var(--sunk)}
+.ask-body{overflow-y:auto;padding:14px 18px 24px;display:grid;gap:12px;align-content:start}
+.ask-ctx{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 10px;background:var(--a-soft);border-radius:8px;padding:10px 12px}
+.ask-ctx-l{display:grid;gap:2px;min-width:0}
+.ask-where{font-size:.95rem;line-height:1.35}
+.ask-quote{margin:0;border-left:3px solid var(--a-mid);padding:6px 10px;color:var(--muted);font-size:.92rem;background:var(--bg);border-radius:0 6px 6px 0}
+.ask-lab{font-weight:700;font-size:.92rem}
+.ask-body textarea{width:100%;font:inherit;font-size:.97rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;resize:vertical;box-sizing:border-box}
+.ask-body textarea:focus{outline:2px solid var(--a);outline-offset:1px}
+#ask-q{min-height:6.2em}
+.ask-follow textarea{min-height:3.2em}
+.ask-body{flex:1 1 auto;min-height:0}
+.ask-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ask-chip{font:inherit;font-size:.82rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.3em .75em;cursor:pointer}
+.ask-chip:hover{border-color:var(--a);color:var(--a)}
+.ask-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ask-btn{font:inherit;font-size:.92rem;font-weight:700;text-decoration:none;color:var(--a);background:var(--surface);border:1.5px solid var(--a);border-radius:8px;padding:.5em .95em;cursor:pointer;display:inline-flex;align-items:center}
+.ask-btn:hover{background:var(--a-soft)}
+.ask-btn.primary{background:var(--a);color:var(--on-a)}
+.ask-btn.primary:hover{filter:brightness(1.07);background:var(--a)}
+.ask-btn[disabled]{opacity:.5;cursor:default}
+.ask-status{font-size:.88rem;color:var(--muted);min-height:1em}
+.ask-manual{margin-top:6px;font-size:.82rem}
+.ask-answer{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:10px}
+.ask-ans-head{display:flex;justify-content:space-between;align-items:baseline}
+.ask-thread{display:grid;gap:10px}
+.ask-md{font-size:.95rem;line-height:1.55}
+.ask-md p{margin:0 0 .55em}
+.ask-md ul{margin:0 0 .6em;padding-left:1.2em}
+.ask-md code{font-family:var(--mono);font-size:.88em;background:var(--sunk);padding:0 .25em;border-radius:3px}
+.ask-claude{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.ask-you{justify-self:end;max-width:85%;background:var(--a-soft);border-radius:8px;padding:8px 11px;font-size:.93rem}
+.ask-follow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
+.ask-help,.ask-log{border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.9rem}
+.ask-help summary,.ask-log summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.ask-help p{margin:.5em 0;color:var(--muted)}
+.ask-projset{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+.ask-projset input{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg);color:var(--ink);min-width:0}
+.ask-log ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.ask-log li{border-top:1px solid var(--line);padding-top:8px}
+.ask-logw{font-family:var(--mono);font-size:.74rem;color:var(--a)}
+.ask-logq{margin-top:2px}
+.ask-logb{display:flex;gap:14px;margin-top:4px}
+@media (max-width:640px){
+  .ask-panel{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+  .ask-top{border-radius:14px 14px 0 0}
+  .ask-fab .lab{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .25s}
+  .ask-fab{padding:.65em}
+  .ask-fab.sel .lab{max-width:240px}
+  .ask-fab.sel{padding:.65em 1.1em .65em .7em}
+}
+@media (prefers-reduced-motion:reduce){.ask-fab.sel{animation:none}.ask-fab .lab{transition:none}}
+footer{padding-bottom:80px}
+
 </style>
 <style>[hidden]{display:none!important}body{margin:0}</style>
 </head>
@@ -744,8 +815,8 @@ function render(box,mod,current,opts){
   function itemHTML(t){
     var links=[], seen={};
     t.at.forEach(function(a){ var k=a[0]+"#"+a[1]; if(!seen[k]){ seen[k]=1; links.push(linkFor(a,current)); } });
-    return '<div class="gl-item"><dt>'+esc(t.t)+'</dt><dd><p>'+esc(t.d)+'</p><div class="gl-meta"><span class="ref">'+esc(t.src)+'</span>'+
-      '<span class="gl-links"><span class="gl-rm">Read more:</span> '+links.join(" ")+'</span></div></dd></div>';
+    return '<div class="gl-item" data-term="'+esc(t.t)+'"><dt>'+esc(t.t)+'</dt><dd><p>'+esc(t.d)+'</p><div class="gl-meta"><span class="ref">'+esc(t.src)+'</span>'+
+      '<span class="gl-links"><span class="gl-rm">Read more:</span> '+links.join(" ")+'</span>'+(opts.ask?'<button class="ask-mini" type="button" data-ask="term" data-id="'+esc(t.t)+'">Ask</button>':'')+'</div></dd></div>';
   }
   function show(L){
     open=L;

@@ -15,6 +15,7 @@ DIST.mkdir(parents=True, exist_ok=True)
 css = (SRC / "site.css").read_text()
 catalog = (SRC / "catalog.js").read_text()
 topic_js = (SRC / "topic.js").read_text()
+ask_js = (SRC / "ask.js").read_text()
 hub_js = (SRC / "hub.js").read_text()
 
 # Glossary: term data, the widget, and the stop names it links to (read from each topic file).
@@ -133,6 +134,9 @@ img{{max-width:100%}}
 </script>
 <script>
 {safe_script(topic_js)}
+</script>
+<script>
+{safe_script(ask_js)}
 </script>
 </body>
 </html>

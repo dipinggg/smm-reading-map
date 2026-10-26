@@ -41,8 +41,8 @@ function render(box,mod,current,opts){
   function itemHTML(t){
     var links=[], seen={};
     t.at.forEach(function(a){ var k=a[0]+"#"+a[1]; if(!seen[k]){ seen[k]=1; links.push(linkFor(a,current)); } });
-    return '<div class="gl-item"><dt>'+esc(t.t)+'</dt><dd><p>'+esc(t.d)+'</p><div class="gl-meta"><span class="ref">'+esc(t.src)+'</span>'+
-      '<span class="gl-links"><span class="gl-rm">Read more:</span> '+links.join(" ")+'</span></div></dd></div>';
+    return '<div class="gl-item" data-term="'+esc(t.t)+'"><dt>'+esc(t.t)+'</dt><dd><p>'+esc(t.d)+'</p><div class="gl-meta"><span class="ref">'+esc(t.src)+'</span>'+
+      '<span class="gl-links"><span class="gl-rm">Read more:</span> '+links.join(" ")+'</span>'+(opts.ask?'<button class="ask-mini" type="button" data-ask="term" data-id="'+esc(t.t)+'">Ask</button>':'')+'</div></dd></div>';
   }
   function show(L){
     open=L;
