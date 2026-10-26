@@ -474,8 +474,23 @@ body.asking .ask-fab{display:none}
 .ask-help,.ask-log{border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.9rem}
 .ask-help summary,.ask-log summary{cursor:pointer;font-weight:700;color:var(--ink)}
 .ask-help p{margin:.5em 0;color:var(--muted)}
-.ask-projset{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
-.ask-projset input{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg);color:var(--ink);min-width:0}
+.ask-projset,.ask-chatset{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+.ask-projset input,.ask-chatset input{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg);color:var(--ink);min-width:0}
+.ask-chat{border:1px dashed var(--a-mid);border-radius:8px;padding:10px 12px;display:grid;gap:8px;font-size:.9rem}
+.ask-chat.on{border-style:solid;background:var(--a-soft)}
+.ask-chat p{margin:0;color:var(--muted);line-height:1.45}
+.ask-chat p b{color:var(--ink)}
+.ask-chat-open{color:var(--a);font-weight:700}
+.ask-chatset .ask-btn{padding:.4em .8em;font-size:.86rem}
+.ask-copyonly{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.86rem;cursor:pointer;line-height:1.4}
+.ask-copyonly input{margin-top:.2em;accent-color:var(--a)}
+.ask-chat.nudge{animation:asknudge 1.3s ease 2}
+@keyframes asknudge{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 4px var(--a-mid)}}
+.ask-ans-tools{display:flex;gap:14px}
+.ask-older{border-bottom:1px dashed var(--line);padding-bottom:8px}
+.ask-older summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
+.ask-older .ask-thread{margin-top:10px}
+.ask-you-w{display:block;font-family:var(--mono);font-size:.7rem;color:var(--a);margin-bottom:3px;letter-spacing:.02em}
 .ask-log ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
 .ask-log li{border-top:1px solid var(--line);padding-top:8px}
 .ask-logw{font-family:var(--mono);font-size:.74rem;color:var(--a)}
@@ -489,7 +504,7 @@ body.asking .ask-fab{display:none}
   .ask-fab.sel .lab{max-width:240px}
   .ask-fab.sel{padding:.65em 1.1em .65em .7em}
 }
-@media (prefers-reduced-motion:reduce){.ask-fab.sel{animation:none}.ask-fab .lab{transition:none}}
+@media (prefers-reduced-motion:reduce){.ask-fab.sel,.ask-chat.nudge{animation:none}.ask-fab .lab{transition:none}}
 footer{padding-bottom:80px}
 
 </style>

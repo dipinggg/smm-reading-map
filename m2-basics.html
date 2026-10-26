@@ -474,8 +474,23 @@ body.asking .ask-fab{display:none}
 .ask-help,.ask-log{border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.9rem}
 .ask-help summary,.ask-log summary{cursor:pointer;font-weight:700;color:var(--ink)}
 .ask-help p{margin:.5em 0;color:var(--muted)}
-.ask-projset{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
-.ask-projset input{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg);color:var(--ink);min-width:0}
+.ask-projset,.ask-chatset{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+.ask-projset input,.ask-chatset input{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg);color:var(--ink);min-width:0}
+.ask-chat{border:1px dashed var(--a-mid);border-radius:8px;padding:10px 12px;display:grid;gap:8px;font-size:.9rem}
+.ask-chat.on{border-style:solid;background:var(--a-soft)}
+.ask-chat p{margin:0;color:var(--muted);line-height:1.45}
+.ask-chat p b{color:var(--ink)}
+.ask-chat-open{color:var(--a);font-weight:700}
+.ask-chatset .ask-btn{padding:.4em .8em;font-size:.86rem}
+.ask-copyonly{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.86rem;cursor:pointer;line-height:1.4}
+.ask-copyonly input{margin-top:.2em;accent-color:var(--a)}
+.ask-chat.nudge{animation:asknudge 1.3s ease 2}
+@keyframes asknudge{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 4px var(--a-mid)}}
+.ask-ans-tools{display:flex;gap:14px}
+.ask-older{border-bottom:1px dashed var(--line);padding-bottom:8px}
+.ask-older summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
+.ask-older .ask-thread{margin-top:10px}
+.ask-you-w{display:block;font-family:var(--mono);font-size:.7rem;color:var(--a);margin-bottom:3px;letter-spacing:.02em}
 .ask-log ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
 .ask-log li{border-top:1px solid var(--line);padding-top:8px}
 .ask-logw{font-family:var(--mono);font-size:.74rem;color:var(--a)}
@@ -489,7 +504,7 @@ body.asking .ask-fab{display:none}
   .ask-fab.sel .lab{max-width:240px}
   .ask-fab.sel{padding:.65em 1.1em .65em .7em}
 }
-@media (prefers-reduced-motion:reduce){.ask-fab.sel{animation:none}.ask-fab .lab{transition:none}}
+@media (prefers-reduced-motion:reduce){.ask-fab.sel,.ask-chat.nudge{animation:none}.ask-fab .lab{transition:none}}
 footer{padding-bottom:80px}
 
 [hidden]{display:none!important}
@@ -1544,14 +1559,18 @@ window.addEventListener("hashchange",goHash);
 /* "Ask a doubt" on topic pages.
    Point at something (a stop, a skim page, a reading, a glossary term, or any text you select),
    type the doubt, and send it to Claude with that part of the guide attached as context.
-   - Everywhere: "Open in Claude" starts a new Claude chat with the doubt filled in (and copies it).
-   - Inside the Claude-hosted version, when the page may use Claude: "Ask here" answers in the panel.
-   Doubts are saved in this browser so they can be revisited. Needs window.TOPIC, window.CATALOG. */
+   Every doubt goes to ONE ongoing chat:
+   - Your doubts chat on claude.ai: start it once and link its address. After that each doubt is
+     copied and that same chat opens, ready to paste. (A link can't type into a chat that exists.)
+   - "Ask here" (Claude-hosted version only): answers inside the page, in one running chat shared
+     by all topic pages and saved in this browser.
+   Doubts are also listed per page so they can be revisited. Needs window.TOPIC, window.CATALOG. */
 (function(){
 "use strict";
 var T=window.TOPIC, C=window.CATALOG; if(!T) return;
 var MOD=C.modules.filter(function(m){return m.id===T.module;})[0];
-var LOGKEY="smm-rm-ask-"+T.id, PROJKEY="smm-rm-ask-project";
+var LOGKEY="smm-rm-ask-"+T.id, PROJKEY="smm-rm-ask-project", CHATKEY="smm-rm-ask-chat",
+    COPYKEY="smm-rm-ask-copyonly", THREADKEY="smm-rm-ask-thread";
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function el(tag,attrs,html){var e=document.createElement(tag); if(attrs){for(var k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k,attrs[k]); }} if(html!=null) e.innerHTML=html; return e;}
 function load(k,d){ try{ var v=JSON.parse(localStorage.getItem(k)||"null"); return v==null?d:v; }catch(e){ return d; } }
@@ -1603,36 +1622,46 @@ function ctxFromNode(node){
   return ctxTopic();
 }
 
-/* ---------- the message sent to Claude ---------- */
-function buildPrompt(ctx,quote,q,short){
+/* ---------- the messages sent to Claude ---------- */
+var INTRO="I teach 22MDM32 Social Media Marketing (MBA) and I'm preparing my lectures from my reading guide.";
+var HOW="Please answer in simple, plain language. If the answer is in the book pages my guide lists, point me to the page, but don't invent page numbers. Give an Indian example if it helps.";
+/* the standing instructions at the top of a doubts chat */
+var RULES=INTRO+" I'll ask my doubts one by one in this chat as I read. Each doubt says the topic, the part of the guide I'm on, and what my guide says there.\n\n"+HOW+" Keep each answer fairly short unless I ask for more.";
+/* one doubt, with the part of the guide it points at */
+function doubtText(ctx,quote,q,short){
   var lineCap=short?180:400, maxLines=short?5:14;
   var lines=ctx.lines.filter(Boolean).slice(0,maxLines).map(function(l){return "- "+clip(l,lineCap);});
-  var parts=[
-    "I teach 22MDM32 Social Media Marketing (MBA) and I'm preparing this topic from my reading guide.",
-    "Topic: "+T.session+" · "+T.title+" (Module "+MOD.n+": "+MOD.title+")",
-    "Where I'm reading: "+ctx.label
-  ];
+  var parts=["Topic: "+T.session+" · "+T.title+" (Module "+MOD.n+": "+MOD.title+")", "Where I'm reading: "+ctx.label];
   if(lines.length) parts.push("What my guide says there:\n"+lines.join("\n"));
   if(quote) parts.push("The text I selected:\n“"+clip(quote,short?400:1200)+"”");
   parts.push("My doubt: "+(q||"(please explain this part)"));
-  parts.push("Please answer in simple, plain language. If the answer is in the book pages listed above, point me to the page, but don't invent page numbers. Give an Indian example if it helps.");
   return parts.join("\n\n");
 }
+/* a stand-alone message for any chat (the Copy button) */
+function buildPrompt(ctx,quote,q,short){ return [INTRO, doubtText(ctx,quote,q,short), HOW].join("\n\n"); }
+/* the first message of a new doubts chat */
+function startPrompt(ctx,quote,q,short){ return RULES+"\n\nMy first doubt:\n\n"+doubtText(ctx,quote,q,short); }
+/* every later message in the same chat */
+function nextPrompt(ctx,quote,q){ return "Next doubt.\n\n"+doubtText(ctx,quote,q,false); }
 function claudeUrl(prompt){ return "https://claude.ai/new?q="+encodeURIComponent(prompt); }
 function urlPrompt(ctx,quote,q){
-  var p=buildPrompt(ctx,quote,q,false); if(p.length<=1800) return p;
-  p=buildPrompt(ctx,quote,q,true); return p.length<=1800?p:p.slice(0,1790)+"…";
+  var p=startPrompt(ctx,quote,q,false); if(p.length<=1800) return p;
+  p=startPrompt(ctx,quote,q,true); return p.length<=1800?p:p.slice(0,1790)+"…";
 }
 
 /* ---------- copying ---------- */
-function copyText(s){
-  if(navigator.clipboard && window.isSecureContext){ return navigator.clipboard.writeText(s).then(function(){return true;},function(){ return legacyCopy(s); }); }
-  return Promise.resolve(legacyCopy(s));
-}
 function legacyCopy(s){
   var ta=el("textarea",{"aria-hidden":"true",style:"position:fixed;left:-9999px;top:0"}); ta.value=s; document.body.appendChild(ta); ta.select();
   var ok=false; try{ ok=document.execCommand("copy"); }catch(e){ ok=false; } ta.remove(); return ok;
 }
+function apiCopy(s){
+  if(navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(s).then(function(){return true;},function(){return false;});
+  return Promise.resolve(false);
+}
+/* Copy button: the clipboard API first, the old way if it fails */
+function copyText(s){ return apiCopy(s).then(function(ok){ return ok || legacyCopy(s); }); }
+/* links that open a new tab: copy right away, before the tab takes focus */
+function copyNow(s){ return legacyCopy(s) ? Promise.resolve(true) : apiCopy(s); }
 
 /* ---------- a little Markdown for Claude's answers (escaped first) ---------- */
 function md(src){
@@ -1666,19 +1695,25 @@ panel.innerHTML=
    ['Explain this in simple words','Give me an Indian example','How do I explain this in class?','What could the exam ask, with a model answer?','How is this different from a related idea?'].map(function(c){return '<button type="button" class="ask-chip">'+c+'</button>';}).join("")+
   '</div>'+
   '<div class="ask-actions">'+
-   '<button type="button" class="ask-btn primary ask-here" hidden>Ask here</button>'+
-   '<a class="ask-btn ask-open" target="_blank" rel="noopener" href="https://claude.ai/new">Open in Claude ↗</a>'+
-   '<a class="ask-btn ask-proj" target="_blank" rel="noopener" href="#" hidden>Open in my project ↗</a>'+
+   '<button type="button" class="ask-btn ask-here" hidden>Ask here</button>'+
+   '<a class="ask-btn primary ask-open" target="_blank" rel="noopener" href="https://claude.ai/new">Start my doubts chat ↗</a>'+
    '<button type="button" class="ask-btn ask-copy">Copy</button>'+
   '</div>'+
   '<p class="ask-status" aria-live="polite"></p>'+
-  '<div class="ask-answer" hidden><div class="ask-ans-head"><span class="eyebrow">Claude’s answer</span><button type="button" class="linkish ask-stop" hidden>Stop</button></div><div class="ask-thread"></div>'+
+  '<div class="ask-chat">'+
+   '<p class="ask-chat-msg"></p>'+
+   '<div class="ask-chatset" hidden><input type="url" inputmode="url" placeholder="https://claude.ai/chat/…" aria-label="Your doubts chat address"><button type="button" class="ask-btn ask-chatsave">Link this chat</button></div>'+
+   '<label class="ask-copyonly" hidden><input type="checkbox"> <span>Just copy each doubt, don’t open a new tab (I keep the chat open)</span></label>'+
+  '</div>'+
+  '<div class="ask-answer" hidden><div class="ask-ans-head"><span class="eyebrow">Your chat on this site</span><span class="ask-ans-tools"><button type="button" class="linkish ask-stop" hidden>Stop</button><button type="button" class="linkish ask-new" hidden>New chat</button></span></div><div class="ask-thread"></div>'+
    '<div class="ask-follow"><textarea rows="2" placeholder="Ask a follow-up…" aria-label="Follow-up question"></textarea><button type="button" class="ask-btn primary ask-send">Send</button></div></div>'+
   '<details class="ask-help"><summary>How this works</summary>'+
-   '<p><b>Open in Claude</b> starts a new Claude chat with your doubt and this part of the guide already filled in. It also copies the same text, in case the chat opens empty: then just paste.</p>'+
-   '<p><b>For answers from your own book copies</b>, ask inside your Claude project that holds the books: paste your project’s link below once, and an <b>Open in my project</b> button appears. It copies the doubt and opens the project; paste it there.</p>'+
+   '<p><b>One chat for all your doubts.</b> Tap <b>Start my doubts chat</b> once: a new Claude chat opens with your doubt filled in. Copy that chat’s address from the browser’s address bar and link it here. After that, <b>Send to my doubts chat</b> copies each new doubt, with the part of the guide you are on, and opens that same chat. Paste and send. A link can’t type into a chat that already exists, so the paste step stays.</p>'+
+   '<p>Each send opens the chat in a new tab. If you keep the chat open, tick <b>Just copy</b> and switch to it yourself.</p>'+
+   '<p>The link is saved on this site in this browser only, so link the chat once on each device. On a phone, claude.ai links may open the Claude app, where the address is hard to copy: link it once in the browser.</p>'+
+   '<p><b>For answers from your own book copies</b>, start the doubts chat inside your Claude project that holds the books. Save the project’s link here, and <b>Start my doubts chat</b> opens the project instead (the doubt is copied). Start a new chat there, paste, then link that chat.</p>'+
    '<div class="ask-projset"><input type="url" placeholder="https://claude.ai/project/…" aria-label="Your Claude project link"><button type="button" class="ask-btn ask-projsave">Save link</button></div>'+
-   '<p class="ask-heretip" hidden><b>Ask here</b> answers inside this page using your Claude account. The first time, Claude asks you to allow it. It sees only what this page sends, not your books.</p>'+
+   '<p class="ask-heretip" hidden><b>Ask here</b> answers inside this page, using your Claude account. It keeps one running chat for all the topic pages, saved in this browser; <b>New chat</b> clears it. The first time, Claude asks you to allow it. It sees only what this page sends, not your books.</p>'+
   '</details>'+
   '<details class="ask-log"><summary>Your earlier doubts on this page <span class="ask-logn"></span></summary><ul></ul></details>'+
  '</div>';
@@ -1686,24 +1721,105 @@ document.body.appendChild(panel);
 
 var $=function(sel){return panel.querySelector(sel);};
 var qBox=$("#ask-q"), whereEl=$(".ask-where"), quoteEl=$(".ask-quote"), status=$(".ask-status");
-var openA=$(".ask-open"), projA=$(".ask-proj"), hereBtn=$(".ask-here"), answer=$(".ask-answer"), thread=$(".ask-thread"), stopBtn=$(".ask-stop");
-var cur={ctx:ctxTopic(),quote:null}, opener=null, sample=null, turns=[], ctl=null;
+var openA=$(".ask-open"), hereBtn=$(".ask-here"), answer=$(".ask-answer"), thread=$(".ask-thread"), stopBtn=$(".ask-stop"), newBtn=$(".ask-new");
+var fBox=$(".ask-follow textarea"), sendBtn=$(".ask-send");
+var chatBox=$(".ask-chat"), chatMsg=$(".ask-chat-msg"), chatSet=$(".ask-chatset"), chatIn=$(".ask-chatset input"), copyOnlyBox=$(".ask-copyonly input");
+var cur={ctx:ctxTopic(),quote:null}, opener=null, sample=null, ctl=null, busy=false, changing=false;
 
+/* ---------- the linked doubts chat on claude.ai ---------- */
+function chatLink(){ return load(CHATKEY,""); }
 function refreshLinks(){
-  var p=urlPrompt(cur.ctx,cur.quote,qBox.value.trim());
-  openA.href=claudeUrl(p);
-  var proj=load(PROJKEY,"");
-  projA.hidden=!proj; if(proj) projA.href=proj;
+  var link=chatLink(), proj=load(PROJKEY,"");
+  openA.href=link||proj||claudeUrl(urlPrompt(cur.ctx,cur.quote,qBox.value.trim()));
 }
+function refreshChat(){
+  var link=chatLink(), proj=load(PROJKEY,""), copyOnly=!!load(COPYKEY,false);
+  if(link){
+    openA.textContent=copyOnly?"Copy for my doubts chat":"Send to my doubts chat ↗";
+    chatMsg.innerHTML='Every doubt goes to <b>your doubts chat</b>. <a class="ask-chat-open" href="'+esc(link)+'" target="_blank" rel="noopener">Open it ↗</a> · <button type="button" class="linkish ask-chat-change">'+(changing?'Cancel':'Change')+'</button> · <button type="button" class="linkish ask-chat-unlink">Unlink</button>';
+  } else {
+    openA.textContent=proj?"Start my doubts chat in my project ↗":"Start my doubts chat ↗";
+    chatMsg.innerHTML='<b>Keep all your doubts in one chat.</b> Tap <b>'+(proj?'Start my doubts chat in my project':'Start my doubts chat')+'</b> once. When the chat opens, copy its address from the address bar (it starts with https://claude.ai/chat/) and paste it here. Every later doubt then goes to that same chat.';
+  }
+  chatBox.classList.toggle("on",!!link);
+  chatSet.hidden=!!link && !changing;
+  $(".ask-copyonly").hidden=!link;
+  copyOnlyBox.checked=copyOnly;
+  var here=!!sample;
+  hereBtn.classList.toggle("primary",here); openA.classList.toggle("primary",!here);
+  refreshLinks();
+}
+function saveChat(){
+  var v=chatIn.value.trim();
+  if(!v){ status.textContent="Paste the chat’s address first."; chatIn.focus(); return; }
+  if(/^claude\.ai\//i.test(v)) v="https://"+v;
+  if(/^https:\/\/claude\.ai\/share\//i.test(v)){ status.textContent="That’s a share link (a public copy of the chat). Use the chat’s own address instead: it starts with https://claude.ai/chat/"; chatIn.focus(); return; }
+  if(!/^https:\/\/claude\.ai\/(?:[^?#\s]*\/)?chat\/[A-Za-z0-9-]{8,}/i.test(v)){ status.textContent="That isn’t a chat address. Open the chat in your browser and copy the address bar: it starts with https://claude.ai/chat/"; chatIn.focus(); return; }
+  v=v.split(/[?#\s]/)[0];
+  store(CHATKEY,v); changing=false; chatIn.value=""; chatBox.classList.remove("nudge"); refreshChat();
+  status.textContent="Linked. From now on, “Send to my doubts chat” copies each doubt and opens this same chat: paste and send.";
+}
+chatBox.addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  if(b.classList.contains("ask-chatsave")) saveChat();
+  else if(b.classList.contains("ask-chat-change")){
+    changing=!changing; refreshChat();
+    if(changing){ chatIn.value=chatLink(); chatIn.focus(); chatIn.select(); }
+  }
+  else if(b.classList.contains("ask-chat-unlink")){
+    store(CHATKEY,""); changing=false; refreshChat();
+    status.textContent="Unlinked. Start a new doubts chat whenever you like.";
+  }
+});
+chatIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); saveChat(); } });
+copyOnlyBox.addEventListener("change",function(){ store(COPYKEY,copyOnlyBox.checked); refreshChat(); });
+
+/* ---------- the running chat on this site ("Ask here") ---------- */
+function loadThread(){
+  var t=load(THREADKEY,[]);
+  return Array.isArray(t)?t.filter(function(x){ return x && (x.r==="user"||x.r==="assistant") && x.c; }):[];
+}
+var th=loadThread();
+function saveThread(){
+  var keep=th.slice(-60);
+  while(keep.length && keep[0].r!=="user") keep.shift();   /* always start on a question */
+  th=keep; store(THREADKEY,th);
+}
+function turnHTML(t){
+  if(t.r==="assistant") return '<div class="ask-md ask-claude">'+md(t.c)+'</div>';
+  return '<div class="ask-you">'+(t.k==="doubt"&&t.w?'<span class="ask-you-w">'+esc((t.s?t.s+" · ":"")+t.w)+'</span>':'')+esc(t.q||t.c)+'</div>';
+}
+function renderThread(){
+  answer.hidden=!(sample && (th.length || busy));
+  newBtn.hidden=!th.length || busy;
+  var groups=[];
+  th.forEach(function(t){ if(!groups.length || (t.r==="user" && t.k==="doubt")) groups.push([]); groups[groups.length-1].push(t); });
+  var older=groups.slice(0,-1), last=groups[groups.length-1]||[], n=older.length;
+  thread.innerHTML=(n?'<details class="ask-older"><summary>Earlier in this chat · '+n+' doubt'+(n>1?'s':'')+'</summary><div class="ask-thread">'+
+      older.map(function(g){ return g.map(turnHTML).join(""); }).join("")+'</div></details>':'')+
+    last.map(turnHTML).join("");
+}
+/* what Claude reads: the standing instructions, then the latest turns (oldest dropped first) */
+function windowTurns(){
+  var out=[], size=0;
+  for(var i=th.length-1;i>=0 && out.length<40;i--){
+    size+=th[i].c.length; if(out.length && size>60000) break;
+    out.unshift({role:th[i].r,content:th[i].c});
+  }
+  return [{role:"user",content:RULES}].concat(out);
+}
+
+/* ---------- opening and closing ---------- */
 function openAsk(ctx,quote,from){
   cur={ctx:ctx||ctxTopic(),quote:quote||null};
   opener=from||document.activeElement;
   whereEl.textContent=cur.ctx.label;
   $(".ask-widen").hidden=cur.ctx.label==="The whole topic" && !cur.quote;
   quoteEl.hidden=!cur.quote; quoteEl.textContent=cur.quote?"“"+clip(cur.quote,500)+"”":"";
-  status.textContent=""; turns=[]; thread.innerHTML=""; answer.hidden=true;
+  status.textContent="";
+  if(!busy) th=loadThread();   /* pick up doubts asked on other topic pages */
   panel.hidden=false; document.body.classList.add("asking");
-  refreshLinks(); renderLog();
+  changing=false; refreshChat(); renderThread(); renderLog();
   setTimeout(function(){ qBox.focus(); },30);
 }
 function closeAsk(){
@@ -1713,9 +1829,9 @@ function closeAsk(){
 }
 
 /* save each doubt in this browser */
-function logDoubt(q,a){
+function logDoubt(q,a,where){
   var log=load(LOGKEY,[]);
-  log.unshift({w:cur.ctx.label,q:q,a:a||"",t:Date.now()});
+  log.unshift({w:where||cur.ctx.label,q:q,a:a||"",t:Date.now()});
   store(LOGKEY,log.slice(0,50)); renderLog();
 }
 function renderLog(){
@@ -1742,15 +1858,15 @@ document.addEventListener("keydown",function(e){ if(e.key==="Escape" && !panel.h
 function needQuestion(){ if(qBox.value.trim()) return false; status.textContent="Type your doubt first, or tap one of the quick prompts."; qBox.focus(); return true; }
 openA.addEventListener("click",function(e){
   if(needQuestion()){ e.preventDefault(); return; }
-  var full=buildPrompt(cur.ctx,cur.quote,qBox.value.trim(),false);
-  copyText(full).then(function(ok){ status.textContent=ok?"Opening Claude. The doubt is also copied: paste it if the chat opens empty.":"Opening Claude. If the chat opens empty, use Copy and paste."; });
-  logDoubt(qBox.value.trim());
-});
-projA.addEventListener("click",function(e){
-  if(needQuestion()){ e.preventDefault(); return; }
-  var full=buildPrompt(cur.ctx,cur.quote,qBox.value.trim(),false);
-  copyText(full).then(function(ok){ status.textContent=ok?"Copied. In your project, start a chat and paste.":"Copy didn’t work here: use the Copy button, then paste in your project."; });
-  logDoubt(qBox.value.trim());
+  var q=qBox.value.trim(), link=chatLink(), proj=load(PROJKEY,""), copyOnly=!!load(COPYKEY,false);
+  if(link && copyOnly) e.preventDefault();
+  copyNow(link?nextPrompt(cur.ctx,cur.quote,q):startPrompt(cur.ctx,cur.quote,q,false)).then(function(ok){
+    if(link) status.textContent=ok?(copyOnly?"Copied. Go to your doubts chat, paste and send.":"Opening your doubts chat. Your doubt is copied: paste it there and send."):"Copy didn’t work here. Use the Copy button, then paste in your doubts chat.";
+    else if(proj) status.textContent=ok?"Copied. In your project, start a new chat and paste. Then link that chat below, so later doubts go to it.":"Copy didn’t work here. Use the Copy button, then paste in your project.";
+    else status.textContent="Opening a new chat with your doubt filled in"+(ok?" (also copied, in case it opens empty)":"")+". Next, link that chat below, so later doubts go to it.";
+  });
+  if(!link){ chatBox.classList.remove("nudge"); void chatBox.offsetWidth; chatBox.classList.add("nudge"); }
+  logDoubt(q,"",cur.ctx.label);
 });
 $(".ask-copy").addEventListener("click",function(){
   if(needQuestion()) return;
@@ -1763,8 +1879,8 @@ $(".ask-copy").addEventListener("click",function(){
 $(".ask-projsave").addEventListener("click",function(){
   var v=$(".ask-projset input").value.trim();
   if(v && !/^https:\/\/claude\.ai\//.test(v)){ status.textContent="That doesn’t look like a claude.ai link. It should start with https://claude.ai/"; return; }
-  store(PROJKEY,v); refreshLinks();
-  status.textContent=v?"Saved. Use “Open in my project” to ask with your books.":"Project link removed.";
+  store(PROJKEY,v); refreshChat();
+  status.textContent=v?"Saved. “Start my doubts chat” now opens your project.":"Project link removed.";
 });
 $(".ask-projset input").value=load(PROJKEY,"");
 $(".ask-log").addEventListener("click",function(e){
@@ -1774,44 +1890,63 @@ $(".ask-log").addEventListener("click",function(e){
 });
 
 /* ---------- answering inside the page (Claude-hosted version only) ---------- */
-var CODES={not_granted:"Claude isn’t allowed to answer inside this page. Use Open in Claude instead.",sampling_disabled:"Claude can’t answer inside this page for this account. Use Open in Claude instead.",rate_limited:"Too many questions just now. Wait a little, or use Open in Claude.",session_expired:"Please sign in to Claude again.",refused:"Claude didn’t answer this one. Try rewording it.",prompt_too_large:"That was too long to send. Select less text."};
-function hideHere(msg){ hereBtn.hidden=true; $(".ask-heretip").hidden=true; sample=null; if(msg) status.textContent=msg; }
-function ask(content,isFollow){
-  if(!sample) return;
-  turns.push({role:"user",content:content});
-  answer.hidden=false;
-  if(isFollow){ thread.appendChild(el("div",{class:"ask-you"},esc(content))); }
+var CODES={not_granted:"Claude isn’t allowed to answer inside this page. Use your doubts chat instead.",sampling_disabled:"Claude can’t answer inside this page for this account. Use your doubts chat instead.",rate_limited:"Too many questions just now. Wait a little, or use your doubts chat.",session_expired:"Please sign in to Claude again.",refused:"Claude didn’t answer this one. Try rewording it.",prompt_too_large:"That was too long to send. Select less text, or start a new chat."};
+function hideHere(msg){ hereBtn.hidden=true; $(".ask-heretip").hidden=true; sample=null; refreshChat(); renderThread(); if(msg) status.textContent=msg; }
+function ask(kind,content,shown){
+  if(!sample || busy) return;
+  th=loadThread();
+  th.push({r:"user",c:content,k:kind,q:shown,w:kind==="doubt"?cur.ctx.label:"",s:T.session,t:Date.now()});
+  saveThread(); busy=true; renderThread();
+  var where=cur.ctx.label;
   var bubble=el("div",{class:"ask-md ask-claude"},'<p class="muted">Thinking…</p>'); thread.appendChild(bubble);
-  ctl=new AbortController(); stopBtn.hidden=false; hereBtn.disabled=true; $(".ask-send").disabled=true;
-  sample(turns.slice(-12),{cache:false,signal:ctl.signal,onText:function(u){ bubble.innerHTML=md(u.text); }}).then(function(r){
-    bubble.innerHTML=md(r.text); turns.push({role:"assistant",content:r.text});
-    if(r.truncated) bubble.appendChild(el("p",{class:"muted"},"(Cut short. Ask for less at a time.)"));
-    if(!isFollow) logDoubt(qBox.value.trim(),r.text);
+  if(bubble.scrollIntoView) bubble.scrollIntoView({block:"nearest"});
+  ctl=new AbortController(); stopBtn.hidden=false; hereBtn.disabled=true; sendBtn.disabled=true;
+  sample(windowTurns(),{cache:false,signal:ctl.signal,onText:function(u){ bubble.innerHTML=md(u.text); }}).then(function(r){
+    th.push({r:"assistant",c:r.text+(r.truncated?"\n\n(Cut short. Ask for less at a time.)":""),t:Date.now()}); saveThread();
+    if(kind==="doubt") logDoubt(shown,r.text,where);
   },function(e){
-    turns.pop();
-    if(e && e.text){ bubble.innerHTML=md(e.text); } else bubble.remove();
     var code=e&&e.code;
+    if(e && e.text){ th.push({r:"assistant",c:e.text+(code==="cancelled"?"\n\n(Stopped.)":""),t:Date.now()}); }
+    else { th.pop(); var box=kind==="doubt"?qBox:fBox; if(!box.value.trim()) box.value=shown; }
+    saveThread();
     if(code==="cancelled") return;
     if(["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].indexOf(code)>-1) hideHere(CODES[code]||CODES.not_granted);
-    else status.textContent=CODES[code]||"Something went wrong. Try again, or use Open in Claude.";
-  }).then(function(){ stopBtn.hidden=true; hereBtn.disabled=false; $(".ask-send").disabled=false; ctl=null; });
+    else status.textContent=CODES[code]||"Something went wrong. Try again, or use your doubts chat.";
+  }).then(function(){
+    busy=false; ctl=null; stopBtn.hidden=true; hereBtn.disabled=false; sendBtn.disabled=false;
+    renderThread(); refreshLinks();
+    var lastC=thread.lastElementChild; if(lastC && lastC.scrollIntoView) lastC.scrollIntoView({block:"nearest"});
+  });
 }
 hereBtn.addEventListener("click",function(){
   if(needQuestion()) return;
-  status.textContent=""; turns=[]; thread.innerHTML="";
-  ask(buildPrompt(cur.ctx,cur.quote,qBox.value.trim(),false),false);
+  var q=qBox.value.trim(); status.textContent="";
+  qBox.value="";
+  ask("doubt",doubtText(cur.ctx,cur.quote,q,false),q);
 });
-$(".ask-send").addEventListener("click",function(){
-  var ta=$(".ask-follow textarea"), v=ta.value.trim(); if(!v || !sample) return;
-  ta.value=""; ask(v,true);
+function sendFollow(){ var v=fBox.value.trim(); if(!v || !sample || busy) return; fBox.value=""; ask("follow",v,v); }
+sendBtn.addEventListener("click",sendFollow);
+fBox.addEventListener("keydown",function(e){ if(e.key==="Enter" && (e.ctrlKey||e.metaKey)){ e.preventDefault(); sendFollow(); } });
+qBox.addEventListener("keydown",function(e){ if(e.key==="Enter" && (e.ctrlKey||e.metaKey)){ e.preventDefault(); if(sample) hereBtn.click(); else openA.click(); } });
+newBtn.addEventListener("click",function(){
+  if(busy) return;
+  th=[]; saveThread(); renderThread();
+  status.textContent="Started a new chat. Your earlier doubts are still listed at the bottom.";
+  qBox.focus();
 });
 stopBtn.addEventListener("click",function(){ if(ctl) ctl.abort(); });
 if(window.claude && typeof window.claude.use==="function"){
   window.claude.use("sample").then(function(s){
     if(!s) return;
     sample=s; hereBtn.hidden=false; $(".ask-heretip").hidden=false;
+    refreshChat(); if(!panel.hidden) renderThread();
   },function(){});
 }
+/* keep pages open in other tabs in step */
+window.addEventListener("storage",function(e){
+  if(e.key===THREADKEY && !busy){ th=loadThread(); if(!panel.hidden) renderThread(); }
+  if(e.key===CHATKEY || e.key===COPYKEY || e.key===PROJKEY){ if(!panel.hidden) refreshChat(); }
+});
 
 /* ---------- pointing: buttons, and selected text ---------- */
 document.addEventListener("click",function(e){
@@ -1835,7 +1970,8 @@ fab.addEventListener("click",function(){
   if(lastSel) openAsk(ctxFromNode(lastSel.node),lastSel.text,fab);
   else openAsk(ctxTopic(),null,fab);
 });
-window.SMMAsk={open:openAsk,ctxStop:ctxStop,ctxSkim:ctxSkim,buildPrompt:buildPrompt};
+refreshChat();
+window.SMMAsk={open:openAsk,ctxStop:ctxStop,ctxSkim:ctxSkim,buildPrompt:buildPrompt,startPrompt:startPrompt,nextPrompt:nextPrompt};
 })();
 
 </script>
